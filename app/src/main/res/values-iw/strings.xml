@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">WIMC</string>
+    <string name="action_settings">הגדרות</string>
+    <string name="Settings">הגדרות</string>
+    <string name="Logout">התנתק</string>
+    <string name="HomeScreen">מסך בית</string>
+</resources>
