@@ -1,9 +1,6 @@
 package com.example.reabar.wimc;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -12,12 +9,24 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+
+
+import com.example.reabar.wimc.Fragments.LoginScreenFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, FragmentCommunicator {
 
     ActionBarDrawerToggle toggle;
     DrawerLayout drawer;
+
+    //Fragments
+    FragmentManager fragmentManager;
+    FragmentTransaction fragmentTransaction;
+    LoginScreenFragment loginFragment;
+    //SignupScreenFragment signUp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +43,14 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        fragmentManager = getSupportFragmentManager();
+        fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        loginFragment = new LoginScreenFragment();
+        fragmentTransaction.add(R.id.main_frag_container,loginFragment,"y");
+        fragmentTransaction.show(loginFragment);
+        fragmentTransaction.commit();
+
     }
 
     @Override

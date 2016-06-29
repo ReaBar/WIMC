@@ -1,0 +1,103 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.reabar.wimc.Fragments.LoginScreenFragment">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="WimfCar"
+        android:id="@+id/logoText"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_marginTop="60dp"
+        android:textSize="35sp"
+        android:textStyle="bold"
+        android:textColor="#234f84"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_marginTop="40dp">
+
+
+        <EditText
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:ems="10"
+            android:id="@+id/emailInput"
+            android:layout_marginTop="157dp"
+            android:singleLine="false"
+            android:layout_marginEnd="40dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="10dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Email"
+            android:id="@+id/textView2"
+            android:layout_marginStart="40dp"
+            android:layout_alignTop="@+id/emailInput"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="10dp" />
+
+        <EditText
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:ems="10"
+            android:id="@+id/passwordInput"
+            android:singleLine="false"
+            android:layout_below="@+id/emailInput"
+            android:layout_alignStart="@+id/emailInput" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Password"
+            android:id="@+id/textView3"
+            android:layout_alignTop="@+id/passwordInput"
+            android:layout_alignStart="@+id/textView2"
+            android:layout_marginTop="10dp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Login"
+            android:id="@+id/loginButton"
+            android:layout_below="@+id/passwordInput"
+            android:layout_alignEnd="@+id/passwordInput"
+            android:layout_marginTop="32dp"
+            android:layout_alignStart="@+id/textView3" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sign Up"
+            android:id="@+id/signUpButton"
+            android:layout_below="@+id/loginButton"
+            android:layout_alignStart="@+id/loginButton"
+            android:layout_toStartOf="@+id/resetPasswordButton" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Reset Password"
+            android:id="@+id/resetPasswordButton"
+            android:layout_alignBottom="@+id/signUpButton"
+            android:layout_alignEnd="@+id/loginButton" />
+
+    </RelativeLayout>
+
+
+</FrameLayout>
