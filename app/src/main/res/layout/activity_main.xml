@@ -22,4 +22,9 @@
         app:headerLayout="@layout/nav_header_main"
         app:menu="@menu/activity_main_drawer" />
 
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/main_frag_container">
+        </FrameLayout>
 </android.support.v4.widget.DrawerLayout>

@@ -1,9 +1,6 @@
 package com.example.reabar.wimc;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,19 +10,24 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 
-import com.example.reabar.wimc.Model.Car;
-import com.example.reabar.wimc.Model.Model;
-import com.example.reabar.wimc.Model.ModelFirebase;
-import com.example.reabar.wimc.Model.User;
+import com.example.reabar.wimc.Fragments.LoginScreenFragment;
+
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, FragmentCommunicator {
 
     ActionBarDrawerToggle toggle;
     DrawerLayout drawer;
-    Model model;
     MyApplication myApplication;
+
+    //Fragments
+    FragmentManager fragmentManager;
+    FragmentTransaction fragmentTransaction;
+    LoginScreenFragment loginFragment;
+    //SignupScreenFragment signUp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +35,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        myApplication = new MyApplication(this.getApplicationContext());
+        myApplication = new MyApplication(this.getApplicationContext(), this);
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         toggle = new ActionBarDrawerToggle(
@@ -43,6 +45,14 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        fragmentManager = getSupportFragmentManager();
+        fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        loginFragment = new LoginScreenFragment();
+        fragmentTransaction.add(R.id.main_frag_container,loginFragment,"y");
+        fragmentTransaction.show(loginFragment);
+        fragmentTransaction.commit();
+
     }
 
     @Override
