@@ -54,11 +54,6 @@ public class MainActivity extends AppCompatActivity
         fragmentTransaction.add(R.id.main_frag_container,loginFragment,"loginFragment");
         fragmentTransaction.show(loginFragment);
         fragmentTransaction.commit();
-
-        Model.getInstance().registerNewUser(new User("rea.bar@gmail.com","reabar00"));
-
-        Model.getInstance().getCurrentUser();
-
     }
 
     @Override
