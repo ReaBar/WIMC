@@ -14,6 +14,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
 import com.example.reabar.wimc.Fragments.LoginScreenFragment;
+import com.example.reabar.wimc.Model.Model;
+import com.example.reabar.wimc.Model.User;
 
 
 public class MainActivity extends AppCompatActivity
@@ -49,9 +51,13 @@ public class MainActivity extends AppCompatActivity
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
         loginFragment = new LoginScreenFragment();
-        fragmentTransaction.add(R.id.main_frag_container,loginFragment,"y");
+        fragmentTransaction.add(R.id.main_frag_container,loginFragment,"loginFragment");
         fragmentTransaction.show(loginFragment);
         fragmentTransaction.commit();
+
+        Model.getInstance().registerNewUser(new User("rea.bar@gmail.com","reabar00"));
+
+        Model.getInstance().getCurrentUser();
 
     }
 

@@ -20,12 +20,12 @@ public class ModelFirebase {
         userFirebase = new UserFirebase();
     }
 
-    public void registerNewUser(String email, String password){
-        userFirebase.registerNewUser(email, password);
+    public void registerNewUser(User user){
+        userFirebase.registerNewUser(firebaseDatabase,user);
     }
 
-    public void signInUser(String email, String password){
-        userFirebase.signInUser(email,password);
+    public void signInUser(User user){
+        userFirebase.signInUser(user);
     }
 
     public void logoutUser(){

@@ -7,19 +7,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.reabar.wimc.FragmentCommunicator;
+import com.example.reabar.wimc.MyApplication;
 import com.example.reabar.wimc.R;
 
 
 public class LoginScreenFragment extends Fragment {
 
-    public LoginScreenFragment() {
-
-    }
-
+    FragmentCommunicator fragmentCommunicator;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        fragmentCommunicator = (FragmentCommunicator) getActivity();
+        fragmentCommunicator.passString("cancelDrawer");
 
     }
 
@@ -32,8 +33,6 @@ public class LoginScreenFragment extends Fragment {
         return view;
     }
 
-
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -45,7 +44,6 @@ public class LoginScreenFragment extends Fragment {
         super.onDetach();
 
     }
-
 
     public interface OnFragmentInteractionListener {
 

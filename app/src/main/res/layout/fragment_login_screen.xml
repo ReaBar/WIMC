@@ -37,7 +37,8 @@
             android:layout_marginEnd="40dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginBottom="10dp" />
+            android:layout_marginBottom="10dp"
+            android:hint="Email" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -58,7 +59,8 @@
             android:id="@+id/passwordInput"
             android:singleLine="false"
             android:layout_below="@+id/emailInput"
-            android:layout_alignStart="@+id/emailInput" />
+            android:layout_alignStart="@+id/emailInput"
+            android:hint="Password" />
 
         <TextView
             android:layout_width="wrap_content"

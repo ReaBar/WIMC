@@ -21,12 +21,17 @@ public class Model {
         modelSql = new ModelSql();
     }
 
-    public void registerNewUser(User user){
-        modelFirebase.registerNewUser(user.getEmail(),user.getPassword());
+    public void registerNewUser(final User user){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                modelFirebase.registerNewUser(user);
+            }
+        }).start();
     }
 
     public void signInUser(User user){
-        modelFirebase.signInUser(user.getEmail(),user.getPassword());
+        modelFirebase.signInUser(user);
     }
 
     public void logoutUser(){

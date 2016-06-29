@@ -45,11 +45,18 @@ public class UserFirebase {
         mAuth.addAuthStateListener(mAuthListener);
     }
 
-    public void registerNewUser(String email, String password){
-        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(MyApplication.getAppActivity(), new OnCompleteListener<AuthResult>() {
+    public void registerNewUser(final FirebaseDatabase db, final User user){
+        mAuth.createUserWithEmailAndPassword(user.getEmail(), user.getPassword()).addOnCompleteListener(MyApplication.getAppActivity(), new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
+                if (task.isSuccessful()) {
+                    Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
+                    String uid = task.getResult().getUser().getUid();
+                    Log.d(TAG,"result: " + uid);
+                    DatabaseReference dbRef = db.getReference(USERS_DB);
+                    user.setUserId(uid);
+                    dbRef.child(uid).setValue(user);
+                }
 
                 if (!task.isSuccessful()) {
                     Toast.makeText(MyApplication.getAppActivity(), "Authentication failed.",
@@ -60,8 +67,8 @@ public class UserFirebase {
         });
     }
 
-    public void signInUser(String email, String password){
-        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(MyApplication.getAppActivity(), new OnCompleteListener<AuthResult>() {
+    public void signInUser(User user){
+        mAuth.signInWithEmailAndPassword(user.getEmail(), user.getPassword()).addOnCompleteListener(MyApplication.getAppActivity(), new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
@@ -85,7 +92,7 @@ public class UserFirebase {
         if(mAuth.getCurrentUser() != null){
             DatabaseReference dbRef = db.getReference(USERS_DB);
             final String userId = mAuth.getCurrentUser().getUid();
-            dbRef.child("Users").child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+            dbRef.child(USERS_DB).child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     User tempUser = dataSnapshot.getValue(User.class);
