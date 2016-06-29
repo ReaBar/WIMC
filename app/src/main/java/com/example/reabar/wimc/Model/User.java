@@ -4,19 +4,19 @@ package com.example.reabar.wimc.Model;
  * Created by reabar on 25.5.2016.
  */
 public class User {
-    private String userName, userObjectId, password;
+    private String email, userObjectId, password;
 
-    public User(String userName, String password) {
-        this.userName = userName;
+    public User(String email, String password) {
+        this.email = email;
         this.password = password;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getUserId() {
