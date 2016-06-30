@@ -88,15 +88,15 @@ public class UserFirebase {
         }
     }
 
-    public User getCurrentUser(FirebaseDatabase db){
+    public void getCurrentUser(FirebaseDatabase db){
         if(mAuth.getCurrentUser() != null){
             DatabaseReference dbRef = db.getReference(USERS_DB);
             final String userId = mAuth.getCurrentUser().getUid();
             dbRef.child(USERS_DB).child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    User tempUser = dataSnapshot.getValue(User.class);
-                    // TODO: return this user somehow
+                    Model.getInstance().setCurrentUser(dataSnapshot.getValue(User.class));
+                    Log.d(TAG,"current user: " + dataSnapshot.getValue(User.class));
                 }
 
                 @Override
@@ -105,6 +105,5 @@ public class UserFirebase {
                 }
             });
         }
-        return null;
     }
 }

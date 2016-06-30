@@ -1,6 +1,7 @@
 package com.example.reabar.wimc;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -54,6 +55,8 @@ public class MainActivity extends AppCompatActivity
         fragmentTransaction.add(R.id.main_frag_container,loginFragment,"loginFragment");
         fragmentTransaction.show(loginFragment);
         fragmentTransaction.commit();
+        User temp = Model.getInstance().getCurrentUser();
+        Log.d("currentUser", temp.toString());
     }
 
     @Override

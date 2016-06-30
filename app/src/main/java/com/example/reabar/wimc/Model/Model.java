@@ -1,8 +1,5 @@
 package com.example.reabar.wimc.Model;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-
 /**
  * Created by reabar on 28/06/2016.
  */
@@ -11,6 +8,7 @@ public class Model {
 
     private ModelFirebase modelFirebase;
     private ModelSql modelSql;
+    private User currentUser;
 
     public static Model getInstance() {
         return ourInstance;
@@ -19,6 +17,10 @@ public class Model {
     private Model() {
         modelFirebase = new ModelFirebase();
         modelSql = new ModelSql();
+    }
+
+    public void setCurrentUser(User currentUser) {
+        this.currentUser = currentUser;
     }
 
     public void registerNewUser(final User user){
@@ -39,7 +41,10 @@ public class Model {
     }
 
     public User getCurrentUser(){
-        return modelFirebase.getCurrentUser();
+        if(currentUser == null){
+            modelFirebase.getCurrentUser();
+        }
+        return currentUser;
     }
 
     public void addCarToDB(final Car car){

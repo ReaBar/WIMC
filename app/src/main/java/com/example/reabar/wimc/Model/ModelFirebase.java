@@ -32,8 +32,8 @@ public class ModelFirebase {
         userFirebase.logoutUser();
     }
 
-    public User getCurrentUser(){
-       return userFirebase.getCurrentUser(firebaseDatabase);
+    public void getCurrentUser(){
+       userFirebase.getCurrentUser(firebaseDatabase);
     }
 
     public void addCarToDB(Car car){
