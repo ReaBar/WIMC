@@ -32,15 +32,12 @@ public class ModelFirebase {
         userFirebase.logoutUser();
     }
 
-    public void getCurrentUser(){
-       userFirebase.getCurrentUser(firebaseDatabase);
+    public void getCurrentUser(Model.GetCurrentUserListener listener){
+       userFirebase.getCurrentUser(firebaseDatabase,listener);
     }
 
     public void addCarToDB(Car car){
         carFirebase.addCarToDB(firebaseDatabase, car);
     }
-
-
-
 
 }

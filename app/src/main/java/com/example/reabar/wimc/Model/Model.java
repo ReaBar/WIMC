@@ -40,11 +40,13 @@ public class Model {
         modelFirebase.logoutUser();
     }
 
-    public User getCurrentUser(){
-        if(currentUser == null){
-            modelFirebase.getCurrentUser();
-        }
-        return currentUser;
+    public interface GetCurrentUserListener{
+        public void onResult(User user);
+        public void onCancel();
+    }
+
+    public void getCurrentUser(GetCurrentUserListener listener){
+       modelFirebase.getCurrentUser(listener);
     }
 
     public void addCarToDB(final Car car){

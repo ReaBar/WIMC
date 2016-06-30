@@ -1,5 +1,6 @@
 package com.example.reabar.wimc.Model;
 
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.Toast;
@@ -88,22 +89,31 @@ public class UserFirebase {
         }
     }
 
-    public void getCurrentUser(FirebaseDatabase db){
+    public void getCurrentUser(final FirebaseDatabase db,final Model.GetCurrentUserListener listener){
         if(mAuth.getCurrentUser() != null){
-            DatabaseReference dbRef = db.getReference(USERS_DB);
-            final String userId = mAuth.getCurrentUser().getUid();
-            dbRef.child(USERS_DB).child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+            AsyncTask<Void,Void,Void> currentUserTask = new AsyncTask<Void, Void, Void>() {
                 @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    Model.getInstance().setCurrentUser(dataSnapshot.getValue(User.class));
-                    Log.d(TAG,"current user: " + dataSnapshot.getValue(User.class));
-                }
+                protected Void doInBackground(Void... voids) {
+                    DatabaseReference dbRef = db.getReference(USERS_DB);
+                    final String userId = mAuth.getCurrentUser().getUid();
+                    dbRef.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            final User tempUser = dataSnapshot.getValue(User.class);
+                            Model.getInstance().setCurrentUser(dataSnapshot.getValue(User.class));
+                            listener.onResult(tempUser);
+                        }
 
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    Log.w(TAG, "getUser:onCancelled", databaseError.toException());
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                            Log.w(TAG, "getUser:onCancelled", databaseError.toException());
+                            listener.onCancel();
+                        }
+                    });
+                    return null;
                 }
-            });
+            };
+            currentUserTask.execute();
         }
     }
 }

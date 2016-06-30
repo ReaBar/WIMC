@@ -6,6 +6,10 @@ package com.example.reabar.wimc.Model;
 public class User {
     private String email, userObjectId, password;
 
+    public User(){
+
+    }
+
     public User(String email, String password) {
         this.email = email;
         this.password = password;

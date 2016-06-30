@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity
     ActionBarDrawerToggle toggle;
     DrawerLayout drawer;
     MyApplication myApplication;
+    User currentUser;
 
     //Fragments
     FragmentManager fragmentManager;
@@ -55,8 +56,15 @@ public class MainActivity extends AppCompatActivity
         fragmentTransaction.add(R.id.main_frag_container,loginFragment,"loginFragment");
         fragmentTransaction.show(loginFragment);
         fragmentTransaction.commit();
-        User temp = Model.getInstance().getCurrentUser();
-        Log.d("currentUser", temp.toString());
+/*        Model.getInstance().getCurrentUser(new Model.GetCurrentUserListener() {
+            @Override
+            public void onResult(User user) {
+                currentUser = user;
+            }
+
+            @Override
+            public void onCancel() {}
+        });*/
     }
 
     @Override
