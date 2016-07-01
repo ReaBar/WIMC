@@ -1,9 +1,9 @@
 package com.example.reabar.wimc;
 
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -11,11 +11,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+import android.view.View;
 
 import com.example.reabar.wimc.Fragments.LoginScreenFragment;
-import com.example.reabar.wimc.Model.Model;
+import com.example.reabar.wimc.Fragments.SignupScreenFragment;
 import com.example.reabar.wimc.Model.User;
 
 
@@ -31,7 +30,7 @@ public class MainActivity extends AppCompatActivity
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
     LoginScreenFragment loginFragment;
-    //SignupScreenFragment signUp;
+    SignupScreenFragment signUpFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +53,8 @@ public class MainActivity extends AppCompatActivity
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
         loginFragment = new LoginScreenFragment();
         fragmentTransaction.add(R.id.main_frag_container,loginFragment,"loginFragment");
-        fragmentTransaction.show(loginFragment);
-        fragmentTransaction.commit();
+        fragmentTransaction.show(loginFragment).addToBackStack("loginFragment").commit();
+
 /*        Model.getInstance().getCurrentUser(new Model.GetCurrentUserListener() {
             @Override
             public void onResult(User user) {
@@ -143,6 +142,12 @@ public class MainActivity extends AppCompatActivity
 
             case "enableDrawer":
                 setDrawerState(true);
+                break;
+            case "SignUpScreenFragment":
+                signUpFragment = new SignupScreenFragment();
+                fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.main_frag_container, signUpFragment, "SignUpScreenFragment");
+                fragmentTransaction.addToBackStack(null).commit();
                 break;
         }
     }

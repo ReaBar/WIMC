@@ -29,6 +29,7 @@ public class LoginScreenFragment extends Fragment {
 
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -38,7 +39,6 @@ public class LoginScreenFragment extends Fragment {
         emailInput = (EditText) view.findViewById(R.id.emailInput);
         passwordInput = (EditText) view.findViewById(R.id.passwordInput);
         Button loginButton = (Button) view.findViewById(R.id.loginButton);
-
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -47,8 +47,18 @@ public class LoginScreenFragment extends Fragment {
             }
         });
 
+        Button signupButton = (Button) view.findViewById(R.id.signUpButton);
+        signupButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    fragmentCommunicator.passString("SignUpScreenFragment");
+            }
+        });
+
+
         return view;
     }
+
 
     @Override
     public void onAttach(Context context) {
@@ -62,7 +72,4 @@ public class LoginScreenFragment extends Fragment {
 
     }
 
-    public interface OnFragmentInteractionListener {
-
-    }
 }
