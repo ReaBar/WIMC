@@ -55,6 +55,14 @@ public class LoginScreenFragment extends Fragment {
             }
         });
 
+        Button forgotPasswordButton = (Button) view.findViewById(R.id.resetPasswordButton);
+        forgotPasswordButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fragmentCommunicator.passString("ForgotPasswordFragment");
+            }
+        });
+
 
         return view;
     }
