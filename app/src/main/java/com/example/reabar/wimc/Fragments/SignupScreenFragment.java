@@ -44,8 +44,8 @@ public class SignupScreenFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(passwordInput.getText().toString().equals(repasswordInput.getText().toString())){
-                    User newUser = new User(emailInput.getText().toString(), passwordInput.getText().toString());
-                    Model.getInstance().registerNewUser(newUser);
+                    User newUser = new User(emailInput.getText().toString());
+                    Model.getInstance().signupUser(newUser,passwordInput.getText().toString());
                 }
 
             }

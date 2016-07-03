@@ -23,17 +23,17 @@ public class Model {
         this.currentUser = currentUser;
     }
 
-    public void registerNewUser(final User user){
+    public void signupUser(final User user, final String password){
         new Thread(new Runnable() {
             @Override
             public void run() {
-                modelFirebase.registerNewUser(user);
+                modelFirebase.signupUser(user, password);
             }
         }).start();
     }
 
-    public void signInUser(User user){
-        modelFirebase.signInUser(user);
+    public void signInUser(User user, String password){
+        modelFirebase.signInUser(user,password);
     }
 
     public void logoutUser(){

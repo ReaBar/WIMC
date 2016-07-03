@@ -4,15 +4,14 @@ package com.example.reabar.wimc.Model;
  * Created by reabar on 25.5.2016.
  */
 public class User {
-    private String email, userObjectId, password;
+    private String email, userObjectId;
 
     public User(){
 
     }
 
-    public User(String email, String password) {
+    public User(String email) {
         this.email = email;
-        this.password = password;
     }
 
     public String getEmail() {
@@ -27,16 +26,7 @@ public class User {
         return userObjectId;
     }
 
-    // TODO: 25.5.2016 set user id from firebase after pushing
     public void setUserId(String userId) {
         this.userObjectId = userId;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 }

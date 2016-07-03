@@ -3,6 +3,7 @@ package com.example.reabar.wimc.Fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,8 +43,22 @@ public class LoginScreenFragment extends Fragment {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                User loginUser = new User(emailInput.getText().toString(), passwordInput.getText().toString());
-                Model.getInstance().signInUser(loginUser);
+                User loginUser = new User(emailInput.getText().toString());
+                Model.getInstance().signInUser(loginUser,passwordInput.getText().toString());
+                Model.getInstance().getCurrentUser(new Model.GetCurrentUserListener() {
+                    @Override
+                    public void onResult(User user) {
+                        if(user != null){
+                            Log.d("LoginFragment", "logged in as: " + user.getEmail());
+                            //TODO after user logged in, move to application main screen
+                        }
+                    }
+
+                    @Override
+                    public void onCancel() {
+
+                    }
+                });
             }
         });
 
@@ -59,7 +74,8 @@ public class LoginScreenFragment extends Fragment {
         forgotPasswordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fragmentCommunicator.passString("ForgotPasswordFragment");
+                //fragmentCommunicator.passString("ForgotPasswordFragment");
+                Model.getInstance().resetPassword();
             }
         });
 

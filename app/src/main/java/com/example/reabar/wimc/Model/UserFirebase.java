@@ -46,8 +46,8 @@ public class UserFirebase {
         mAuth.addAuthStateListener(mAuthListener);
     }
 
-    public void registerNewUser(final FirebaseDatabase db, final User user){
-        mAuth.createUserWithEmailAndPassword(user.getEmail(), user.getPassword()).addOnCompleteListener(MyApplication.getAppActivity(), new OnCompleteListener<AuthResult>() {
+    public void signupUser(final FirebaseDatabase db, final User user, final String password){
+        mAuth.createUserWithEmailAndPassword(user.getEmail(), password).addOnCompleteListener(MyApplication.getAppActivity(), new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
@@ -68,8 +68,8 @@ public class UserFirebase {
         });
     }
 
-    public void signInUser(User user){
-        mAuth.signInWithEmailAndPassword(user.getEmail(), user.getPassword()).addOnCompleteListener(MyApplication.getAppActivity(), new OnCompleteListener<AuthResult>() {
+    public void signInUser(User user, String password){
+        mAuth.signInWithEmailAndPassword(user.getEmail(), password).addOnCompleteListener(MyApplication.getAppActivity(), new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
@@ -81,6 +81,7 @@ public class UserFirebase {
                 }
             }
         });
+        Log.d(TAG,"signed in as: " + mAuth.getCurrentUser().getEmail());
     }
 
     public void logoutUser(){
@@ -91,7 +92,18 @@ public class UserFirebase {
 
     public void resetPassword(){
         if(mAuth.getCurrentUser() != null){
-            mAuth.sendPasswordResetEmail(mAuth.getCurrentUser().getUid());
+            mAuth.sendPasswordResetEmail(mAuth.getCurrentUser().getEmail()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if(task.isSuccessful()){
+                        Log.d(TAG, "Email sent.");
+                    }
+
+                    else{
+                        Log.d(TAG,"Email not sent");
+                    }
+                }
+            });
         }
     }
 
