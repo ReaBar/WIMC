@@ -1,0 +1,55 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.reabar.wimc.Fragments.SignupScreenFragment">
+
+
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        android:id="@+id/emailInput"
+        android:layout_marginTop="100dp"
+        android:singleLine="false"
+        android:hint="Email"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:id="@+id/passwordInput"
+        android:singleLine="false"
+        android:layout_below="@+id/emailInput"
+        android:layout_alignStart="@+id/emailInput"
+        android:hint="Password"
+        android:layout_alignEnd="@+id/emailInput"
+        android:inputType="textPassword" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:id="@+id/repasswordInput"
+        android:singleLine="false"
+        android:layout_below="@+id/passwordInput"
+        android:layout_alignStart="@+id/emailInput"
+        android:hint="Re-Enter Password"
+        android:layout_alignEnd="@+id/emailInput"
+        android:inputType="textPassword" />
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sign up!"
+        android:id="@+id/registerButton"
+        android:layout_gravity="left|center_vertical"
+        android:layout_centerVertical="true"
+        android:layout_alignStart="@+id/repasswordInput"
+        android:layout_alignEnd="@+id/repasswordInput" />
+
+</RelativeLayout>
