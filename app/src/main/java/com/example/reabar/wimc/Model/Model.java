@@ -49,6 +49,10 @@ public class Model {
        modelFirebase.getCurrentUser(listener);
     }
 
+    public void resetPassword(){
+        modelFirebase.resetPassword();
+    }
+
     public void addCarToDB(final Car car){
         new Thread(new Runnable() {
             @Override

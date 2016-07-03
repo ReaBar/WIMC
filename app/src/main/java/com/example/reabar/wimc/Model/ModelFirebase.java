@@ -36,6 +36,10 @@ public class ModelFirebase {
        userFirebase.getCurrentUser(firebaseDatabase,listener);
     }
 
+    public void resetPassword(){
+        userFirebase.resetPassword();
+    }
+
     public void addCarToDB(Car car){
         carFirebase.addCarToDB(firebaseDatabase, car);
     }

@@ -89,6 +89,12 @@ public class UserFirebase {
         }
     }
 
+    public void resetPassword(){
+        if(mAuth.getCurrentUser() != null){
+            mAuth.sendPasswordResetEmail(mAuth.getCurrentUser().getUid());
+        }
+    }
+
     public void getCurrentUser(final FirebaseDatabase db,final Model.GetCurrentUserListener listener){
         if(mAuth.getCurrentUser() != null){
             AsyncTask<Void,Void,Void> currentUserTask = new AsyncTask<Void, Void, Void>() {
@@ -116,4 +122,6 @@ public class UserFirebase {
             currentUserTask.execute();
         }
     }
+
+
 }
