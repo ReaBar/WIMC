@@ -44,4 +44,12 @@ public class ModelFirebase {
         carFirebase.addCarToDB(firebaseDatabase, car);
     }
 
+    public void removeCarFromDB(Car car){
+        carFirebase.removeCarFromDB(firebaseDatabase,car);
+    }
+
+    public void updateCar(Car car){
+        carFirebase.updateCar(firebaseDatabase, car);
+    }
+
 }

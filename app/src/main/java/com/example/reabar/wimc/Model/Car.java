@@ -7,7 +7,7 @@ import java.util.List;
  */
 public class Car {
     private String carId, color, model, company, userOwnerId;
-    private List<User> usersList;
+    private List<String> usersList;
 
     public Car(String carId, String color, String model, String company, String userOwnerId) {
         this.carId = carId;
@@ -19,10 +19,6 @@ public class Car {
 
     public String getCarId() {
         return carId;
-    }
-
-    public void setCarId(String carId) {
-        this.carId = carId;
     }
 
     public String getColor() {
@@ -57,11 +53,11 @@ public class Car {
         this.userOwnerId = userOwnerId;
     }
 
-    public List<User> getUsersList() {
+    public List<String> getUsersList() {
         return usersList;
     }
 
-    public void setUsersList(List<User> usersList) {
-        this.usersList = usersList;
+    public void setUsersList(String user) {
+        this.usersList.add(user);
     }
 }

@@ -60,6 +60,9 @@ public class Model {
                 modelFirebase.addCarToDB(car);
             }
         }).start();
+    }
 
+    public void updateCar(Car car){
+        modelFirebase.updateCar(car);
     }
 }
