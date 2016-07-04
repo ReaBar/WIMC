@@ -13,8 +13,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.example.reabar.wimc.Fragments.HomeScreenFragment;
 import com.example.reabar.wimc.Fragments.LoginScreenFragment;
 import com.example.reabar.wimc.Fragments.SignupScreenFragment;
+import com.example.reabar.wimc.Model.Model;
 import com.example.reabar.wimc.Model.User;
 
 
@@ -31,6 +33,7 @@ public class MainActivity extends AppCompatActivity
     FragmentTransaction fragmentTransaction;
     LoginScreenFragment loginFragment;
     SignupScreenFragment signUpFragment;
+    HomeScreenFragment homeFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +52,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        Model.getInstance().logoutUser();
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
         loginFragment = new LoginScreenFragment();
@@ -149,7 +153,12 @@ public class MainActivity extends AppCompatActivity
                 fragmentTransaction.replace(R.id.main_frag_container, signUpFragment, "SignUpScreenFragment");
                 fragmentTransaction.addToBackStack(null).commit();
                 break;
-
+            case "HomeScreenFragment":
+                homeFragment = new HomeScreenFragment();
+                fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.main_frag_container, homeFragment, "HomeScreenFragment");
+                fragmentTransaction.addToBackStack(null).commit();
+                break;
         }
     }
 
