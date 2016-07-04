@@ -81,7 +81,6 @@ public class UserFirebase {
                 }
             }
         });
-        Log.d(TAG,"signed in as: " + mAuth.getCurrentUser().getEmail());
     }
 
     public void logoutUser(){
