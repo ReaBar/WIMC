@@ -16,6 +16,8 @@ import android.view.View;
 import com.example.reabar.wimc.Fragments.ForgotPasswordFragment;
 import com.example.reabar.wimc.Fragments.LoginScreenFragment;
 import com.example.reabar.wimc.Fragments.SignupScreenFragment;
+import com.example.reabar.wimc.Model.Car;
+import com.example.reabar.wimc.Model.Model;
 import com.example.reabar.wimc.Model.User;
 
 
@@ -56,6 +58,10 @@ public class MainActivity extends AppCompatActivity
         loginFragment = new LoginScreenFragment();
         fragmentTransaction.add(R.id.main_frag_container,loginFragment,"loginFragment");
         fragmentTransaction.show(loginFragment).addToBackStack("loginFragment").commit();
+
+        Car car = new Car("1234567","blue","test","test", "tomer@gmail.com");
+        car.set
+        Model.getInstance().updateCar(car);
 
 /*        Model.getInstance().getCurrentUser(new Model.GetCurrentUserListener() {
             @Override

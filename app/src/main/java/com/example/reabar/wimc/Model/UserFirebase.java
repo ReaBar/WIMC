@@ -17,6 +17,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by reabar on 29/06/2016.
  */
@@ -68,11 +71,14 @@ public class UserFirebase {
         });
     }
 
-    public void signInUser(User user, String password){
+    public void signInUser(final User user, String password){
         mAuth.signInWithEmailAndPassword(user.getEmail(), password).addOnCompleteListener(MyApplication.getAppActivity(), new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
+                if(task.isSuccessful()){
+                    Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
+                    Model.getInstance().setCurrentUser(user);
+                }
 
                 if (!task.isSuccessful()) {
                     Log.w(TAG, "signInWithEmail", task.getException());
@@ -81,7 +87,6 @@ public class UserFirebase {
                 }
             }
         });
-        Log.d(TAG,"signed in as: " + mAuth.getCurrentUser().getEmail());
     }
 
     public void logoutUser(){
@@ -133,6 +138,23 @@ public class UserFirebase {
             };
             currentUserTask.execute();
         }
+    }
+
+    public List<String> getUsersList(FirebaseDatabase db){
+        List<String> users = new ArrayList<String>();
+        DatabaseReference dbRef = db.getReference(USERS_DB);
+        dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        usersDB.
     }
 
 
