@@ -58,6 +58,9 @@ public class Car {
     }
 
     public void setUsersList(String user) {
-        this.usersList.add(user);
+        List<String> allUsers = Model.getInstance().getUsersList();
+        if(allUsers.contains(user)){
+            this.usersList.add(user);
+        }
     }
 }

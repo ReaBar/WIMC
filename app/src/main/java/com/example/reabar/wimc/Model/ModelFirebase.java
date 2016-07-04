@@ -6,6 +6,8 @@ import android.content.Context;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.List;
+
 /**
  * Created by reabar on 27.6.2016.
  */
@@ -32,8 +34,8 @@ public class ModelFirebase {
         userFirebase.logoutUser();
     }
 
-    public void getCurrentUser(Model.GetCurrentUserListener listener){
-       userFirebase.getCurrentUser(firebaseDatabase,listener);
+    public void getCurrentUser(){
+       userFirebase.getCurrentUser();
     }
 
     public void resetPassword(){
@@ -50,6 +52,10 @@ public class ModelFirebase {
 
     public void updateCar(Car car){
         carFirebase.updateCar(firebaseDatabase, car);
+    }
+
+    public List<String> getUsersList(){
+       return userFirebase.getUsersList(firebaseDatabase);
     }
 
 }

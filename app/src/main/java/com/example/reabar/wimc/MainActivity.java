@@ -56,9 +56,9 @@ public class MainActivity extends AppCompatActivity
         loginFragment = new LoginScreenFragment();
         fragmentTransaction.add(R.id.main_frag_container,loginFragment,"loginFragment");
         fragmentTransaction.show(loginFragment).addToBackStack("loginFragment").commit();
-
+        Model.getInstance().logoutUser();
         Car car = new Car("1234567","blue","test","test", "tomer@gmail.com");
-        //car.set
+        car.setUsersList("rea.bar@gmail.com");
         Model.getInstance().updateCar(car);
 
 /*        Model.getInstance().getCurrentUser(new Model.GetCurrentUserListener() {

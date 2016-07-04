@@ -45,20 +45,9 @@ public class LoginScreenFragment extends Fragment {
             public void onClick(View v) {
                 User loginUser = new User(emailInput.getText().toString());
                 Model.getInstance().signInUser(loginUser,passwordInput.getText().toString());
-                Model.getInstance().getCurrentUser(new Model.GetCurrentUserListener() {
-                    @Override
-                    public void onResult(User user) {
-                        if(user != null){
-                            Log.d("LoginFragment", "logged in as: " + user.getEmail());
-                            //TODO after user logged in, move to application main screen
-                        }
-                    }
-
-                    @Override
-                    public void onCancel() {
-
-                    }
-                });
+                if(Model.getInstance().getCurrentUser() != null){
+                    
+                }
             }
         });
 

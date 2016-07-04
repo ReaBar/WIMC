@@ -11,6 +11,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -112,41 +113,22 @@ public class UserFirebase {
         }
     }
 
-    public void getCurrentUser(final FirebaseDatabase db,final Model.GetCurrentUserListener listener){
-        if(mAuth.getCurrentUser() != null){
-            AsyncTask<Void,Void,Void> currentUserTask = new AsyncTask<Void, Void, Void>() {
-                @Override
-                protected Void doInBackground(Void... voids) {
-                    DatabaseReference dbRef = db.getReference(USERS_DB);
-                    final String userId = mAuth.getCurrentUser().getUid();
-                    dbRef.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            final User tempUser = dataSnapshot.getValue(User.class);
-                            Model.getInstance().setCurrentUser(dataSnapshot.getValue(User.class));
-                            listener.onResult(tempUser);
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-                            Log.w(TAG, "getUser:onCancelled", databaseError.toException());
-                            listener.onCancel();
-                        }
-                    });
-                    return null;
-                }
-            };
-            currentUserTask.execute();
+    public void getCurrentUser(){
+        if(mAuth.getCurrentUser() != null) {
+            Model.getInstance().setCurrentUser(new User(mAuth.getCurrentUser().getEmail()));
         }
     }
 
     public List<String> getUsersList(FirebaseDatabase db){
-        List<String> users = new ArrayList<String>();
+        final List<String> users = new ArrayList<String>();
         DatabaseReference dbRef = db.getReference(USERS_DB);
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
+                Iterable<DataSnapshot> children = dataSnapshot.getChildren();
+                while(children.iterator().hasNext()){
+                    users.add(children.iterator().next().getValue(User.class).getEmail());
+                }
             }
 
             @Override
@@ -154,7 +136,8 @@ public class UserFirebase {
 
             }
         });
-        //usersDB.
+
+        return users;
     }
 
 

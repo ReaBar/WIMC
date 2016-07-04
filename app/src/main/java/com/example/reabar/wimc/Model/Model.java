@@ -1,5 +1,7 @@
 package com.example.reabar.wimc.Model;
 
+import java.util.List;
+
 /**
  * Created by reabar on 28/06/2016.
  */
@@ -45,8 +47,9 @@ public class Model {
         public void onCancel();
     }
 
-    public void getCurrentUser(GetCurrentUserListener listener){
-       modelFirebase.getCurrentUser(listener);
+    public User getCurrentUser(){
+       modelFirebase.getCurrentUser();
+        return currentUser;
     }
 
     public void resetPassword(){
@@ -64,5 +67,9 @@ public class Model {
 
     public void updateCar(Car car){
         modelFirebase.updateCar(car);
+    }
+
+    public List<String> getUsersList(){
+        return modelFirebase.getUsersList();
     }
 }
