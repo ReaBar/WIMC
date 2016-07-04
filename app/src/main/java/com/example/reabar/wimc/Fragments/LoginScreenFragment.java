@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,10 +45,13 @@ public class LoginScreenFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 User loginUser = new User(emailInput.getText().toString());
-                Model.getInstance().signInUser(loginUser,passwordInput.getText().toString());
-                if(Model.getInstance().getCurrentUser() != null){
-                    
+                Model.getInstance().signInUser(loginUser, passwordInput.getText().toString());
+                User tempUser = Model.getInstance().getCurrentUser();
+                if(tempUser != null){
+                    Log.d("LoginFragment", "logged in as: " + tempUser.getEmail());
+                    fragmentCommunicator.passString("HomeScreenFragment");
                 }
+
             }
         });
 
@@ -55,7 +59,7 @@ public class LoginScreenFragment extends Fragment {
         signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    fragmentCommunicator.passString("SignUpScreenFragment");
+                fragmentCommunicator.passString("SignUpScreenFragment");
             }
         });
 
