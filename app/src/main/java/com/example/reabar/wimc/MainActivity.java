@@ -13,7 +13,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.example.reabar.wimc.Fragments.ForgotPasswordFragment;
 import com.example.reabar.wimc.Fragments.LoginScreenFragment;
 import com.example.reabar.wimc.Fragments.SignupScreenFragment;
 import com.example.reabar.wimc.Model.Car;
@@ -34,7 +33,6 @@ public class MainActivity extends AppCompatActivity
     FragmentTransaction fragmentTransaction;
     LoginScreenFragment loginFragment;
     SignupScreenFragment signUpFragment;
-    ForgotPasswordFragment forgotPasswordFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +58,7 @@ public class MainActivity extends AppCompatActivity
         fragmentTransaction.show(loginFragment).addToBackStack("loginFragment").commit();
 
         Car car = new Car("1234567","blue","test","test", "tomer@gmail.com");
-        car.set
+        //car.set
         Model.getInstance().updateCar(car);
 
 /*        Model.getInstance().getCurrentUser(new Model.GetCurrentUserListener() {
@@ -155,12 +153,6 @@ public class MainActivity extends AppCompatActivity
                 signUpFragment = new SignupScreenFragment();
                 fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.main_frag_container, signUpFragment, "SignUpScreenFragment");
-                fragmentTransaction.addToBackStack(null).commit();
-                break;
-            case "ForgotPasswordFragment":
-                forgotPasswordFragment = new ForgotPasswordFragment();
-                fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.main_frag_container, forgotPasswordFragment, "ForgotPasswordFragment");
                 fragmentTransaction.addToBackStack(null).commit();
                 break;
 
