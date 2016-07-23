@@ -12,16 +12,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.reabar.wimc.Fragments.HomeScreenFragment;
 import com.example.reabar.wimc.Fragments.LoginScreenFragment;
+import com.example.reabar.wimc.Fragments.SettingsScreenFragment;
 import com.example.reabar.wimc.Fragments.SignupScreenFragment;
-<<<<<<< HEAD
-=======
-import com.example.reabar.wimc.Model.Car;
->>>>>>> a2d30873314075e7425f302b8f408b022fa99c02
 import com.example.reabar.wimc.Model.Model;
-import com.example.reabar.wimc.Model.User;
 
 
 public class MainActivity extends AppCompatActivity
@@ -30,7 +27,6 @@ public class MainActivity extends AppCompatActivity
     ActionBarDrawerToggle toggle;
     DrawerLayout drawer;
     MyApplication myApplication;
-    User currentUser;
 
     //Fragments
     FragmentManager fragmentManager;
@@ -38,6 +34,7 @@ public class MainActivity extends AppCompatActivity
     LoginScreenFragment loginFragment;
     SignupScreenFragment signUpFragment;
     HomeScreenFragment homeFragment;
+    SettingsScreenFragment settingsFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,27 +52,8 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        passString("LoginScreenFragment");
 
-        Model.getInstance().logoutUser();
-        fragmentManager = getSupportFragmentManager();
-        fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        loginFragment = new LoginScreenFragment();
-        fragmentTransaction.add(R.id.main_frag_container,loginFragment,"loginFragment");
-        fragmentTransaction.show(loginFragment).addToBackStack("loginFragment").commit();
-        Model.getInstance().logoutUser();
-        Car car = new Car("1234567","blue","test","test", "tomer@gmail.com");
-        car.setUsersList("rea.bar@gmail.com");
-        Model.getInstance().updateCar(car);
-
-/*        Model.getInstance().getCurrentUser(new Model.GetCurrentUserListener() {
-            @Override
-            public void onResult(User user) {
-                currentUser = user;
-            }
-
-            @Override
-            public void onCancel() {}
-        });*/
     }
 
     @Override
@@ -113,12 +91,24 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
+
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
-//        if (id == R.id.nav_camera) {
-//            // Handle the camera action
-//          }
+        switch (id){
+            case R.id.nav_menu_homepage:
+                passString("HomeScreenFragment");
+                break;
+            case R.id.nav_menu_settings:
+                passString("SettingsScreenFragment");
+                break;
+            case R.id.nav_menu_myCarsNow:
+                Toast.makeText(this, "MyCarsNow", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.nav_menu_logoutapp:
+                Model.getInstance().logoutUser();
+                passString("LoginScreenFragment");
+                break;
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -145,15 +135,27 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+
+
+
+
+
+
+
     @Override
     public void passString(String text) {
         switch (text) {
             case "cancelDrawer":
                 setDrawerState(false);
                 break;
-
             case "enableDrawer":
                 setDrawerState(true);
+                break;
+            case "LoginScreenFragment":
+                loginFragment = new LoginScreenFragment();
+                fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.main_frag_container, loginFragment, "LoginFragment");
+                fragmentTransaction.addToBackStack(null).commit();
                 break;
             case "SignUpScreenFragment":
                 signUpFragment = new SignupScreenFragment();
@@ -167,6 +169,12 @@ public class MainActivity extends AppCompatActivity
                 fragmentTransaction.replace(R.id.main_frag_container, homeFragment, "HomeScreenFragment");
                 fragmentTransaction.addToBackStack(null).commit();
                 break;
+            case "SettingsScreenFragment":
+                settingsFragment = new SettingsScreenFragment();
+                fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.main_frag_container, settingsFragment, "SettingsScreenFragment");
+                fragmentTransaction.addToBackStack(null).commit();
+                break;
         }
     }
 
@@ -174,4 +182,14 @@ public class MainActivity extends AppCompatActivity
     public void passData(Object[] data) {
 
     }
+
+
+
+
+    //        fragmentManager = getSupportFragmentManager();
+//        fragmentTransaction = getSupportFragmentManager().beginTransaction();
+//        loginFragment = new LoginScreenFragment();
+//        fragmentTransaction.add(R.id.main_frag_container,loginFragment,"loginFragment");
+//        fragmentTransaction.show(loginFragment).addToBackStack("loginFragment").commit();
+
 }

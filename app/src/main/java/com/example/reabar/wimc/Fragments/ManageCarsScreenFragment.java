@@ -7,38 +7,34 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.reabar.wimc.FragmentCommunicator;
 import com.example.reabar.wimc.R;
 
-public class HomeScreenFragment extends Fragment {
+public class ManageCarsScreenFragment extends Fragment {
 
-    FragmentCommunicator fragmentCommunicator;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        fragmentCommunicator = (FragmentCommunicator) getActivity();
-        fragmentCommunicator.passString("enableDrawer");
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_home_screen, container, false);
-        return view;
+        return inflater.inflate(R.layout.fragment_manage_cars_screen, container, false);
     }
-
-
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+
     }
 
     @Override
     public void onDetach() {
+        super.onDetach();
+
     }
+
 
 }

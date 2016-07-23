@@ -1,9 +1,7 @@
 package com.example.reabar.wimc.Model;
 
-import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.example.reabar.wimc.MyApplication;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -11,7 +9,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -50,41 +47,41 @@ public class UserFirebase {
         mAuth.addAuthStateListener(mAuthListener);
     }
 
-    public void signupUser(final FirebaseDatabase db, final User user, final String password){
+    public void signupUser(final FirebaseDatabase db, final User user, final String password, final Model.SignUpListener listener){
         mAuth.createUserWithEmailAndPassword(user.getEmail(), password).addOnCompleteListener(MyApplication.getAppActivity(), new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
                     String uid = task.getResult().getUser().getUid();
-                    Log.d(TAG,"result: " + uid);
+                    Log.d(TAG, "result: " + uid);
                     DatabaseReference dbRef = db.getReference(USERS_DB);
                     user.setUserId(uid);
                     dbRef.child(uid).setValue(user);
+                    listener.success(true);
                 }
 
                 if (!task.isSuccessful()) {
-                    Toast.makeText(MyApplication.getAppActivity(), "Authentication failed.",
-                            Toast.LENGTH_SHORT).show();
-                    Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
+                    listener.failed(task.getException().getMessage());
                 }
             }
         });
     }
 
-    public void signInUser(final User user, String password){
+    public void signInUser(final User user, String password, final Model.LoginListener listener){
         mAuth.signInWithEmailAndPassword(user.getEmail(), password).addOnCompleteListener(MyApplication.getAppActivity(), new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
                     Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
                     Model.getInstance().setCurrentUser(user);
+
+                    listener.success(true);
                 }
 
                 if (!task.isSuccessful()) {
                     Log.w(TAG, "signInWithEmail", task.getException());
-                    Toast.makeText(MyApplication.getAppActivity(), "Authentication failed.",
-                            Toast.LENGTH_SHORT).show();
+                    listener.failed(task.getException().getMessage());
                 }
             }
         });
@@ -96,23 +93,40 @@ public class UserFirebase {
         }
     }
 
-    public void resetPassword(){
-        if(mAuth.getCurrentUser() != null){
-            mAuth.sendPasswordResetEmail(mAuth.getCurrentUser().getEmail()).addOnCompleteListener(new OnCompleteListener<Void>() {
+    public void resetPassword(String email, final Model.ResetPasswordListener listener){
+            mAuth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if(task.isSuccessful()){
                         Log.d(TAG, "Email sent.");
+                        listener.success(true);
                     }
 
                     else{
                         Log.d(TAG,"Email not sent");
+                        listener.failed(task.getException().getMessage());
                     }
                 }
             });
-        }
     }
 
+    public void updatePassword(String newPassword, final Model.UpdatePasswordListener listener){
+        user = mAuth.getCurrentUser();
+
+        user.updatePassword(newPassword).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    Log.d(TAG, "Update Password.");
+                    listener.success(true);
+                }
+                else{
+                    Log.d(TAG,"Failed to update password.");
+                    listener.failed(task.getException().getMessage());
+                }
+            }
+        });
+    }
     public void getCurrentUser(){
         if(mAuth.getCurrentUser() != null) {
             Model.getInstance().setCurrentUser(new User(mAuth.getCurrentUser().getEmail()));

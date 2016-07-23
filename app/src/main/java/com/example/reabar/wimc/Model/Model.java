@@ -1,5 +1,7 @@
 package com.example.reabar.wimc.Model;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.util.List;
 
 /**
@@ -25,26 +27,16 @@ public class Model {
         this.currentUser = currentUser;
     }
 
-    public void signupUser(final User user, final String password){
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                modelFirebase.signupUser(user, password);
-            }
-        }).start();
+    public void signupUser(final User user, final String password, final SignUpListener listener){
+        modelFirebase.signupUser(user, password, listener);
     }
 
-    public void signInUser(User user, String password){
-        modelFirebase.signInUser(user,password);
+    public void signInUser(User user, String password, final LoginListener listener){
+        modelFirebase.signInUser(user, password, listener);
     }
 
     public void logoutUser(){
         modelFirebase.logoutUser();
-    }
-
-    public interface GetCurrentUserListener{
-        public void onResult(User user);
-        public void onCancel();
     }
 
     public User getCurrentUser(){
@@ -52,24 +44,65 @@ public class Model {
         return currentUser;
     }
 
-    public void resetPassword(){
-        modelFirebase.resetPassword();
+    public String getCurrentUserID(){
+        return FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
 
-    public void addCarToDB(final Car car){
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                modelFirebase.addCarToDB(car);
-            }
-        }).start();
+    public void resetPassword(String email, final ResetPasswordListener listener){
+        modelFirebase.resetPassword(email, listener);
+    }
+
+    public void updatePassword(String newPassword, final UpdatePasswordListener listener){
+        modelFirebase.updatePassword(newPassword, listener);
+    }
+
+    public List<String> getUsersList(){
+        return modelFirebase.getUsersList();
+    }
+
+
+
+
+
+    public void addCarToDB(final Car car, final AddNewCarListener listener){
+        modelFirebase.addCarToDB(car, listener);
     }
 
     public void updateCar(Car car){
         modelFirebase.updateCar(car);
     }
 
-    public List<String> getUsersList(){
-        return modelFirebase.getUsersList();
+
+
+
+
+
+
+
+
+    //--- Listeners ---- //
+    public interface LoginListener {
+        void success(boolean success);
+        void failed(String message);
+    }
+
+    public interface SignUpListener {
+        void success(boolean success);
+        void failed(String message);
+    }
+
+    public interface ResetPasswordListener {
+        void success(boolean success);
+        void failed(String message);
+    }
+
+    public interface UpdatePasswordListener {
+        void success(boolean success);
+        void failed(String message);
+    }
+
+    public interface AddNewCarListener {
+        void success(boolean success);
+        void failed(String message);
     }
 }

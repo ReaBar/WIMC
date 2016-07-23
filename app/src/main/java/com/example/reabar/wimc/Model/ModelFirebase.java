@@ -1,9 +1,5 @@
 package com.example.reabar.wimc.Model;
 
-import android.app.Activity;
-import android.content.Context;
-
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
@@ -22,12 +18,13 @@ public class ModelFirebase {
         userFirebase = new UserFirebase();
     }
 
-    public void signupUser(User user, String password){
-        userFirebase.signupUser(firebaseDatabase,user,password);
+    // ---- User Functions ---- //
+    public void signupUser(User user, String password, final Model.SignUpListener listener){
+        userFirebase.signupUser(firebaseDatabase,user,password,listener);
     }
 
-    public void signInUser(User user,String password){
-        userFirebase.signInUser(user,password);
+    public void signInUser(User user,String password, final Model.LoginListener listener){
+        userFirebase.signInUser(user, password, listener);
     }
 
     public void logoutUser(){
@@ -38,12 +35,18 @@ public class ModelFirebase {
        userFirebase.getCurrentUser();
     }
 
-    public void resetPassword(){
-        userFirebase.resetPassword();
+    public void resetPassword(String email, final Model.ResetPasswordListener listener){
+        userFirebase.resetPassword(email, listener);
     }
 
-    public void addCarToDB(Car car){
-        carFirebase.addCarToDB(firebaseDatabase, car);
+    public void updatePassword(String newPassword, final Model.UpdatePasswordListener listener){
+        userFirebase.updatePassword(newPassword, listener);
+    }
+
+
+    // ---- Car Functions ---- //
+    public void addCarToDB(Car car, final Model.AddNewCarListener listener){
+        carFirebase.addCarToDB(firebaseDatabase, car, listener);
     }
 
     public void removeCarFromDB(Car car){

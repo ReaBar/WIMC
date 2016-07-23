@@ -4,16 +4,17 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.reabar.wimc.FragmentCommunicator;
 import com.example.reabar.wimc.Model.Model;
 import com.example.reabar.wimc.Model.User;
+import com.example.reabar.wimc.MyApplication;
 import com.example.reabar.wimc.R;
 
 
@@ -28,7 +29,6 @@ public class LoginScreenFragment extends Fragment {
         super.onCreate(savedInstanceState);
         fragmentCommunicator = (FragmentCommunicator) getActivity();
         fragmentCommunicator.passString("cancelDrawer");
-
     }
 
 
@@ -44,14 +44,28 @@ public class LoginScreenFragment extends Fragment {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                User loginUser = new User(emailInput.getText().toString());
-                Model.getInstance().signInUser(loginUser, passwordInput.getText().toString());
-                User tempUser = Model.getInstance().getCurrentUser();
-                if(tempUser != null){
-                    Log.d("LoginFragment", "logged in as: " + tempUser.getEmail());
-                    fragmentCommunicator.passString("HomeScreenFragment");
+                if(emailInput.getText().toString().matches("") || passwordInput.getText().toString().matches("")){
+                    Toast.makeText(MyApplication.getAppActivity(), "You must enter email and password",
+                            Toast.LENGTH_SHORT).show();
                 }
-
+                else {
+                    User loginUser = new User(emailInput.getText().toString());
+                    Model.getInstance().signInUser(loginUser, passwordInput.getText().toString(), new Model.LoginListener(){
+                        @Override
+                        public void success(boolean success) {
+                            User tempUser = Model.getInstance().getCurrentUser();
+                            if(success){
+                                Log.d("LoginFragment", "logged in as: " + tempUser.getEmail());
+                                fragmentCommunicator.passString("HomeScreenFragment");
+                            }
+                        }
+                        @Override
+                        public void failed(String message) {
+                            Toast.makeText(MyApplication.getAppActivity(), message,
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
             }
         });
 
@@ -67,13 +81,29 @@ public class LoginScreenFragment extends Fragment {
         forgotPasswordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //fragmentCommunicator.passString("ForgotPasswordFragment");
-                Model.getInstance().resetPassword();
+                if (emailInput.getText().toString().matches("")) {
+                    Toast.makeText(MyApplication.getAppActivity(), "Please enter your email",
+                            Toast.LENGTH_SHORT).show();
+
+                } else {
+                    Model.getInstance().resetPassword(emailInput.getText().toString(), new Model.ResetPasswordListener() {
+                        @Override
+                        public void success(boolean success) {
+                            Toast.makeText(MyApplication.getAppActivity(), "Please check your mailbox to reset the password",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void failed(String message) {
+                            Toast.makeText(MyApplication.getAppActivity(), message,
+                                    Toast.LENGTH_SHORT).show();
+                        }
+
+                    });
+                }
             }
         });
-
-
-        return view;
+         return view;
     }
 
 

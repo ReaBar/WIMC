@@ -11,11 +11,11 @@
         android:inputType="textEmailAddress"
         android:ems="10"
         android:id="@+id/emailInput"
-        android:layout_marginTop="100dp"
         android:singleLine="false"
         android:hint="Email"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="61dp" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -23,11 +23,11 @@
         android:ems="10"
         android:id="@+id/passwordInput"
         android:singleLine="false"
-        android:layout_below="@+id/emailInput"
-        android:layout_alignStart="@+id/emailInput"
         android:hint="Password"
-        android:layout_alignEnd="@+id/emailInput"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        android:layout_below="@+id/repasswordInput"
+        android:layout_alignStart="@+id/repasswordInput"
+        android:layout_alignEnd="@+id/repasswordInput" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -35,11 +35,11 @@
         android:ems="10"
         android:id="@+id/repasswordInput"
         android:singleLine="false"
-        android:layout_below="@+id/passwordInput"
-        android:layout_alignStart="@+id/emailInput"
         android:hint="Re-Enter Password"
-        android:layout_alignEnd="@+id/emailInput"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        android:layout_below="@+id/emailInput"
+        android:layout_alignStart="@+id/emailInput"
+        android:layout_alignEnd="@+id/emailInput" />
 
 
     <Button
@@ -48,8 +48,8 @@
         android:text="Sign up!"
         android:id="@+id/registerButton"
         android:layout_gravity="left|center_vertical"
-        android:layout_centerVertical="true"
-        android:layout_alignStart="@+id/repasswordInput"
+        android:layout_below="@+id/passwordInput"
+        android:layout_alignStart="@+id/passwordInput"
         android:layout_alignEnd="@+id/repasswordInput" />
 
 </RelativeLayout>
