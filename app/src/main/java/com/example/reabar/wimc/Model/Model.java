@@ -77,13 +77,6 @@ public class Model {
     }
 
 
-
-
-
-
-
-
-
     //--- Listeners ---- //
     public interface LoginListener {
         void success(boolean success);
