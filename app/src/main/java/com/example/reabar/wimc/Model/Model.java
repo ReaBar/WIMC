@@ -56,11 +56,13 @@ public class Model {
         modelFirebase.updatePassword(newPassword, listener);
     }
 
-    public List<String> getUsersList(){
-        return modelFirebase.getUsersList();
+    public List<String> getUsersList(Model.SyncListener listener){
+        return modelFirebase.getUsersList(listener);
     }
 
-
+    public void getOwnedCars(String uId,SyncListener listener){
+        modelFirebase.getOwnedCars(uId,listener);
+    }
 
 
 
@@ -68,8 +70,8 @@ public class Model {
         modelFirebase.addCarToDB(car, listener);
     }
 
-    public void updateCar(Car car){
-        modelFirebase.updateCar(car);
+    public void updateCar(Car car,Model.SyncListener listener){
+        modelFirebase.updateCar(car,listener);
     }
 
 
@@ -84,6 +86,12 @@ public class Model {
     public interface LoginListener {
         void success(boolean success);
         void failed(String message);
+    }
+
+    public interface SyncListener{
+        void isSuccessful(boolean success);
+        void failed(String message);
+        void PassData(Object data);
     }
 
     public interface SignUpListener {

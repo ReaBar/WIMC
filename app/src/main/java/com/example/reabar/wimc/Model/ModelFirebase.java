@@ -53,12 +53,16 @@ public class ModelFirebase {
         carFirebase.removeCarFromDB(firebaseDatabase,car);
     }
 
-    public void updateCar(Car car){
-        carFirebase.updateCar(firebaseDatabase, car);
+    public void updateCar(Car car,Model.SyncListener listener){
+        carFirebase.updateCar(firebaseDatabase, car,listener);
     }
 
-    public List<String> getUsersList(){
-       return userFirebase.getUsersList(firebaseDatabase);
+    public List<String> getUsersList(Model.SyncListener listener){
+       return userFirebase.getUsersList(firebaseDatabase, listener);
+    }
+
+    public void getOwnedCars(String uId,Model.SyncListener listener){
+        carFirebase.getOwnedCars(firebaseDatabase,uId,listener);
     }
 
 }
