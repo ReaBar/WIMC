@@ -3,6 +3,7 @@ package com.example.reabar.wimc.Model;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.example.reabar.wimc.FilesHandler;
 import com.example.reabar.wimc.MyApplication;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -75,7 +76,7 @@ public class UserFirebase {
                 if(task.isSuccessful()){
                     Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
                     Model.getInstance().setCurrentUser(user);
-
+                    FilesHandler filesHandler = new FilesHandler();
                     listener.success(true);
                 }
 
@@ -129,7 +130,7 @@ public class UserFirebase {
     }
     public void getCurrentUser(){
         if(mAuth.getCurrentUser() != null) {
-            Model.getInstance().setCurrentUser(new User(mAuth.getCurrentUser().getEmail()));
+            Model.getInstance().setCurrentUser(new User(mAuth.getCurrentUser().getEmail(),mAuth.getCurrentUser().getUid()));
         }
     }
 

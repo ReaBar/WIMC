@@ -26,8 +26,13 @@ public class HomeScreenFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         fragmentCommunicator = (FragmentCommunicator) getActivity();
+        if (Model.getInstance().getCurrentUser() == null) {
+            fragmentCommunicator.passString("cancelDrawer");
+            fragmentCommunicator.passString("LoginScreenFragment");
+        }
         fragmentCommunicator.passString("enableDrawer");
-     }
+
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -37,7 +42,6 @@ public class HomeScreenFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home_screen, container, false);
         return view;
     }
-
 
 
     @Override
