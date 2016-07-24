@@ -15,6 +15,14 @@
             android:icon="@drawable/ic_menu_slideshow"
             android:title="Where are my Cars Now?" />
         <item
+            android:id="@+id/nav_menu_manageMyCars"
+            android:icon="@drawable/ic_menu_send"
+            android:title="Manage My Cars" />
+        <item
+            android:id="@+id/nav_menu_manageSahredCars"
+            android:icon="@drawable/ic_menu_send"
+            android:title="Manage Shared Cars" />
+        <item
             android:id="@+id/nav_menu_logoutapp"
             android:icon="@drawable/ic_menu_send"
             android:title="Logout" />

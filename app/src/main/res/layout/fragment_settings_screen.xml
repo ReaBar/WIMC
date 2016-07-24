@@ -58,59 +58,7 @@
             android:layout_alignStart="@+id/settingsPasswordButton"
             android:layout_alignEnd="@+id/settingsPasswordButton" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Add New Car"
-            android:id="@+id/newCarButton"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="37dp"
-            android:layout_alignStart="@+id/myCarsButton"
-            android:layout_alignEnd="@+id/myCarsButton" />
 
-        <EditText
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:inputType="text"
-            android:ems="10"
-            android:id="@+id/carCompanyInput"
-            android:singleLine="false"
-            android:hint="Company.."
-            android:layout_above="@+id/newCarButton"
-            android:layout_alignStart="@+id/newCarButton" />
-
-        <EditText
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:inputType="text"
-            android:ems="10"
-            android:id="@+id/carModelInput"
-            android:singleLine="false"
-            android:hint="Model.."
-            android:layout_above="@+id/carCompanyInput"
-            android:layout_alignStart="@+id/carCompanyInput" />
-
-        <EditText
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:inputType="text"
-            android:ems="10"
-            android:id="@+id/carColorInput"
-            android:singleLine="false"
-            android:hint="Color.."
-            android:layout_above="@+id/carModelInput"
-            android:layout_alignStart="@+id/carModelInput" />
-
-        <EditText
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:inputType="text"
-            android:ems="10"
-            android:id="@+id/carLicenseInput"
-            android:singleLine="false"
-            android:hint="License Number.."
-            android:layout_above="@+id/carColorInput"
-            android:layout_alignStart="@+id/carColorInput" />
 
     </RelativeLayout>
 
