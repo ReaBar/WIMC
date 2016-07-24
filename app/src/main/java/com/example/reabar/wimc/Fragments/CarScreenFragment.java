@@ -7,33 +7,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.reabar.wimc.FragmentCommunicator;
-import com.example.reabar.wimc.Model.Model;
 import com.example.reabar.wimc.R;
 
-public class HomeScreenFragment extends Fragment {
+import java.util.List;
 
-    FragmentCommunicator fragmentCommunicator;
+public class CarScreenFragment extends Fragment {
+
+    List<String> carOwners;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        fragmentCommunicator = (FragmentCommunicator) getActivity();
-        if (Model.getInstance().getCurrentUser() == null) {
-            fragmentCommunicator.passString("cancelDrawer");
-            fragmentCommunicator.passString("LoginScreenFragment");
-        }
-        fragmentCommunicator.passString("enableDrawer");
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_home_screen, container, false);
-        return view;
+        return inflater.inflate(R.layout.fragment_car_screen, container, false);
     }
 
 
@@ -44,6 +35,8 @@ public class HomeScreenFragment extends Fragment {
 
     @Override
     public void onDetach() {
+        super.onDetach();
     }
+
 
 }

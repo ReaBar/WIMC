@@ -65,12 +65,27 @@
         android:layout_alignEnd="@+id/carCompanyInput" />
 
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Manage your cars"
+        android:id="@+id/logoText"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_marginTop="20dp"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:textColor="#234f84"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="436dp"
         android:id="@+id/carsListView"
         android:layout_below="@+id/newCarButton"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="25dp" />
+        android:layout_marginTop="15dp" />
 
 </LinearLayout>

@@ -1,0 +1,49 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.reabar.wimc.Fragments.CarScreenFragment">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Car License Number"
+        android:id="@+id/cars_list_row_car_license"
+        android:autoText="false"
+        android:textAlignment="center"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/cars_list_row_car_model_company"
+        android:layout_marginTop="65dp" />
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Model + Company"
+        android:id="@+id/cars_list_row_car_model_company"
+        android:layout_below="@+id/cars_list_row_car_license"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="to delete the user, click on his row"
+        android:id="@+id/textView2"
+        android:layout_marginTop="55dp"
+        android:layout_below="@+id/cars_list_row_car_model_company"
+        android:layout_centerHorizontal="true" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/listSharedUsersID"
+        android:layout_below="@+id/textView2"
+        android:layout_centerHorizontal="true" />
+
+
+</RelativeLayout>

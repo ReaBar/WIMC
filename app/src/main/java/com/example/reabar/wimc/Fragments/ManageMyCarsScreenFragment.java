@@ -4,6 +4,8 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,7 +29,11 @@ import java.util.List;
 
 public class ManageMyCarsScreenFragment extends Fragment {
 
+    FragmentManager fragmentManager;
+    FragmentTransaction fragmentTransaction;
     FragmentCommunicator fragmentCommunicator;
+    CarScreenFragment carFragment;
+
     EditText carLicenseInput;
     EditText carColorInput;
     EditText carModelInput;
@@ -110,6 +116,11 @@ public class ManageMyCarsScreenFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(MyApplication.getAppActivity(), "Row Clicked!",
                         Toast.LENGTH_SHORT).show();
+                carFragment = new CarScreenFragment();
+                carFragment.carOwners = cars.get(position).getUsersList();
+//                fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.main_frag_container, carFragment, "CarScreenFragment");
+                fragmentTransaction.addToBackStack(null).commit();
 
             }
         });
@@ -163,36 +174,27 @@ public class ManageMyCarsScreenFragment extends Fragment {
 
             TextView carLicense = (TextView) convertView.findViewById(R.id.cars_list_row_car_license);
             TextView carModelCompany = (TextView) convertView.findViewById(R.id.cars_list_row_car_model_company);
-            TextView User1 = (TextView) convertView.findViewById(R.id.cars_list_row_shared_user1);
-            TextView User2 = (TextView) convertView.findViewById(R.id.cars_list_row_shared_user2);
-            TextView User3 = (TextView) convertView.findViewById(R.id.cars_list_row_shared_user3);
             Car car = cars.get(position);
             carLicense.setText(car.getCarId());
             carModelCompany.setText(car.getCompany() + " " + car.getModel());
 
-            if(car.getUsersList().size()  == 0){
-                User1.setText("");
-                User2.setText("");
-                User3.setText("");
-            }
-
-            if(car.getUsersList().size()  == 1){
-                User1.setText(car.getUsersList().get(0));
-                User2.setText("");
-                User3.setText("");
-            }
-
-            if(car.getUsersList().size() == 2){
-                User1.setText(car.getUsersList().get(0));
-                User2.setText(car.getUsersList().get(1));
-                User3.setText("");
-
-            }
-            if(car.getUsersList().size() == 3){
-                User1.setText(car.getUsersList().get(0));
-                User2.setText(car.getUsersList().get(1));
-                User3.setText(car.getUsersList().get(2));
-            }
+//            if(car.getUsersList().size()  == 1){
+//                User1.setText(car.getUsersList().get(0));
+//                User2.setText("");
+//                User3.setText("");
+//            }
+//
+//            if(car.getUsersList().size() == 2){
+//                User1.setText(car.getUsersList().get(0));
+//                User2.setText(car.getUsersList().get(1));
+//                User3.setText("");
+//
+//            }
+//            if(car.getUsersList().size() == 3){
+//                User1.setText(car.getUsersList().get(0));
+//                User2.setText(car.getUsersList().get(1));
+//                User3.setText(car.getUsersList().get(2));
+//            }
             return convertView;
         }
     }

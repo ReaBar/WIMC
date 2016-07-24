@@ -5,10 +5,6 @@
     android:orientation="horizontal">
 
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="4">
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -20,7 +16,11 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Car License Number"
-                android:id="@+id/cars_list_row_car_license" />
+                android:id="@+id/cars_list_row_car_license"
+                android:autoText="false"
+                android:textAlignment="center" />
+
+
 
             <TextView
                 android:layout_width="wrap_content"
@@ -29,27 +29,27 @@
                 android:text="Model + Company"
                 android:id="@+id/cars_list_row_car_model_company" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Shared User 1"
-                android:id="@+id/cars_list_row_shared_user1" />
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:textAppearance="?android:attr/textAppearanceLarge"-->
+                <!--android:text="Shared User 1"-->
+                <!--android:id="@+id/cars_list_row_shared_user1" />-->
 
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Shared User 2"
-                android:id="@+id/cars_list_row_shared_user2" />
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:textAppearance="?android:attr/textAppearanceLarge"-->
+                <!--android:text="Shared User 2"-->
+                <!--android:id="@+id/cars_list_row_shared_user2" />-->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Shared User 3"
-                android:id="@+id/cars_list_row_shared_user3" />
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:textAppearance="?android:attr/textAppearanceLarge"-->
+                <!--android:text="Shared User 3"-->
+                <!--android:id="@+id/cars_list_row_shared_user3" />-->
 
 
 
@@ -57,7 +57,6 @@
         </LinearLayout>
 
 
-    </RelativeLayout>
 
 
 

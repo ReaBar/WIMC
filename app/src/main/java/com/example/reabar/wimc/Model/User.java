@@ -6,12 +6,15 @@ package com.example.reabar.wimc.Model;
 public class User {
     private String email, userObjectId;
 
-    public User(){
-
-    }
+    public User(){}
 
     public User(String email) {
+        this.email = email.toLowerCase();
+    }
+
+    public User(String email, String userObjectId) {
         this.email = email;
+        this.userObjectId = userObjectId;
     }
 
     public String getEmail() {
@@ -19,7 +22,7 @@ public class User {
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        this.email = email.toLowerCase();
     }
 
     public String getUserId() {
