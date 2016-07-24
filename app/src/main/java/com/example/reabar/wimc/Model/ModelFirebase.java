@@ -65,4 +65,8 @@ public class ModelFirebase {
         carFirebase.getOwnedCars(firebaseDatabase,uId,listener);
     }
 
+    public void getListOfSharedCars(String uId, Model.SyncListener listener){
+        carFirebase.getListOfSharedCars(firebaseDatabase,uId,listener);
+    }
+
 }

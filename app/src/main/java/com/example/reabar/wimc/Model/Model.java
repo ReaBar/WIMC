@@ -64,7 +64,9 @@ public class Model {
         modelFirebase.getOwnedCars(uId,listener);
     }
 
-
+    public void getListOfSharedCars(String uId, SyncListener listener){
+        modelFirebase.getListOfSharedCars(uId,listener);
+    }
 
     public void addCarToDB(final Car car, final AddNewCarListener listener){
         modelFirebase.addCarToDB(car, listener);
