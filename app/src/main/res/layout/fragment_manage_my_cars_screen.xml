@@ -1,8 +1,22 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.example.reabar.wimc.Fragments.ManageMyCarsScreenFragment">
+
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:ems="10"
+        android:id="@+id/carLicenseInput"
+        android:singleLine="false"
+        android:hint="License Number.."
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="50dp" />
 
     <EditText
         android:layout_width="300dp"
@@ -12,8 +26,9 @@
         android:id="@+id/carCompanyInput"
         android:singleLine="false"
         android:hint="Company.."
-        android:layout_below="@+id/carModelInput"
-        android:layout_alignStart="@+id/carModelInput" />
+        android:layout_above="@+id/newCarButton"
+        android:layout_alignStart="@+id/carModelInput"
+        android:layout_marginLeft="50dp" />
 
     <EditText
         android:layout_width="300dp"
@@ -24,19 +39,8 @@
         android:singleLine="false"
         android:hint="Color.."
         android:layout_below="@+id/carLicenseInput"
-        android:layout_alignStart="@+id/carLicenseInput" />
-
-    <EditText
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:inputType="text"
-        android:ems="10"
-        android:id="@+id/carLicenseInput"
-        android:singleLine="false"
-        android:hint="License Number.."
-        android:layout_gravity="center_horizontal|top"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignStart="@+id/carLicenseInput"
+        android:layout_marginLeft="50dp" />
 
     <EditText
         android:layout_width="300dp"
@@ -46,26 +50,27 @@
         android:id="@+id/carModelInput"
         android:singleLine="false"
         android:hint="Model.."
-        android:layout_below="@+id/carColorInput"
-        android:layout_alignStart="@+id/carColorInput" />
+        android:layout_above="@+id/carCompanyInput"
+        android:layout_alignStart="@+id/carColorInput"
+        android:layout_marginLeft="50dp" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="215dp"
         android:layout_height="wrap_content"
         android:text="Add New Car"
         android:id="@+id/newCarButton"
         android:layout_gravity="center_horizontal|top"
-        android:layout_below="@+id/carCompanyInput"
+        android:layout_centerVertical="true"
         android:layout_alignStart="@+id/carCompanyInput"
         android:layout_alignEnd="@+id/carCompanyInput" />
 
 
     <ListView
         android:layout_width="wrap_content"
-        android:layout_height="329dp"
+        android:layout_height="436dp"
         android:id="@+id/carsListView"
-        android:layout_gravity="center_horizontal|bottom"
+        android:layout_below="@+id/newCarButton"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/newCarButton" />
+        android:layout_marginTop="25dp" />
 
-</RelativeLayout>
+</LinearLayout>

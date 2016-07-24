@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.reabar.wimc.Fragments.HomeScreenFragment;
 import com.example.reabar.wimc.Fragments.LoginScreenFragment;
+import com.example.reabar.wimc.Fragments.ManageMyCarsScreenFragment;
 import com.example.reabar.wimc.Fragments.SettingsScreenFragment;
 import com.example.reabar.wimc.Fragments.SignupScreenFragment;
 import com.example.reabar.wimc.Model.Model;
@@ -35,6 +36,8 @@ public class MainActivity extends AppCompatActivity
     SignupScreenFragment signUpFragment;
     HomeScreenFragment homeFragment;
     SettingsScreenFragment settingsFragment;
+    ManageMyCarsScreenFragment manageMyCarsFragment;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +56,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         //passString("LoginScreenFragment");
-        passString("HomeScreenFragment");
+        passString("LoginScreenFragment");
 
     }
 
@@ -105,6 +108,10 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_menu_myCarsNow:
                 Toast.makeText(this, "MyCarsNow", Toast.LENGTH_SHORT).show();
                 break;
+            case R.id.nav_menu_manageMyCars:
+                passString("ManageMyCarsScreenFragment");
+                break;
+
             case R.id.nav_menu_logoutapp:
                 Model.getInstance().logoutUser();
                 passString("LoginScreenFragment");
@@ -174,6 +181,12 @@ public class MainActivity extends AppCompatActivity
                 settingsFragment = new SettingsScreenFragment();
                 fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.main_frag_container, settingsFragment, "SettingsScreenFragment");
+                fragmentTransaction.addToBackStack(null).commit();
+                break;
+            case "ManageMyCarsScreenFragment":
+                manageMyCarsFragment = new ManageMyCarsScreenFragment();
+                fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.main_frag_container, manageMyCarsFragment, "ManageMyCarsScreenFragment");
                 fragmentTransaction.addToBackStack(null).commit();
                 break;
         }

@@ -2,6 +2,7 @@ package com.example.reabar.wimc.Model;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -75,6 +76,10 @@ public class Model {
     }
 
 
+    private List<Car> data = new LinkedList<Car>();
+    public List<Car> getAllCars(){
+        return data;
+    }
 
 
 

@@ -47,6 +47,8 @@ public class ManageMyCarsScreenFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_manage_my_cars_screen, container, false);
 
+        cars = Model.getInstance().getAllCars();
+
         carCompanyInput = (EditText) view.findViewById(R.id.carCompanyInput);
         carColorInput = (EditText) view.findViewById(R.id.carColorInput);
         carLicenseInput = (EditText) view.findViewById(R.id.carLicenseInput);
@@ -83,12 +85,22 @@ public class ManageMyCarsScreenFragment extends Fragment {
 
 
         carsList= (ListView) view.findViewById(R.id.carsListView);
-        Model.getInstance().getMyCars(Model.getInstance().getCurrentUser().getEmail(), new Model.GetListMyCarsListener() {
+        Model.getInstance().getOwnedCars(Model.getInstance().getCurrentUser().getEmail(), new Model.SyncListener() {
             @Override
-            public void success(ArrayList<Car> allCars) {
-                cars = allCars;
+            public void PassData(Object allCars) {
+                cars = (ArrayList) allCars;
                 adapter.notifyDataSetChanged();
             }
+
+            @Override
+            public void isSuccessful(boolean s) {
+            }
+
+            @Override
+            public void failed(String s) {
+            }
+
+
         });
 
         adapter = new MyCarsAdapter();
@@ -157,9 +169,30 @@ public class ManageMyCarsScreenFragment extends Fragment {
             Car car = cars.get(position);
             carLicense.setText(car.getCarId());
             carModelCompany.setText(car.getCompany() + " " + car.getModel());
-            User1.setText(car.getUsersList().get(0));
-            User2.setText(car.getUsersList().get(1));
-            User3.setText(car.getUsersList().get(2));
+
+            if(car.getUsersList().size()  == 0){
+                User1.setText("");
+                User2.setText("");
+                User3.setText("");
+            }
+
+            if(car.getUsersList().size()  == 1){
+                User1.setText(car.getUsersList().get(0));
+                User2.setText("");
+                User3.setText("");
+            }
+
+            if(car.getUsersList().size() == 2){
+                User1.setText(car.getUsersList().get(0));
+                User2.setText(car.getUsersList().get(1));
+                User3.setText("");
+
+            }
+            if(car.getUsersList().size() == 3){
+                User1.setText(car.getUsersList().get(0));
+                User2.setText(car.getUsersList().get(1));
+                User3.setText(car.getUsersList().get(2));
+            }
             return convertView;
         }
     }
