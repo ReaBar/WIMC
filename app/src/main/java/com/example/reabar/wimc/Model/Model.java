@@ -77,17 +77,10 @@ public class Model {
         modelFirebase.updateCar(car,listener);
     }
 
-
     private List<Car> data = new LinkedList<Car>();
     public List<Car> getAllCars(){
         return data;
     }
-
-
-
-
-
-
 
     //--- Listeners ---- //
     public interface LoginListener {

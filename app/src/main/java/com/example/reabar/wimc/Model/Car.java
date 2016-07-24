@@ -90,7 +90,7 @@ public class Car {
         });
     }
 
-    public void setNewCarUser(final String user) {
+    public void setNewCarUser(final String uId) {
         Model.getInstance().getUsersList(new Model.SyncListener() {
             @Override
             public void isSuccessful(boolean success) {
@@ -106,8 +106,8 @@ public class Car {
             public void PassData(Object data) {
                 if (data instanceof List) {
                     usersList = (ArrayList<String>) data;
-                    if (((List<User>) data).contains(user)) {
-                        usersList.add(user);
+                    if (((List<User>) data).contains(uId)) {
+                        usersList.add(uId);
                     } else {
                         Toast.makeText(MyApplication.getAppContext(), "User already in the DB", Toast.LENGTH_SHORT).show();
                     }
@@ -115,5 +115,12 @@ public class Car {
                 updateThisCar();
             }
         });
+    }
+
+    public void removeCarUser(final String uId){
+        if(usersList.contains(uId)){
+            usersList.remove(uId);
+            updateThisCar();
+        }
     }
 }

@@ -24,7 +24,6 @@ public class HomeScreenFragment extends Fragment {
             fragmentCommunicator.passString("LoginScreenFragment");
         }
         fragmentCommunicator.passString("enableDrawer");
-
     }
 
     @Override
