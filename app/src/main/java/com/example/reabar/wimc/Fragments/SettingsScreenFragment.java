@@ -66,12 +66,12 @@ public class SettingsScreenFragment extends Fragment {
             }
         });
 
-
         carCompanyInput = (EditText) view.findViewById(R.id.carCompanyInput);
         carColorInput = (EditText) view.findViewById(R.id.carColorInput);
         carLicenseInput = (EditText) view.findViewById(R.id.carLicenseInput);
         carModelInput = (EditText) view.findViewById(R.id.carModelInput);
         Button addNewCarButton = (Button) view.findViewById(R.id.newCarButton);
+
         addNewCarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

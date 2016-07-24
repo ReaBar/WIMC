@@ -3,12 +3,20 @@ package com.example.reabar.wimc.Fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.reabar.wimc.FragmentCommunicator;
+import com.example.reabar.wimc.Model.Car;
+import com.example.reabar.wimc.Model.Model;
+import com.example.reabar.wimc.Model.User;
+import com.example.reabar.wimc.MyApplication;
 import com.example.reabar.wimc.R;
+
+import java.util.ArrayList;
 
 public class HomeScreenFragment extends Fragment {
 
@@ -19,7 +27,7 @@ public class HomeScreenFragment extends Fragment {
         super.onCreate(savedInstanceState);
         fragmentCommunicator = (FragmentCommunicator) getActivity();
         fragmentCommunicator.passString("enableDrawer");
-    }
+     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

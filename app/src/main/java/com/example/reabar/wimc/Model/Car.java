@@ -1,5 +1,8 @@
 package com.example.reabar.wimc.Model;
 
+import android.widget.Toast;
+import com.example.reabar.wimc.MyApplication;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -7,7 +10,11 @@ import java.util.List;
  */
 public class Car {
     private String carId, color, model, company, userOwnerId;
-    private List<String> usersList;
+    private ArrayList<String> usersList;
+
+    public Car() {
+        usersList = new ArrayList<>();
+    }
 
     public Car(String carId, String color, String model, String company, String userOwnerId) {
         this.carId = carId;
@@ -15,6 +22,7 @@ public class Car {
         this.model = model;
         this.company = company;
         this.userOwnerId = userOwnerId;
+        usersList = new ArrayList<>();
     }
 
     public String getCarId() {
@@ -53,14 +61,59 @@ public class Car {
         this.userOwnerId = userOwnerId;
     }
 
+    public void setUsersList(ArrayList<String> users){
+        usersList = users;
+    }
+
     public List<String> getUsersList() {
         return usersList;
     }
 
-    public void setUsersList(String user) {
-        List<String> allUsers = Model.getInstance().getUsersList();
-        if(allUsers.contains(user)){
-            this.usersList.add(user);
-        }
+    private void updateThisCar(){
+        Model.getInstance().updateCar(this, new Model.SyncListener() {
+            @Override
+            public void isSuccessful(boolean success) {
+                if(success){
+                    Toast.makeText(MyApplication.getAppContext(), "Success!!", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void failed(String message) {
+
+            }
+
+            @Override
+            public void PassData(Object data) {
+
+            }
+        });
+    }
+
+    public void setNewCarUser(final String user) {
+        Model.getInstance().getUsersList(new Model.SyncListener() {
+            @Override
+            public void isSuccessful(boolean success) {
+
+            }
+
+            @Override
+            public void failed(String message) {
+
+            }
+
+            @Override
+            public void PassData(Object data) {
+                if (data instanceof List) {
+                    usersList = (ArrayList<String>) data;
+                    if (((List<User>) data).contains(user)) {
+                        usersList.add(user);
+                    } else {
+                        Toast.makeText(MyApplication.getAppContext(), "User already in the DB", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                updateThisCar();
+            }
+        });
     }
 }
