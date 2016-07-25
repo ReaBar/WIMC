@@ -117,11 +117,13 @@ public class ManageMyCarsScreenFragment extends Fragment {
                 Toast.makeText(MyApplication.getAppActivity(), "Row Clicked!",
                         Toast.LENGTH_SHORT).show();
                 carFragment = new CarScreenFragment();
-                carFragment.carOwners = cars.get(position).getUsersList();
-//                fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                carFragment.users = cars.get(position).getUsersList();
+                carFragment.carLicense = cars.get(position).getCarId();
+                carFragment.car = cars.get(position);
+                carFragment.modelCompany = cars.get(position).getModel() + " " + cars.get(position).getModel();
+                fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.main_frag_container, carFragment, "CarScreenFragment");
                 fragmentTransaction.addToBackStack(null).commit();
-
             }
         });
 

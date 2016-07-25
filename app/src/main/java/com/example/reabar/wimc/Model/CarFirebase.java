@@ -127,28 +127,28 @@ public class CarFirebase {
         });
     }
 
-    public void getListOfSharedCars(FirebaseDatabase db,final String uId, final Model.SyncListener listener){
-        DatabaseReference dbRef = db.getReference(CARS_DB);
-        final ArrayList<Car> sharedCars = new ArrayList<>();
-        dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Iterable<DataSnapshot> children = dataSnapshot.getChildren();
-                while(children.iterator().hasNext()){
-                    Car tempCar = children.iterator().next().getValue(Car.class);
-                    if(tempCar.getUsersList().contains(uId)){
-                        sharedCars.add(tempCar);
-                    }
-                }
-                listener.isSuccessful(true);
-                listener.PassData(sharedCars);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                listener.isSuccessful(false);
-                listener.failed(databaseError.getMessage());
-            }
-        });
-    }
+//    public void getListOfSharedCars(FirebaseDatabase db,final String uId, final Model.SyncListener listener){
+//        DatabaseReference dbRef = db.getReference(CARS_DB);
+//        final ArrayList<Car> sharedCars = new ArrayList<>();
+//        dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                Iterable<DataSnapshot> children = dataSnapshot.getChildren();
+//                while(children.iterator().hasNext()){
+//                    Car tempCar = children.iterator().next().getValue(Car.class);
+//                    if(tempCar.getUsersList().contains(uId)){
+//                        sharedCars.add(tempCar);
+//                    }
+//                }
+//                listener.isSuccessful(true);
+//                listener.PassData(sharedCars);
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//                listener.isSuccessful(false);
+//                listener.failed(databaseError.getMessage());
+//            }
+//        });
+//    }
 }
