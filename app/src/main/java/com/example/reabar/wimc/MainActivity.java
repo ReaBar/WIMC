@@ -55,8 +55,27 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        //passString("LoginScreenFragment");
-        passString("LoginScreenFragment");
+
+        //---- check ---- //
+//        Car car = new Car("123456", "Green", "2015", "Volkswagen", "tasolutions2012@gmail.com");
+//        String share1 = "tomer_aronovsky@hotmail.com";
+//        String share2 = "rea.bar@gmail.com";
+//        ArrayList <String> s = new ArrayList<String>();
+//        s.add(share1);
+//        s.add(share2);
+//        car.setUsersList(s);
+//        Model.getInstance().addCarToDB(car, new Model.AddNewCarListener() {
+//            @Override
+//            public void success(boolean success) {
+//                if (success) {
+//                }
+//            }
+//            @Override
+//            public void failed(String message) {
+//            }
+//        });
+        //---- check ---- //
+        passString("HomeScreenFragment");
 
     }
 

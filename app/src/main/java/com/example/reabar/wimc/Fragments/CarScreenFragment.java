@@ -11,8 +11,10 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.reabar.wimc.Model.Car;
+import com.example.reabar.wimc.MyApplication;
 import com.example.reabar.wimc.R;
 
 import java.util.ArrayList;
@@ -38,9 +40,19 @@ public class CarScreenFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_car_screen, container, false);
 
-        if(users == null)
+        if(users == null) {
             users = new ArrayList<>();
+        }
 
+        if(users.isEmpty()){
+            TextView text = (TextView) view.findViewById(R.id.deleteTextView);
+            text.setVisibility(View.GONE);
+        }
+
+        TextView licenseTextView = (TextView) view.findViewById(R.id.cars_list_row_car_license);
+        licenseTextView.setText(carLicense);
+        TextView modelCompanyTextView = (TextView) view.findViewById(R.id.cars_list_row_car_model_company);
+        modelCompanyTextView.setText(modelCompany);
 
         list = (ListView) view.findViewById(R.id.listSharedUsersID);
         adapter = new MyUsersCarAdapter();
@@ -49,10 +61,11 @@ public class CarScreenFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     car.removeCarUser(users.get(position));
+                    adapter.notifyDataSetChanged();
+                    Toast.makeText(MyApplication.getAppActivity(), "User removed successfully",
+                        Toast.LENGTH_SHORT).show();
             }
         });
-
-
 
         return  view;
     }

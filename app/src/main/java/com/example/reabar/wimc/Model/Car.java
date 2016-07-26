@@ -1,5 +1,6 @@
 package com.example.reabar.wimc.Model;
 
+import android.util.Log;
 import android.widget.Toast;
 import com.example.reabar.wimc.MyApplication;
 import java.util.ArrayList;
@@ -74,7 +75,7 @@ public class Car {
             @Override
             public void isSuccessful(boolean success) {
                 if(success){
-                    Toast.makeText(MyApplication.getAppContext(), "Success!!", Toast.LENGTH_SHORT).show();
+                    Log.d("UpdateThisCar", "Car updated!");
                 }
             }
 

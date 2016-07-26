@@ -49,7 +49,6 @@ public class CarFirebase {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
-                    Log.d(TAG, "Car updated!");
                     listener.isSuccessful(true);
                 } else {
                     Log.d(TAG, "Error to update car");

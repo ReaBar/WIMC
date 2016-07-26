@@ -16,7 +16,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="50dp"
-        android:layout_marginTop="50dp" />
+        android:layout_marginTop="65dp" />
 
     <EditText
         android:layout_width="300dp"
@@ -72,7 +72,7 @@
         android:text="Manage your cars"
         android:id="@+id/logoText"
         android:layout_gravity="center_horizontal|top"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:textSize="25sp"
         android:textStyle="bold"
         android:textColor="#234f84"
@@ -80,12 +80,21 @@
         android:layout_centerHorizontal="true" />
 
 
+    <ProgressBar
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/mainProgressBar"
+        style="@android:style/Widget.Holo.ProgressBar.Large"
+        android:indeterminate="true"
+        android:background="#fafafa"
+        android:layout_marginTop="25dp"
+        android:indeterminateBehavior="cycle" />
     <ListView
         android:layout_width="wrap_content"
-        android:layout_height="436dp"
+        android:layout_height="356dp"
         android:id="@+id/carsListView"
         android:layout_below="@+id/newCarButton"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="15dp" />
+        android:layout_marginTop="0dp" />
 
 </LinearLayout>

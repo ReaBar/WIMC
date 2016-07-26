@@ -63,6 +63,13 @@ public class SettingsScreenFragment extends Fragment {
 
 
 
+        Button MyCars = (Button) view.findViewById(R.id.button);
+        MyCars.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fragmentCommunicator.passString("ManageMyCarsScreenFragment");
+            }
+        });
 
         return view;
     }

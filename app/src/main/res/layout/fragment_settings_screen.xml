@@ -1,22 +1,8 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Fragments.SettingsScreenFragment">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Settings"
-        android:id="@+id/settingsText"
-        android:layout_gravity="center_horizontal|top"
-        android:layout_marginTop="60dp"
-        android:textSize="35sp"
-        android:textStyle="bold"
-        android:textColor="#234f84"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
 
 
     <RelativeLayout
@@ -34,11 +20,34 @@
             android:id="@+id/settingsPasswordInput"
             android:singleLine="false"
             android:hint="Change Password.."
-            android:layout_marginTop="56dp"
+            android:layout_below="@+id/settingsText"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Settings"
+            android:id="@+id/settingsText"
+            android:layout_gravity="center_horizontal|top"
+            android:textSize="35sp"
+            android:textStyle="bold"
+            android:textColor="#234f84"
             android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="82dp" />
 
-
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="My Cars"
+            android:id="@+id/button"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="67dp"
+            android:layout_alignStart="@+id/settingsPasswordInput"
+            android:layout_alignEnd="@+id/settingsPasswordInput" />
 
         <Button
             android:layout_width="wrap_content"
@@ -46,21 +55,11 @@
             android:text="Save"
             android:id="@+id/settingsPasswordButton"
             android:layout_below="@+id/settingsPasswordInput"
-            android:layout_alignStart="@+id/settingsPasswordInput"
-            android:layout_alignEnd="@+id/settingsPasswordInput" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="My Cars"
-            android:id="@+id/myCarsButton"
-            android:layout_below="@+id/settingsPasswordButton"
-            android:layout_alignStart="@+id/settingsPasswordButton"
-            android:layout_alignEnd="@+id/settingsPasswordButton" />
-
+            android:layout_alignEnd="@+id/settingsPasswordInput"
+            android:layout_alignStart="@+id/settingsPasswordInput" />
 
 
     </RelativeLayout>
 
 
-</FrameLayout>
+</LinearLayout>

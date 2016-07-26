@@ -4,7 +4,6 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +14,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,19 +29,18 @@ import java.util.List;
 
 public class ManageMyCarsScreenFragment extends Fragment {
 
-    FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
     FragmentCommunicator fragmentCommunicator;
     CarScreenFragment carFragment;
-
     EditText carLicenseInput;
     EditText carColorInput;
     EditText carModelInput;
     EditText carCompanyInput;
-
+    ProgressBar progressBar;
     MyCarsAdapter adapter;
     ListView carsList;
     List<Car> cars;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,8 +52,11 @@ public class ManageMyCarsScreenFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_manage_my_cars_screen, container, false);
 
-        cars = Model.getInstance().getAllCars();
+        progressBar = (ProgressBar) view.findViewById(R.id.mainProgressBar);
+        progressBar.setVisibility(View.VISIBLE);
 
+
+        cars = Model.getInstance().getAllCars();
         carCompanyInput = (EditText) view.findViewById(R.id.carCompanyInput);
         carColorInput = (EditText) view.findViewById(R.id.carColorInput);
         carLicenseInput = (EditText) view.findViewById(R.id.carLicenseInput);
@@ -95,6 +97,7 @@ public class ManageMyCarsScreenFragment extends Fragment {
             @Override
             public void PassData(Object allCars) {
                 cars = (ArrayList) allCars;
+                progressBar.setVisibility(View.GONE);
                 adapter.notifyDataSetChanged();
             }
 
@@ -114,13 +117,11 @@ public class ManageMyCarsScreenFragment extends Fragment {
         carsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(MyApplication.getAppActivity(), "Row Clicked!",
-                        Toast.LENGTH_SHORT).show();
                 carFragment = new CarScreenFragment();
                 carFragment.users = cars.get(position).getUsersList();
                 carFragment.carLicense = cars.get(position).getCarId();
                 carFragment.car = cars.get(position);
-                carFragment.modelCompany = cars.get(position).getModel() + " " + cars.get(position).getModel();
+                carFragment.modelCompany = cars.get(position).getModel() + " " + cars.get(position).getCompany();
                 fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.main_frag_container, carFragment, "CarScreenFragment");
                 fragmentTransaction.addToBackStack(null).commit();
@@ -180,23 +181,6 @@ public class ManageMyCarsScreenFragment extends Fragment {
             carLicense.setText(car.getCarId());
             carModelCompany.setText(car.getCompany() + " " + car.getModel());
 
-//            if(car.getUsersList().size()  == 1){
-//                User1.setText(car.getUsersList().get(0));
-//                User2.setText("");
-//                User3.setText("");
-//            }
-//
-//            if(car.getUsersList().size() == 2){
-//                User1.setText(car.getUsersList().get(0));
-//                User2.setText(car.getUsersList().get(1));
-//                User3.setText("");
-//
-//            }
-//            if(car.getUsersList().size() == 3){
-//                User1.setText(car.getUsersList().get(0));
-//                User2.setText(car.getUsersList().get(1));
-//                User3.setText(car.getUsersList().get(2));
-//            }
             return convertView;
         }
     }
