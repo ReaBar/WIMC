@@ -3,13 +3,31 @@ package com.example.reabar.wimc.Fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.reabar.wimc.Model.Car;
+import com.example.reabar.wimc.Model.Model;
+import com.example.reabar.wimc.MyApplication;
 import com.example.reabar.wimc.R;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MySharedCarsScreenFragment extends Fragment {
+
+    ProgressBar progressBar;
+    MySharedCarsAdapter adapter;
+    ListView carsList;
+    List<Car> cars;
 
 
     @Override
@@ -21,7 +39,44 @@ public class MySharedCarsScreenFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_my_shared_cars_screen, container, false);
+        View view = inflater.inflate(R.layout.fragment_my_shared_cars_screen, container, false);
+
+        progressBar = (ProgressBar) view.findViewById(R.id.mySharedCars_ProgressBar);
+        progressBar.setVisibility(View.VISIBLE);
+
+        cars = Model.getInstance().getAllCars();
+        carsList= (ListView) view.findViewById(R.id.listShredCars);
+        Model.getInstance().getListOfSharedCars(Model.getInstance().getCurrentUser().getEmail(), new Model.SyncListener() {
+            @Override
+            public void PassData(Object allCars) {
+                cars = (ArrayList) allCars;
+                progressBar.setVisibility(View.GONE);
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void isSuccessful(boolean s) {
+            }
+
+            @Override
+            public void failed(String s) {
+            }
+        });
+
+        adapter = new MySharedCarsAdapter();
+        carsList.setAdapter(adapter);
+        carsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(MyApplication.getAppActivity(), "Row Clicked!",
+                        Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+
+
+        return view;
     }
 
     @Override
@@ -34,5 +89,44 @@ public class MySharedCarsScreenFragment extends Fragment {
         super.onDetach();
     }
 
+
+
+    public class MySharedCarsAdapter extends BaseAdapter {
+
+        @Override
+        public int getCount() {
+            return cars.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return cars.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+
+            if(convertView == null){
+                LayoutInflater layoutInflater = getActivity().getLayoutInflater();
+                convertView= layoutInflater.inflate(R.layout.fragment_my_shared_cars_screen_row,null);
+
+            }
+            else{
+                Log.d("TAG", "use convert view:" + position);
+            }
+
+            TextView carLicense = (TextView) convertView.findViewById(R.id.mySharedCars_car_license);
+            TextView carModelCompany = (TextView) convertView.findViewById(R.id.mySharedCars_model_company);
+            Car car = cars.get(position);
+            carLicense.setText(car.getCarId());
+            carModelCompany.setText(car.getCompany() + " " + car.getModel());
+            return convertView;
+        }
+    }
 
 }

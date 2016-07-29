@@ -1,7 +1,8 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.example.reabar.wimc.Fragments.MySharedCarsScreenFragment">
 
 
@@ -9,20 +10,43 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Cars that you are not Owner.."
+        android:text="Shared Cars"
         android:id="@+id/logoText"
         android:layout_gravity="center_horizontal|top"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="55dp"
         android:textSize="25sp"
         android:textStyle="bold"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="You are not the owner of these cars, but you can park them!"
+        android:id="@+id/deleteTextView"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="25dp"
+        android:layout_below="@+id/cars_list_row_car_model_company"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
+        android:textStyle="bold|italic" />
+
+
+    <ProgressBar
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/mySharedCars_ProgressBar"
+        style="@android:style/Widget.Holo.ProgressBar.Large"
+        android:indeterminate="true"
+        android:background="#fafafa"
+        android:layout_marginTop="25dp"
+        android:indeterminateBehavior="cycle" />
+
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="358dp"
-        android:id="@+id/listShredCars"
-        android:layout_gravity="center_horizontal|bottom" />
+        android:id="@+id/listShredCars" />
 
 
-</FrameLayout>
+</LinearLayout>

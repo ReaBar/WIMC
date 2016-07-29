@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.example.reabar.wimc.Fragments.HomeScreenFragment;
 import com.example.reabar.wimc.Fragments.LoginScreenFragment;
 import com.example.reabar.wimc.Fragments.ManageMyCarsScreenFragment;
+import com.example.reabar.wimc.Fragments.MySharedCarsScreenFragment;
 import com.example.reabar.wimc.Fragments.SettingsScreenFragment;
 import com.example.reabar.wimc.Fragments.SignupScreenFragment;
 import com.example.reabar.wimc.Model.Model;
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity
     HomeScreenFragment homeFragment;
     SettingsScreenFragment settingsFragment;
     ManageMyCarsScreenFragment manageMyCarsFragment;
+    MySharedCarsScreenFragment mySharedCarsFragment;
 
 
     @Override
@@ -56,11 +58,10 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        //---- check ---- //
-//        Car car = new Car("123456", "Green", "2015", "Volkswagen", "tasolutions2012@gmail.com");
+//        Car car = new Car("112233", "Blue", "2015", "Honda", "rea.bar@gmail.com");
 //        String share1 = "tomer_aronovsky@hotmail.com";
-//        String share2 = "rea.bar@gmail.com";
-//        ArrayList <String> s = new ArrayList<String>();
+//        String share2 = "tasolutions2012@gmail.com";
+//        ArrayList<String> s = new ArrayList<String>();
 //        s.add(share1);
 //        s.add(share2);
 //        car.setUsersList(s);
@@ -74,7 +75,7 @@ public class MainActivity extends AppCompatActivity
 //            public void failed(String message) {
 //            }
 //        });
-        //---- check ---- //
+
         passString("HomeScreenFragment");
 
     }
@@ -129,6 +130,9 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_menu_manageMyCars:
                 passString("ManageMyCarsScreenFragment");
+                break;
+            case R.id.nav_menu_manageSahredCars:
+                passString("MySharedCarsScreenFragment");
                 break;
 
             case R.id.nav_menu_logoutapp:
@@ -206,6 +210,12 @@ public class MainActivity extends AppCompatActivity
                 manageMyCarsFragment = new ManageMyCarsScreenFragment();
                 fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.main_frag_container, manageMyCarsFragment, "ManageMyCarsScreenFragment");
+                fragmentTransaction.addToBackStack(null).commit();
+                break;
+            case "MySharedCarsScreenFragment":
+                mySharedCarsFragment = new MySharedCarsScreenFragment();
+                fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.main_frag_container, mySharedCarsFragment, "MySharedCarsScreenFragment");
                 fragmentTransaction.addToBackStack(null).commit();
                 break;
         }

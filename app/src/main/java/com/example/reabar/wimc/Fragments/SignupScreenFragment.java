@@ -42,17 +42,21 @@ public class SignupScreenFragment extends Fragment {
         passwordInput = (EditText) view.findViewById(R.id.passwordInput);
         repasswordInput = (EditText) view.findViewById(R.id.repasswordInput);
 
+
         Button signupButton = (Button) view.findViewById(R.id.registerButton);
         signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(passwordInput.getText().toString().equals(repasswordInput.getText().toString())){
+                if(passwordInput.getText().toString().equals("") || emailInput.getText().toString().equals("") || repasswordInput.getText().toString().equals("")){
+                    Toast.makeText(MyApplication.getAppActivity(), "Please fill the relevant information",
+                            Toast.LENGTH_SHORT).show();
+                }
+                else if(passwordInput.getText().toString().equals(repasswordInput.getText().toString())){
                     User newUser = new User(emailInput.getText().toString());
-                    Model.getInstance().signupUser(newUser,passwordInput.getText().toString(), new Model.SignUpListener(){
+                    Model.getInstance().signupUser(newUser, passwordInput.getText().toString(), new Model.SignUpListener() {
                         @Override
                         public void success(boolean success) {
-                            //User tempUser = Model.getInstance().getCurrentUser();
-                            if(success){
+                            if (success) {
                                 fragmentCommunicator.passString("HomeScreenFragment");
                             }
                         }
@@ -65,7 +69,10 @@ public class SignupScreenFragment extends Fragment {
 
                     });
                 }
-
+                else {
+                    Toast.makeText(MyApplication.getAppActivity(), "Passwords must be the same",
+                            Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

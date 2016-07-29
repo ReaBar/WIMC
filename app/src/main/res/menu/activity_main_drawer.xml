@@ -16,7 +16,7 @@
             android:title="Where are my Cars Now?" />
         <item
             android:id="@+id/nav_menu_manageMyCars"
-            android:icon="@drawable/ic_menu_send"
+            android:icon="@drawable/ic_menu_manage"
             android:title="Manage My Cars" />
         <item
             android:id="@+id/nav_menu_manageSahredCars"
