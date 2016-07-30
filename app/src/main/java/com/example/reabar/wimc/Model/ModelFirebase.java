@@ -76,4 +76,8 @@ public class ModelFirebase {
         parkingFirebase.parkCar(firebaseDatabase,parking,listener);
     }
 
+    public void getMyUnparkedCars(String uid, Model.SyncListener listener){
+        parkingFirebase.getMyUnparkedCars(firebaseDatabase,uid,listener);
+    }
+
 }

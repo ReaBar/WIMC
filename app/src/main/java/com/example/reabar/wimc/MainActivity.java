@@ -9,6 +9,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -63,35 +64,26 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
 
+        //Parking parking = new Parking.ParkingBuilder("12345555556").city("Tel Aviv").streetNumber(123).build();
 
-        Parking parking = new Parking.ParkingBuilder("12345555556").city("Tel Aviv").streetNumber(123).build();
-
-        Car car = new Car("1145453444555", "Blue", "2015", "Honda", "rea.bar@gmail.com", parking);
-        String share1 = "tomer_aronovsky@hotmail.com";
-        String share2 = "tasolutions2012@gmail.com";
-        ArrayList<String> s = new ArrayList<String>();
-        s.add(share1);
-        s.add(share2);
-        car.setUsersList(s);
-        Model.getInstance().addCarToDB(car, new Model.SyncListener() {
-
-            @Override
-            public void isSuccessful(boolean success) {
-
-            }
-
-            @Override
-            public void failed(String message) {
-            }
-
-            @Override
-            public void PassData(Object data) {
-
-            }
-        });
-
-        passString("LoginScreenFragment");
-
+//        Car car = new Car("112233", "Blue", "2015", "Honda", "rea.bar@gmail.com");
+//        String share1 = "tomer_aronovsky@hotmail.com";
+//        String share2 = "tasolutions2012@gmail.com";
+//        ArrayList<String> s = new ArrayList<String>();
+//        s.add(share1);
+//        s.add(share2);
+//        car.setUsersList(s);
+//        Model.getInstance().addCarToDB(car, new Model.AddNewCarListener() {
+//            @Override
+//            public void success(boolean success) {
+//                if (success) {
+//                }
+//            }
+//            @Override
+//            public void failed(String message) {
+//            }
+//        });
+        passString("HomeScreenFragment");
     }
 
     @Override
@@ -132,7 +124,7 @@ public class MainActivity extends AppCompatActivity
 
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        switch (id){
+        switch (id) {
             case R.id.nav_menu_homepage:
                 passString("HomeScreenFragment");
                 break;
@@ -161,13 +153,12 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void setDrawerState(boolean isEnabled) {
-        if ( isEnabled ) {
+        if (isEnabled) {
             drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
             toggle.setDrawerIndicatorEnabled(true);
             toggle.syncState();
 
-        }
-        else {
+        } else {
             drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
             toggle.setDrawerIndicatorEnabled(false);
             toggle.setToolbarNavigationClickListener(new View.OnClickListener() {
@@ -179,12 +170,6 @@ public class MainActivity extends AppCompatActivity
             toggle.syncState();
         }
     }
-
-
-
-
-
-
 
 
     @Override
@@ -239,8 +224,6 @@ public class MainActivity extends AppCompatActivity
     public void passData(Object[] data) {
 
     }
-
-
 
 
     //        fragmentManager = getSupportFragmentManager();
