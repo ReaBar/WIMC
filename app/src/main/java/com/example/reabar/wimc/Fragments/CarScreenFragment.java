@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,6 +29,7 @@ public class CarScreenFragment extends Fragment {
     ListView list;
     String carLicense;
     String modelCompany;
+    EditText emailSharedinput;
 
 
     @Override
@@ -60,10 +63,25 @@ public class CarScreenFragment extends Fragment {
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    car.removeCarUser(users.get(position));
-                    adapter.notifyDataSetChanged();
-                    Toast.makeText(MyApplication.getAppActivity(), "User removed successfully",
+                car.removeCarUser(users.get(position));
+                adapter.notifyDataSetChanged();
+                Toast.makeText(MyApplication.getAppActivity(), "User removed successfully",
                         Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+        emailSharedinput = (EditText) view.findViewById(R.id.emailSharedinput);
+        Button addUserButton = (Button) view.findViewById(R.id.addUserButton);
+        addUserButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (emailSharedinput.getText().toString().matches("")) {
+                    Toast.makeText(MyApplication.getAppActivity(), "You must enter email of the shared user",
+                            Toast.LENGTH_SHORT).show();
+                } else {
+
+                }
             }
         });
 

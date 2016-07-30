@@ -20,8 +20,11 @@ import com.example.reabar.wimc.Fragments.ManageMyCarsScreenFragment;
 import com.example.reabar.wimc.Fragments.MySharedCarsScreenFragment;
 import com.example.reabar.wimc.Fragments.SettingsScreenFragment;
 import com.example.reabar.wimc.Fragments.SignupScreenFragment;
+import com.example.reabar.wimc.Model.Car;
 import com.example.reabar.wimc.Model.Model;
 import com.example.reabar.wimc.Model.Parking;
+
+import java.util.ArrayList;
 
 
 public class MainActivity extends AppCompatActivity
@@ -59,34 +62,26 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-//        Car car = new Car("112233", "Blue", "2015", "Honda", "rea.bar@gmail.com");
-//        String share1 = "tomer_aronovsky@hotmail.com";
-//        String share2 = "tasolutions2012@gmail.com";
-//        ArrayList<String> s = new ArrayList<String>();
-//        s.add(share1);
-//        s.add(share2);
-//        car.setUsersList(s);
-//        Model.getInstance().addCarToDB(car, new Model.AddNewCarListener() {
-//            @Override
-//            public void success(boolean success) {
-//                if (success) {
-//                }
-//            }
-//            @Override
-//            public void failed(String message) {
-//            }
-//        });
 
-        Parking parking = new Parking.ParkingBuilder("123456").city("Tel Aviv").streetNumber(123).build();
-        Model.getInstance().parkCar(parking, new Model.SyncListener() {
+
+        Parking parking = new Parking.ParkingBuilder("12345555556").city("Tel Aviv").streetNumber(123).build();
+
+        Car car = new Car("1145453444555", "Blue", "2015", "Honda", "rea.bar@gmail.com", parking);
+        String share1 = "tomer_aronovsky@hotmail.com";
+        String share2 = "tasolutions2012@gmail.com";
+        ArrayList<String> s = new ArrayList<String>();
+        s.add(share1);
+        s.add(share2);
+        car.setUsersList(s);
+        Model.getInstance().addCarToDB(car, new Model.SyncListener() {
+
             @Override
             public void isSuccessful(boolean success) {
-                Toast.makeText(MainActivity.this, "added car parking", Toast.LENGTH_SHORT).show();
+
             }
 
             @Override
             public void failed(String message) {
-
             }
 
             @Override
@@ -95,7 +90,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        passString("HomeScreenFragment");
+        passString("LoginScreenFragment");
 
     }
 
