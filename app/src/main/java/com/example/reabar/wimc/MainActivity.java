@@ -21,6 +21,7 @@ import com.example.reabar.wimc.Fragments.MySharedCarsScreenFragment;
 import com.example.reabar.wimc.Fragments.SettingsScreenFragment;
 import com.example.reabar.wimc.Fragments.SignupScreenFragment;
 import com.example.reabar.wimc.Model.Model;
+import com.example.reabar.wimc.Model.Parking;
 
 
 public class MainActivity extends AppCompatActivity
@@ -75,6 +76,24 @@ public class MainActivity extends AppCompatActivity
 //            public void failed(String message) {
 //            }
 //        });
+
+        Parking parking = new Parking.ParkingBuilder("123456").city("Tel Aviv").streetNumber(123).build();
+        Model.getInstance().parkCar(parking, new Model.SyncListener() {
+            @Override
+            public void isSuccessful(boolean success) {
+                Toast.makeText(MainActivity.this, "added car parking", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void failed(String message) {
+
+            }
+
+            @Override
+            public void PassData(Object data) {
+
+            }
+        });
 
         passString("HomeScreenFragment");
 

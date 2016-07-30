@@ -12,6 +12,8 @@ public class Parking {
     private boolean parkingIsActive;
     private Image parkingImage;
 
+    public Parking(){}
+
     private Parking(ParkingBuilder parkingBuilder){
         this.carId = parkingBuilder.carId;
         this.street = parkingBuilder.street;
@@ -25,10 +27,6 @@ public class Parking {
         this.longitude = parkingBuilder.longitude;
         this.parkingImage = parkingBuilder.parkingImage;
         this.parkingIsActive = parkingBuilder.parkingIsActive;
-    }
-
-    public String getParkingObjectId() {
-        return parkingObjectId;
     }
 
     public void setParkingObjectId(String parkingObjectId) {
@@ -132,7 +130,7 @@ public class Parking {
     }
 
     public static class ParkingBuilder {
-        private String parkingObjectId, carId, street, city, parkingLotName,parkingLotRowColor;
+        private String carId, street, city, parkingLotName,parkingLotRowColor;
         private int streetNumber, parkingLotNumber, parkingLotFloor;
         private double latitude, longitude;
         private boolean parkingIsActive;
@@ -143,12 +141,22 @@ public class Parking {
             this.parkingIsActive = true;
         }
 
-        public ParkingBuilder carId(String carId){
+/*        public ParkingBuilder carId(String carId){
             this.carId = carId;
+            return this;
+        }*/
+
+        public ParkingBuilder parkingLonitude(double longitude){
+            this.parkingLonitude(longitude);
             return this;
         }
 
-        public ParkingBuilder parkingLotNumber(int parkingLotNumber){
+        public ParkingBuilder parkingLatitude(double latitude){
+            this.parkingLatitude(latitude);
+            return this;
+        }
+
+        public ParkingBuilder parkingLotNumber(int parkingLotNumber) {
             this.parkingLotNumber = parkingLotNumber;
             return this;
         }
@@ -160,12 +168,6 @@ public class Parking {
 
         public ParkingBuilder parkingImage(Image parkingImage){
             this.parkingImage = parkingImage;
-            return this;
-        }
-
-
-        public ParkingBuilder parkingObjectId(String parkingObjectId){
-            this.parkingObjectId = parkingObjectId;
             return this;
         }
 
@@ -198,6 +200,4 @@ public class Parking {
             return new Parking(this);
         }
     }
-
-
 }

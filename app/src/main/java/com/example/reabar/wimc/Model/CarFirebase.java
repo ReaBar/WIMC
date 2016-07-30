@@ -22,14 +22,14 @@ public class CarFirebase {
     private String CARS_DB = "cars";
 
 
-    public void addCarToDB(FirebaseDatabase db, Car car, final Model.AddNewCarListener listener) {
+    public void addCarToDB(FirebaseDatabase db, Car car, final Model.SyncListener listener) {
         DatabaseReference dbRef = db.getReference(CARS_DB);
         dbRef.child(car.getCarId()).setValue(car).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
                     Log.d(TAG, "Car Added!");
-                    listener.success(true);
+                    listener.isSuccessful(true);
                 } else {
                     Log.d(TAG, "Error to add the new car");
                     listener.failed(task.getException().getMessage());

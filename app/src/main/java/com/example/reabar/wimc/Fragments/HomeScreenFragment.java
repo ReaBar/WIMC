@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import com.example.reabar.wimc.FragmentCommunicator;
 import com.example.reabar.wimc.Model.Model;
+import com.example.reabar.wimc.Model.Parking;
 import com.example.reabar.wimc.R;
 
 public class HomeScreenFragment extends Fragment {
