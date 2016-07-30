@@ -86,6 +86,10 @@ public class Model {
         modelFirebase.parkCar(parking,listener);
     }
 
+    public void getMyUnparkedCars(String uid, SyncListener listener){
+        modelFirebase.getMyUnparkedCars(uid, listener);
+    }
+
     //--- Listeners ---- //
     public interface SyncListener{
         void isSuccessful(boolean success);

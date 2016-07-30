@@ -9,6 +9,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,8 +21,11 @@ import com.example.reabar.wimc.Fragments.ManageMyCarsScreenFragment;
 import com.example.reabar.wimc.Fragments.MySharedCarsScreenFragment;
 import com.example.reabar.wimc.Fragments.SettingsScreenFragment;
 import com.example.reabar.wimc.Fragments.SignupScreenFragment;
+import com.example.reabar.wimc.Model.Car;
 import com.example.reabar.wimc.Model.Model;
 import com.example.reabar.wimc.Model.Parking;
+
+import java.util.ArrayList;
 
 
 public class MainActivity extends AppCompatActivity
@@ -78,10 +82,10 @@ public class MainActivity extends AppCompatActivity
 //        });
 
         Parking parking = new Parking.ParkingBuilder("123456").city("Tel Aviv").streetNumber(123).build();
-        Model.getInstance().parkCar(parking, new Model.SyncListener() {
+        Model.getInstance().getMyUnparkedCars("rea.bar@gmail.com", new Model.SyncListener() {
             @Override
             public void isSuccessful(boolean success) {
-                Toast.makeText(MainActivity.this, "added car parking", Toast.LENGTH_SHORT).show();
+
             }
 
             @Override
@@ -91,11 +95,14 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public void PassData(Object data) {
-
+                ArrayList<Car> unparkedcars = (ArrayList<Car>)data;
+                for (Car car: unparkedcars) {
+                    Log.d("TESTTEST", "Unparked cars: " + car.getCarId());
+                }
             }
         });
 
-        passString("HomeScreenFragment");
+        passString("LoginScreenFragment");
 
     }
 
