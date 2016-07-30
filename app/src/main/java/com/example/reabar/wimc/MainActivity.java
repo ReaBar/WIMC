@@ -80,30 +80,7 @@ public class MainActivity extends AppCompatActivity
 //            public void failed(String message) {
 //            }
 //        });
-
-        Parking parking = new Parking.ParkingBuilder("123456").city("Tel Aviv").streetNumber(123).build();
-        Model.getInstance().getMyUnparkedCars("rea.bar@gmail.com", new Model.SyncListener() {
-            @Override
-            public void isSuccessful(boolean success) {
-
-            }
-
-            @Override
-            public void failed(String message) {
-
-            }
-
-            @Override
-            public void PassData(Object data) {
-                ArrayList<Car> unparkedcars = (ArrayList<Car>)data;
-                for (Car car: unparkedcars) {
-                    Log.d("TESTTEST", "Unparked cars: " + car.getCarId());
-                }
-            }
-        });
-
-        passString("LoginScreenFragment");
-
+        passString("HomeScreenFragment");
     }
 
     @Override
@@ -144,7 +121,7 @@ public class MainActivity extends AppCompatActivity
 
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        switch (id){
+        switch (id) {
             case R.id.nav_menu_homepage:
                 passString("HomeScreenFragment");
                 break;
@@ -173,13 +150,12 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void setDrawerState(boolean isEnabled) {
-        if ( isEnabled ) {
+        if (isEnabled) {
             drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
             toggle.setDrawerIndicatorEnabled(true);
             toggle.syncState();
 
-        }
-        else {
+        } else {
             drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
             toggle.setDrawerIndicatorEnabled(false);
             toggle.setToolbarNavigationClickListener(new View.OnClickListener() {
@@ -191,12 +167,6 @@ public class MainActivity extends AppCompatActivity
             toggle.syncState();
         }
     }
-
-
-
-
-
-
 
 
     @Override
@@ -251,8 +221,6 @@ public class MainActivity extends AppCompatActivity
     public void passData(Object[] data) {
 
     }
-
-
 
 
     //        fragmentManager = getSupportFragmentManager();
