@@ -50,19 +50,25 @@ public class LoginScreenFragment extends Fragment {
                 }
                 else {
                     User loginUser = new User(emailInput.getText().toString());
-                    Model.getInstance().signInUser(loginUser, passwordInput.getText().toString(), new Model.LoginListener(){
+                    Model.getInstance().signInUser(loginUser, passwordInput.getText().toString(), new Model.SyncListener(){
                         @Override
-                        public void success(boolean success) {
+                        public void isSuccessful(boolean success) {
                             User tempUser = Model.getInstance().getCurrentUser();
                             if(success){
                                 Log.d("LoginFragment", "logged in as: " + tempUser.getEmail());
                                 fragmentCommunicator.passString("HomeScreenFragment");
                             }
                         }
+
                         @Override
                         public void failed(String message) {
                             Toast.makeText(MyApplication.getAppActivity(), message,
                                     Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void PassData(Object data) {
+
                         }
                     });
                 }
@@ -86,9 +92,9 @@ public class LoginScreenFragment extends Fragment {
                             Toast.LENGTH_SHORT).show();
 
                 } else {
-                    Model.getInstance().resetPassword(emailInput.getText().toString(), new Model.ResetPasswordListener() {
+                    Model.getInstance().resetPassword(emailInput.getText().toString(), new Model.SyncListener() {
                         @Override
-                        public void success(boolean success) {
+                        public void isSuccessful(boolean success) {
                             Toast.makeText(MyApplication.getAppActivity(), "Please check your mailbox to reset the password",
                                     Toast.LENGTH_SHORT).show();
                         }
@@ -97,6 +103,11 @@ public class LoginScreenFragment extends Fragment {
                         public void failed(String message) {
                             Toast.makeText(MyApplication.getAppActivity(), message,
                                     Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void PassData(Object data) {
+
                         }
 
                     });

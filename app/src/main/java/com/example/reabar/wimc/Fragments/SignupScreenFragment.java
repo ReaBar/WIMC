@@ -53,9 +53,9 @@ public class SignupScreenFragment extends Fragment {
                 }
                 else if(passwordInput.getText().toString().equals(repasswordInput.getText().toString())){
                     User newUser = new User(emailInput.getText().toString());
-                    Model.getInstance().signupUser(newUser, passwordInput.getText().toString(), new Model.SignUpListener() {
+                    Model.getInstance().signupUser(newUser, passwordInput.getText().toString(), new Model.SyncListener() {
                         @Override
-                        public void success(boolean success) {
+                        public void isSuccessful(boolean success) {
                             if (success) {
                                 fragmentCommunicator.passString("HomeScreenFragment");
                             }
@@ -65,6 +65,11 @@ public class SignupScreenFragment extends Fragment {
                         public void failed(String message) {
                             Toast.makeText(MyApplication.getAppActivity(), message,
                                     Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void PassData(Object data) {
+
                         }
 
                     });

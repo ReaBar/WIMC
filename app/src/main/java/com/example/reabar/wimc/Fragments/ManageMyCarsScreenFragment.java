@@ -71,19 +71,25 @@ public class ManageMyCarsScreenFragment extends Fragment {
                 }
                 else {
                     Car newCar = new Car(carLicenseInput.getText().toString(), carColorInput.getText().toString(), carModelInput.getText().toString(), carCompanyInput.getText().toString(), Model.getInstance().getCurrentUser().getEmail());
-                    Model.getInstance().addCarToDB(newCar, new Model.AddNewCarListener() {
+                    Model.getInstance().addCarToDB(newCar, new Model.SyncListener() {
                         @Override
-                        public void success(boolean success) {
+                        public void isSuccessful(boolean success) {
                             if (success) {
                                 Toast.makeText(MyApplication.getAppActivity(), "New Car Added!",
                                         Toast.LENGTH_SHORT).show();
                                 fragmentCommunicator.passString("HomeScreenFragment");
                             }
                         }
+
                         @Override
                         public void failed(String message) {
                             Toast.makeText(MyApplication.getAppActivity(), message,
                                     Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void PassData(Object data) {
+
                         }
                     });
                 }

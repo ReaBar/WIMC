@@ -42,9 +42,9 @@ public class SettingsScreenFragment extends Fragment {
                             Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    Model.getInstance().updatePassword(settingsPasswordInput.getText().toString(), new Model.UpdatePasswordListener() {
+                    Model.getInstance().updatePassword(settingsPasswordInput.getText().toString(), new Model.SyncListener() {
                         @Override
-                        public void success(boolean success) {
+                        public void isSuccessful(boolean success) {
                             if (success) {
                                 Toast.makeText(MyApplication.getAppActivity(), "Password Updated.",
                                         Toast.LENGTH_SHORT).show();
@@ -55,6 +55,11 @@ public class SettingsScreenFragment extends Fragment {
                         public void failed(String message) {
                             Toast.makeText(MyApplication.getAppActivity(), message,
                                     Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void PassData(Object data) {
+
                         }
                     });
                 }
