@@ -1,7 +1,36 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.reabar.wimc.Fragments.HomeScreenFragment">
+    android:orientation="vertical"
+    tools:context="com.example.reabar.wimc.Fragments.HomeScreenFragment"
+    android:weightSum="1">
 
-</FrameLayout>
+
+    <ImageButton
+        android:layout_width="175dp"
+        android:layout_height="150dp"
+        android:id="@+id/imageButton"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="30dp"
+        android:layout_marginTop="60dp" />
+
+    <ProgressBar
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/homepageProgressBar"
+        style="@android:style/Widget.Holo.ProgressBar.Large"
+        android:indeterminate="true"
+        android:background="#fafafa"
+        android:layout_marginTop="25dp"
+        android:indeterminateBehavior="cycle" />
+
+    <ListView
+        android:layout_width="204dp"
+        android:layout_height="227dp"
+        android:id="@+id/listCarsNotParkingNow"
+        android:layout_alignParentStart="true"
+        android:layout_gravity="center_horizontal" />
+
+
+</LinearLayout>
