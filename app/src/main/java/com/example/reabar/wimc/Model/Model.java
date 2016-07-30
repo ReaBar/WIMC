@@ -28,11 +28,11 @@ public class Model {
         this.currentUser = currentUser;
     }
 
-    public void signupUser(final User user, final String password, final SignUpListener listener){
+    public void signupUser(final User user, final String password, final SyncListener listener){
         modelFirebase.signupUser(user, password, listener);
     }
 
-    public void signInUser(User user, String password, final LoginListener listener){
+    public void signInUser(User user, String password, final SyncListener listener){
         modelFirebase.signInUser(user, password, listener);
     }
 
@@ -49,11 +49,11 @@ public class Model {
         return FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
 
-    public void resetPassword(String email, final ResetPasswordListener listener){
+    public void resetPassword(String email, final SyncListener listener){
         modelFirebase.resetPassword(email, listener);
     }
 
-    public void updatePassword(String newPassword, final UpdatePasswordListener listener){
+    public void updatePassword(String newPassword, final SyncListener listener){
         modelFirebase.updatePassword(newPassword, listener);
     }
 
@@ -69,7 +69,7 @@ public class Model {
         modelFirebase.getListOfSharedCars(uId,listener);
     }
 
-    public void addCarToDB(final Car car, final AddNewCarListener listener){
+    public void addCarToDB(final Car car, final SyncListener listener){
         modelFirebase.addCarToDB(car, listener);
     }
 
@@ -82,35 +82,14 @@ public class Model {
         return data;
     }
 
-    //--- Listeners ---- //
-    public interface LoginListener {
-        void success(boolean success);
-        void failed(String message);
+    public void parkCar(Parking parking, SyncListener listener){
+        modelFirebase.parkCar(parking,listener);
     }
 
+    //--- Listeners ---- //
     public interface SyncListener{
         void isSuccessful(boolean success);
         void failed(String message);
         void PassData(Object data);
-    }
-
-    public interface SignUpListener {
-        void success(boolean success);
-        void failed(String message);
-    }
-
-    public interface ResetPasswordListener {
-        void success(boolean success);
-        void failed(String message);
-    }
-
-    public interface UpdatePasswordListener {
-        void success(boolean success);
-        void failed(String message);
-    }
-
-    public interface AddNewCarListener {
-        void success(boolean success);
-        void failed(String message);
     }
 }

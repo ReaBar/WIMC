@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.example.reabar.wimc.FragmentCommunicator;
 import com.example.reabar.wimc.Model.Car;
 import com.example.reabar.wimc.Model.Model;
+import com.example.reabar.wimc.Model.Parking;
 import com.example.reabar.wimc.R;
 
 import java.util.List;

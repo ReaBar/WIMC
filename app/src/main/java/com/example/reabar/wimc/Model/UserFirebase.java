@@ -30,17 +30,16 @@ public class UserFirebase {
     private String TAG = "UserFirebase";
     private String USERS_DB = "users";
 
-    public UserFirebase(){
+    public UserFirebase() {
         mAuth = FirebaseAuth.getInstance();
 
-        mAuthListener = new FirebaseAuth.AuthStateListener(){
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 user = firebaseAuth.getCurrentUser();
-                if(user != null){
-                    Log.d(TAG,"onAuthStateChanged:signed_in:" + user.getUid());
-                }
-                else{
+                if (user != null) {
+                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                } else {
                     Log.d(TAG, "onAuthStateChanged:signed_out");
                 }
             }
@@ -48,7 +47,7 @@ public class UserFirebase {
         mAuth.addAuthStateListener(mAuthListener);
     }
 
-    public void signupUser(final FirebaseDatabase db, final User user, final String password, final Model.SignUpListener listener){
+    public void signupUser(final FirebaseDatabase db, final User user, final String password, final Model.SyncListener listener) {
         mAuth.createUserWithEmailAndPassword(user.getEmail(), password).addOnCompleteListener(MyApplication.getAppActivity(), new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -59,7 +58,7 @@ public class UserFirebase {
                     DatabaseReference dbRef = db.getReference(USERS_DB);
                     user.setUserId(uid);
                     dbRef.child(uid).setValue(user);
-                    listener.success(true);
+                    listener.isSuccessful(true);
                 }
 
                 if (!task.isSuccessful()) {
@@ -69,15 +68,15 @@ public class UserFirebase {
         });
     }
 
-    public void signInUser(final User user, String password, final Model.LoginListener listener){
+    public void signInUser(final User user, String password, final Model.SyncListener listener) {
         mAuth.signInWithEmailAndPassword(user.getEmail(), password).addOnCompleteListener(MyApplication.getAppActivity(), new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
+                if (task.isSuccessful()) {
                     Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
                     Model.getInstance().setCurrentUser(user);
                     FilesHandler filesHandler = new FilesHandler();
-                    listener.success(true);
+                    listener.isSuccessful(true);
                 }
 
                 if (!task.isSuccessful()) {
@@ -88,60 +87,58 @@ public class UserFirebase {
         });
     }
 
-    public void logoutUser(){
-        if(mAuth.getCurrentUser() != null){
+    public void logoutUser() {
+        if (mAuth.getCurrentUser() != null) {
             mAuth.signOut();
         }
     }
 
-    public void resetPassword(String email, final Model.ResetPasswordListener listener){
-            mAuth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    if(task.isSuccessful()){
-                        Log.d(TAG, "Email sent.");
-                        listener.success(true);
-                    }
-
-                    else{
-                        Log.d(TAG,"Email not sent");
-                        listener.failed(task.getException().getMessage());
-                    }
-                }
-            });
-    }
-
-    public void updatePassword(String newPassword, final Model.UpdatePasswordListener listener){
-        user = mAuth.getCurrentUser();
-
-        user.updatePassword(newPassword).addOnCompleteListener(new OnCompleteListener<Void>() {
+    public void resetPassword(String email, final Model.SyncListener listener) {
+        mAuth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                if(task.isSuccessful()){
-                    Log.d(TAG, "Update Password.");
-                    listener.success(true);
-                }
-                else{
-                    Log.d(TAG,"Failed to update password.");
+                if (task.isSuccessful()) {
+                    Log.d(TAG, "Email sent.");
+                    listener.isSuccessful(true);
+                } else {
+                    Log.d(TAG, "Email not sent");
                     listener.failed(task.getException().getMessage());
                 }
             }
         });
     }
-    public void getCurrentUser(){
-        if(mAuth.getCurrentUser() != null) {
-            Model.getInstance().setCurrentUser(new User(mAuth.getCurrentUser().getEmail(),mAuth.getCurrentUser().getUid()));
+
+    public void updatePassword(String newPassword, final Model.SyncListener listener) {
+        user = mAuth.getCurrentUser();
+
+        user.updatePassword(newPassword).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Log.d(TAG, "Update Password.");
+                    listener.isSuccessful(true);
+                } else {
+                    Log.d(TAG, "Failed to update password.");
+                    listener.failed(task.getException().getMessage());
+                }
+            }
+        });
+    }
+
+    public void getCurrentUser() {
+        if (mAuth.getCurrentUser() != null) {
+            Model.getInstance().setCurrentUser(new User(mAuth.getCurrentUser().getEmail(), mAuth.getCurrentUser().getUid()));
         }
     }
 
-    public List<String> getUsersList(FirebaseDatabase db, final Model.SyncListener listener){
+    public List<String> getUsersList(FirebaseDatabase db, final Model.SyncListener listener) {
         final List<String> users = new ArrayList<String>();
         DatabaseReference dbRef = db.getReference(USERS_DB);
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
-                while(children.iterator().hasNext()){
+                while (children.iterator().hasNext()) {
                     users.add(children.iterator().next().getValue(User.class).getEmail());
                 }
                 listener.PassData(users);

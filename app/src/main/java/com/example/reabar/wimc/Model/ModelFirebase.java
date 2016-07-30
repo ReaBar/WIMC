@@ -11,19 +11,21 @@ public class ModelFirebase {
     private FirebaseDatabase firebaseDatabase;
     private CarFirebase carFirebase;
     private UserFirebase userFirebase;
+    private ParkingFirebase parkingFirebase;
 
     public ModelFirebase(){
         firebaseDatabase = FirebaseDatabase.getInstance();
         carFirebase = new CarFirebase();
         userFirebase = new UserFirebase();
+        parkingFirebase = new ParkingFirebase();
     }
 
     // ---- User Functions ---- //
-    public void signupUser(User user, String password, final Model.SignUpListener listener){
+    public void signupUser(User user, String password, final Model.SyncListener listener){
         userFirebase.signupUser(firebaseDatabase,user,password,listener);
     }
 
-    public void signInUser(User user,String password, final Model.LoginListener listener){
+    public void signInUser(User user,String password, final Model.SyncListener listener){
         userFirebase.signInUser(user, password, listener);
     }
 
@@ -35,17 +37,17 @@ public class ModelFirebase {
        userFirebase.getCurrentUser();
     }
 
-    public void resetPassword(String email, final Model.ResetPasswordListener listener){
+    public void resetPassword(String email, final Model.SyncListener listener){
         userFirebase.resetPassword(email, listener);
     }
 
-    public void updatePassword(String newPassword, final Model.UpdatePasswordListener listener){
+    public void updatePassword(String newPassword, final Model.SyncListener listener){
         userFirebase.updatePassword(newPassword, listener);
     }
 
 
     // ---- Car Functions ---- //
-    public void addCarToDB(Car car, final Model.AddNewCarListener listener){
+    public void addCarToDB(Car car, final Model.SyncListener listener){
         carFirebase.addCarToDB(firebaseDatabase, car, listener);
     }
 
@@ -67,6 +69,11 @@ public class ModelFirebase {
 
     public void getListOfSharedCars(String uId, Model.SyncListener listener){
         carFirebase.getListOfSharedCars(firebaseDatabase,uId,listener);
+    }
+
+    // ---- Parking Functions ---- //
+    public void parkCar(Parking parking, Model.SyncListener listener){
+        parkingFirebase.parkCar(firebaseDatabase,parking,listener);
     }
 
 }
