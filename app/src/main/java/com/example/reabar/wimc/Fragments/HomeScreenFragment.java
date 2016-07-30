@@ -16,7 +16,6 @@ import android.widget.TextView;
 import com.example.reabar.wimc.FragmentCommunicator;
 import com.example.reabar.wimc.Model.Car;
 import com.example.reabar.wimc.Model.Model;
-import com.example.reabar.wimc.Model.Parking;
 import com.example.reabar.wimc.R;
 
 import java.util.List;
@@ -52,7 +51,6 @@ public class HomeScreenFragment extends Fragment {
 
         carsList = (ListView) view.findViewById(R.id.listCarsNotParkingNow);
 
-
         return view;
     }
 
@@ -65,10 +63,6 @@ public class HomeScreenFragment extends Fragment {
     @Override
     public void onDetach() {
     }
-
-
-
-
 
 
 
@@ -97,7 +91,6 @@ public class HomeScreenFragment extends Fragment {
             if(convertView == null){
                 LayoutInflater layoutInflater = getActivity().getLayoutInflater();
                 convertView= layoutInflater.inflate(R.layout.fragment_home_screen_row,null);
-
             }
             else{
                 Log.d("TAG", "use convert view:" + position);
