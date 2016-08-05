@@ -21,6 +21,13 @@
         <!--android:layout_weight="0.87" />-->
 
     <TextView
+        android:layout_width="231dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Hello username"
+        android:id="@+id/loggedinUser" />
+
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/nav_header_vertical_spacing"

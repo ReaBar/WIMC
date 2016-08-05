@@ -9,10 +9,10 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.reabar.wimc.Fragments.HomeScreenFragment;
@@ -21,11 +21,7 @@ import com.example.reabar.wimc.Fragments.ManageMyCarsScreenFragment;
 import com.example.reabar.wimc.Fragments.MySharedCarsScreenFragment;
 import com.example.reabar.wimc.Fragments.SettingsScreenFragment;
 import com.example.reabar.wimc.Fragments.SignupScreenFragment;
-import com.example.reabar.wimc.Model.Car;
 import com.example.reabar.wimc.Model.Model;
-import com.example.reabar.wimc.Model.Parking;
-
-import java.util.ArrayList;
 
 
 public class MainActivity extends AppCompatActivity
@@ -225,11 +221,5 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-
-    //        fragmentManager = getSupportFragmentManager();
-//        fragmentTransaction = getSupportFragmentManager().beginTransaction();
-//        loginFragment = new LoginScreenFragment();
-//        fragmentTransaction.add(R.id.main_frag_container,loginFragment,"loginFragment");
-//        fragmentTransaction.show(loginFragment).addToBackStack("loginFragment").commit();
 
 }

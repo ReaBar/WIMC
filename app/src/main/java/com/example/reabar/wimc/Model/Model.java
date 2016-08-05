@@ -1,28 +1,14 @@
 package com.example.reabar.wimc.Model;
 
+import android.graphics.Bitmap;
+import android.os.AsyncTask;
+
 import com.example.reabar.wimc.FilesManagerHelper;
 import com.example.reabar.wimc.MyApplication;
 import com.google.firebase.auth.FirebaseAuth;
-import java.util.LinkedList;
+
+import java.util.ArrayList;
 import java.util.List;
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.os.AsyncTask;
-import android.os.Environment;
-import android.util.Log;
-
-
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 
 /**
  * Created by reabar on 28/06/2016.
@@ -100,7 +86,7 @@ public class Model {
         modelFirebase.updateCar(car,listener);
     }
 
-    private List<Car> data = new LinkedList<Car>();
+    private List<Car> data = new ArrayList<>();
     public List<Car> getAllCars(){
         return data;
     }

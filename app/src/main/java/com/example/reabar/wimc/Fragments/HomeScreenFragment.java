@@ -18,6 +18,7 @@ import com.example.reabar.wimc.Model.Car;
 import com.example.reabar.wimc.Model.Model;
 import com.example.reabar.wimc.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class HomeScreenFragment extends Fragment {
@@ -46,10 +47,30 @@ public class HomeScreenFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home_screen, container, false);
 
-        progressBar = (ProgressBar) view.findViewById(R.id.mySharedCars_ProgressBar);
+        progressBar = (ProgressBar) view.findViewById(R.id.homepageProgressBar);
         progressBar.setVisibility(View.VISIBLE);
+        cars =  Model.getInstance().getAllCars();
+
+        Model.getInstance().getMyUnparkedCars(Model.getInstance().getCurrentUser().getEmail(), new Model.SyncListener() {
+            @Override
+            public void PassData(Object allCars) {
+                cars = (ArrayList) allCars;
+                progressBar.setVisibility(View.GONE);
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void isSuccessful(boolean s) {
+            }
+
+            @Override
+            public void failed(String s) {
+            }
+        });
 
         carsList = (ListView) view.findViewById(R.id.listCarsNotParkingNow);
+        adapter = new CarsNotParkingAdapter();
+        carsList.setAdapter(adapter);
 
         return view;
     }
@@ -97,8 +118,12 @@ public class HomeScreenFragment extends Fragment {
             }
 
             TextView carLicense = (TextView) convertView.findViewById(R.id.home_car_license);
+            TextView carModelCompany = (TextView) convertView.findViewById(R.id.home_car_modelCompany);
+
             Car car = cars.get(position);
             carLicense.setText(car.getCarId());
+            carModelCompany.setText(car.getCompany() + " " + car.getModel());
+
             return convertView;
         }
     }
