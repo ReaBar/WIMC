@@ -4,17 +4,27 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.example.reabar.wimc.Fragments.HomeScreenFragment"
-    android:weightSum="1"
-    android:gravity="center_vertical">
+    android:weightSum="1">
 
+    <TextView
+        android:layout_width="361dp"
+        android:layout_height="36dp"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Hello username"
+        android:id="@+id/loggedinUser"
+        android:textIsSelectable="false"
+        android:textSize="18dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="60dp"
+        android:textAlignment="center" />
 
     <TextView
         android:layout_width="283dp"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Want to park your car? please choose the car below!"
-        android:id="@+id/deleteTextView"
-        android:layout_marginTop="45dp"
+        android:id="@+id/helloTextView"
+        android:layout_marginTop="25dp"
         android:layout_marginBottom="15dp"
         android:layout_below="@+id/cars_list_row_car_model_company"
         android:layout_centerHorizontal="true"
@@ -38,6 +48,8 @@
         android:id="@+id/listCarsNotParkingNow"
         android:layout_alignParentStart="true"
         android:layout_gravity="center_horizontal" />
+
+
 
 
 </LinearLayout>

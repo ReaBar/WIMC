@@ -40,6 +40,7 @@ public class ParkingFirebase {
     public void getMyUnparkedCars(final FirebaseDatabase db, final String uId, final Model.SyncListener listener) {
         final DatabaseReference carDbRef = db.getReference("cars");
         final ArrayList<Car> carsList = new ArrayList<>();
+
         carDbRef.orderByChild("userOwnerId").equalTo(uId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

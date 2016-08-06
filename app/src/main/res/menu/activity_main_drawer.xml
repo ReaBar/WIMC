@@ -4,27 +4,27 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_menu_homepage"
-            android:icon="@drawable/common_ic_googleplayservices"
+            android:icon="@drawable/home_24x24"
             android:title="Home Page" />
         <item
             android:id="@+id/nav_menu_settings"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/wrench_24x24"
             android:title="Settings" />
         <item
             android:id="@+id/nav_menu_myCarsNow"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/map_pin_alt_16x32"
             android:title="Where are my Cars Now?" />
         <item
             android:id="@+id/nav_menu_manageMyCars"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/star_24x24"
             android:title="Manage My Cars" />
         <item
             android:id="@+id/nav_menu_manageSahredCars"
-            android:icon="@drawable/ic_menu_send"
+            android:icon="@drawable/tag_fill_24x24"
             android:title="Manage Shared Cars" />
         <item
             android:id="@+id/nav_menu_logoutapp"
-            android:icon="@drawable/ic_menu_send"
+            android:icon="@drawable/arrow_left_24x24"
             android:title="Logout" />
     </group>
 

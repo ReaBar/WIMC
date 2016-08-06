@@ -47,26 +47,31 @@ public class HomeScreenFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home_screen, container, false);
 
+        TextView user = (TextView) view.findViewById(R.id.loggedinUser);
+        user.setText("Hello " + Model.getInstance().getCurrentUser().getEmail());
+
         progressBar = (ProgressBar) view.findViewById(R.id.homepageProgressBar);
         progressBar.setVisibility(View.VISIBLE);
         cars =  Model.getInstance().getAllCars();
 
-        Model.getInstance().getMyUnparkedCars(Model.getInstance().getCurrentUser().getEmail(), new Model.SyncListener() {
-            @Override
-            public void PassData(Object allCars) {
-                cars = (ArrayList) allCars;
-                progressBar.setVisibility(View.GONE);
-                adapter.notifyDataSetChanged();
-            }
+        if(Model.getInstance().getCurrentUser() != null) {
+            Model.getInstance().getMyUnparkedCars(Model.getInstance().getCurrentUser().getEmail(), new Model.SyncListener() {
+                @Override
+                public void PassData(Object allCars) {
+                    cars = (ArrayList) allCars;
+                    progressBar.setVisibility(View.GONE);
+                    adapter.notifyDataSetChanged();
+                }
 
-            @Override
-            public void isSuccessful(boolean s) {
-            }
+                @Override
+                public void isSuccessful(boolean s) {
+                }
 
-            @Override
-            public void failed(String s) {
-            }
-        });
+                @Override
+                public void failed(String s) {
+                }
+            });
+        }
 
         carsList = (ListView) view.findViewById(R.id.listCarsNotParkingNow);
         adapter = new CarsNotParkingAdapter();
