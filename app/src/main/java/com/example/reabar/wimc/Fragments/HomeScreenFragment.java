@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -76,6 +77,16 @@ public class HomeScreenFragment extends Fragment {
         carsList = (ListView) view.findViewById(R.id.listCarsNotParkingNow);
         adapter = new CarsNotParkingAdapter();
         carsList.setAdapter(adapter);
+
+        carsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Object[] data = new Object[1];
+                data[0] = cars.get(position).getCarId();
+                fragmentCommunicator.passData(data,"ParkingScreenFragment");
+            }
+        });
+
 
         return view;
     }

@@ -7,7 +7,7 @@
     android:weightSum="1">
 
     <TextView
-        android:layout_width="361dp"
+        android:layout_width="match_parent"
         android:layout_height="36dp"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Hello username"

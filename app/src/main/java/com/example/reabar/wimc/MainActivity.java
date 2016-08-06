@@ -18,6 +18,7 @@ import com.example.reabar.wimc.Fragments.HomeScreenFragment;
 import com.example.reabar.wimc.Fragments.LoginScreenFragment;
 import com.example.reabar.wimc.Fragments.ManageMyCarsScreenFragment;
 import com.example.reabar.wimc.Fragments.MySharedCarsScreenFragment;
+import com.example.reabar.wimc.Fragments.ParkingScreenFragment;
 import com.example.reabar.wimc.Fragments.SettingsScreenFragment;
 import com.example.reabar.wimc.Fragments.SignupScreenFragment;
 import com.example.reabar.wimc.Model.Model;
@@ -39,7 +40,7 @@ public class MainActivity extends AppCompatActivity
     SettingsScreenFragment settingsFragment;
     ManageMyCarsScreenFragment manageMyCarsFragment;
     MySharedCarsScreenFragment mySharedCarsFragment;
-
+    ParkingScreenFragment parkingFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -220,7 +221,17 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void passData(Object[] data) {
+    public void passData(Object[] data, String text) {
+
+        switch (text) {
+            case "ParkingScreenFragment":
+                parkingFragment = new ParkingScreenFragment();
+                parkingFragment.carID = (String) data[0];
+                fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.main_frag_container, parkingFragment, "ParkingScreenFragment");
+                fragmentTransaction.addToBackStack(null).commit();
+                break;
+        }
 
     }
 

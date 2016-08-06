@@ -5,5 +5,5 @@ package com.example.reabar.wimc;
  */
 public interface FragmentCommunicator {
     void passString(String text);
-    void passData(Object[] data);
+    void passData(Object[] data, String text);
 }

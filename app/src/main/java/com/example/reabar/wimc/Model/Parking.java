@@ -7,7 +7,7 @@ import android.media.Image;
  */
 public class Parking {
     private String parkingObjectId, carId, street, city, parkingLotName,parkingLotRowColor;
-    private int streetNumber, parkingLotNumber, parkingLotFloor;
+    private int streetNumber, parkingLotFloor;
     private double latitude, longitude;
     private boolean parkingIsActive;
     private Image parkingImage;
@@ -21,7 +21,6 @@ public class Parking {
         this.parkingLotName = parkingBuilder.parkingLotName;
         this.parkingLotRowColor = parkingBuilder.parkingLotRowColor;
         this.streetNumber = parkingBuilder.streetNumber;
-        this.parkingLotNumber = parkingBuilder.parkingLotNumber;
         this.parkingLotFloor = parkingBuilder.parkingLotFloor;
         this.latitude = parkingBuilder.latitude;
         this.longitude = parkingBuilder.longitude;
@@ -81,13 +80,6 @@ public class Parking {
         this.streetNumber = streetNumber;
     }
 
-    public int getParkingLotNumber() {
-        return parkingLotNumber;
-    }
-
-    public void setParkingLotNumber(int parkingLotNumber) {
-        this.parkingLotNumber = parkingLotNumber;
-    }
 
     public int getParkingLotFloor() {
         return parkingLotFloor;
@@ -153,11 +145,6 @@ public class Parking {
 
         public ParkingBuilder parkingLatitude(double latitude){
             this.parkingLatitude(latitude);
-            return this;
-        }
-
-        public ParkingBuilder parkingLotNumber(int parkingLotNumber) {
-            this.parkingLotNumber = parkingLotNumber;
             return this;
         }
 
