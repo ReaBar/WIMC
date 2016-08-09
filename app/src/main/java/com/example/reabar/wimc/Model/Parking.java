@@ -7,7 +7,7 @@ import android.media.Image;
  */
 public class Parking {
     private String parkingObjectId, carId, street, city, parkingLotName,parkingLotRowColor;
-    private int streetNumber, parkingLotFloor;
+    private String streetNumber, parkingLotFloor;
     private double latitude, longitude;
     private boolean parkingIsActive;
     private Image parkingImage;
@@ -72,20 +72,20 @@ public class Parking {
         this.parkingLotRowColor = parkingLotRowColor;
     }
 
-    public int getStreetNumber() {
+    public String getStreetNumber() {
         return streetNumber;
     }
 
-    public void setStreetNumber(int streetNumber) {
+    public void setStreetNumber(String streetNumber) {
         this.streetNumber = streetNumber;
     }
 
 
-    public int getParkingLotFloor() {
+    public String getParkingLotFloor() {
         return parkingLotFloor;
     }
 
-    public void setParkingLotFloor(int parkingLotFloor) {
+    public void setParkingLotFloor(String parkingLotFloor) {
         this.parkingLotFloor = parkingLotFloor;
     }
 
@@ -121,9 +121,12 @@ public class Parking {
         this.parkingImage = parkingImage;
     }
 
+
+
+
     public static class ParkingBuilder {
         private String carId, street, city, parkingLotName,parkingLotRowColor;
-        private int streetNumber, parkingLotNumber, parkingLotFloor;
+        private String streetNumber, parkingLotNumber, parkingLotFloor;
         private double latitude, longitude;
         private boolean parkingIsActive;
         private Image parkingImage;
@@ -132,11 +135,6 @@ public class Parking {
             this.carId = carId;
             this.parkingIsActive = true;
         }
-
-/*        public ParkingBuilder carId(String carId){
-            this.carId = carId;
-            return this;
-        }*/
 
         public ParkingBuilder parkingLonitude(double longitude){
             this.parkingLonitude(longitude);
@@ -148,7 +146,7 @@ public class Parking {
             return this;
         }
 
-        public ParkingBuilder parkingLotFloor(int parkingLotFloor){
+        public ParkingBuilder parkingLotFloor(String parkingLotFloor){
             this.parkingLotFloor = parkingLotFloor;
             return this;
         }
@@ -178,7 +176,7 @@ public class Parking {
             return this;
         }
 
-        public ParkingBuilder streetNumber(int streetNumber){
+        public ParkingBuilder streetNumber(String streetNumber){
             this.streetNumber = streetNumber;
             return this;
         }

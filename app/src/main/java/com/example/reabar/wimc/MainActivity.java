@@ -64,8 +64,7 @@ public class MainActivity extends AppCompatActivity
 //        navUsername.setText("Hello " + Model.getInstance().getCurrentUser().getEmail());
 
 
-
-        //Parking parking = new Parking.ParkingBuilder("12345555556").city("Tel Aviv").streetNumber(123).build();
+        //Parking parking = new Parking.ParkingBuilder("12345555556").city("Tel Aviv").street("dalia").build();
 
 //        Car car = new Car("112233", "Blue", "2015", "Honda", "rea.bar@gmail.com");
 //        String share1 = "tomer_aronovsky@hotmail.com";
@@ -234,6 +233,8 @@ public class MainActivity extends AppCompatActivity
         }
 
     }
+
+
 
 
 }
