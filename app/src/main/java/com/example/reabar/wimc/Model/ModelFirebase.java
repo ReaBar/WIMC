@@ -71,6 +71,10 @@ public class ModelFirebase {
         carFirebase.getListOfSharedCars(firebaseDatabase,uId,listener);
     }
 
+    public void getListOfAllCarsInDB(Model.SyncListener listener){
+        carFirebase.getListOfAllCarsInDB(firebaseDatabase,listener);
+    }
+
     // ---- Parking Functions ---- //
     public void parkCar(Parking parking, Model.SyncListener listener){
         parkingFirebase.parkCar(firebaseDatabase,parking,listener);
@@ -78,6 +82,14 @@ public class ModelFirebase {
 
     public void getMyUnparkedCars(String uid, Model.SyncListener listener){
         parkingFirebase.getMyUnparkedCars(firebaseDatabase,uid,listener);
+    }
+
+    public void getAllMyParkedCars(Model.SyncListener listener){
+        parkingFirebase.getAllMyParkedCars(listener);
+    }
+
+    public void getAllMyParkingSpots(Model.SyncListener listener){
+        parkingFirebase.getAllMyParkingSpots(firebaseDatabase,listener);
     }
 
 }

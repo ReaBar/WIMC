@@ -44,7 +44,6 @@ public class MySharedCarsScreenFragment extends Fragment {
         progressBar = (ProgressBar) view.findViewById(R.id.mySharedCars_ProgressBar);
         progressBar.setVisibility(View.VISIBLE);
 
-        cars = Model.getInstance().getAllCars();
         carsList= (ListView) view.findViewById(R.id.listShredCars);
         Model.getInstance().getListOfSharedCars(Model.getInstance().getCurrentUser().getEmail(), new Model.SyncListener() {
             @Override

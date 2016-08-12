@@ -29,7 +29,7 @@ public class HomeScreenFragment extends Fragment {
     FragmentTransaction fragmentTransaction;
     CarsNotParkingAdapter adapter;
     ListView carsList;
-    List<Car> cars;
+    List<Car> cars = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,7 +50,6 @@ public class HomeScreenFragment extends Fragment {
 
         progressBar = (ProgressBar) view.findViewById(R.id.homepageProgressBar);
         progressBar.setVisibility(View.VISIBLE);
-        cars =  Model.getInstance().getAllCars();
 
         if(Model.getInstance().getCurrentUser() != null) {
             Model.getInstance().getMyUnparkedCars(Model.getInstance().getCurrentUser().getEmail(), new Model.SyncListener() {

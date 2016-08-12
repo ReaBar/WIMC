@@ -55,8 +55,6 @@ public class ManageMyCarsScreenFragment extends Fragment {
         progressBar = (ProgressBar) view.findViewById(R.id.mainProgressBar);
         progressBar.setVisibility(View.VISIBLE);
 
-
-        cars = Model.getInstance().getAllCars();
         carCompanyInput = (EditText) view.findViewById(R.id.carCompanyInput);
         carColorInput = (EditText) view.findViewById(R.id.carColorInput);
         carLicenseInput = (EditText) view.findViewById(R.id.carLicenseInput);

@@ -12,6 +12,7 @@ import java.util.List;
 public class Car {
     private String carId, color, model, company, userOwnerId;
     private ArrayList<String> usersList;
+    private Boolean parkingIsActive;
 
     public Car() {
         usersList = new ArrayList<>();
@@ -24,6 +25,7 @@ public class Car {
         this.company = company;
         this.userOwnerId = userOwnerId;
         usersList = new ArrayList<>();
+        parkingIsActive = false;
     }
 
     public String getCarId() {
@@ -70,7 +72,15 @@ public class Car {
         return usersList;
     }
 
-    private void updateThisCar(){
+    public Boolean getParkingIsActive() {
+        return parkingIsActive;
+    }
+
+    public void setParkingIsActive(Boolean parkingIsActive) {
+        this.parkingIsActive = parkingIsActive;
+    }
+
+    protected void updateThisCar(){
         Model.getInstance().updateCar(this, new Model.SyncListener() {
             @Override
             public void isSuccessful(boolean success) {
