@@ -117,9 +117,6 @@ public class MyCarsNowScreenFragment extends Fragment {
                 parkingPhoto.setImageBitmap(image);
             }
 
-
-
-
             return convertView;
         }
     }
