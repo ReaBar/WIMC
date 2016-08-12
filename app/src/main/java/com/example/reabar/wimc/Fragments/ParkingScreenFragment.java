@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.example.reabar.wimc.FragmentCommunicator;
 import com.example.reabar.wimc.GPSTracker;
 import com.example.reabar.wimc.Model.Model;
+import com.example.reabar.wimc.Model.ModelCloudinary;
 import com.example.reabar.wimc.Model.Parking;
 import com.example.reabar.wimc.MyApplication;
 import com.example.reabar.wimc.R;
@@ -122,7 +123,8 @@ public class ParkingScreenFragment extends Fragment implements  LocationListener
                             //save image to cloudinary
                             if(imageTaken){
                                 //call cloudinary function
-
+                                ModelCloudinary cloudinary = new ModelCloudinary(getActivity());
+                                cloudinary.uploadImage(carID, bitmap);
                             }
                             //go to homepage fragment
                             Toast.makeText(MyApplication.getAppActivity(), "Parking place saved",

@@ -13,11 +13,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.example.reabar.wimc.Fragments.HomeScreenFragment;
 import com.example.reabar.wimc.Fragments.LoginScreenFragment;
 import com.example.reabar.wimc.Fragments.ManageMyCarsScreenFragment;
+import com.example.reabar.wimc.Fragments.MyCarsNowScreenFragment;
 import com.example.reabar.wimc.Fragments.MySharedCarsScreenFragment;
 import com.example.reabar.wimc.Fragments.ParkingScreenFragment;
 import com.example.reabar.wimc.Fragments.SettingsScreenFragment;
@@ -42,6 +42,8 @@ public class MainActivity extends AppCompatActivity
     ManageMyCarsScreenFragment manageMyCarsFragment;
     MySharedCarsScreenFragment mySharedCarsFragment;
     ParkingScreenFragment parkingFragment;
+    MyCarsNowScreenFragment MyCarNowFragment;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,7 +135,7 @@ public class MainActivity extends AppCompatActivity
                 passString("SettingsScreenFragment");
                 break;
             case R.id.nav_menu_myCarsNow:
-                Toast.makeText(this, "MyCarsNow", Toast.LENGTH_SHORT).show();
+                passString("MyCarsNowScreenFragment");
                 break;
             case R.id.nav_menu_manageMyCars:
                 passString("ManageMyCarsScreenFragment");
@@ -215,6 +217,12 @@ public class MainActivity extends AppCompatActivity
                 mySharedCarsFragment = new MySharedCarsScreenFragment();
                 fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.main_frag_container, mySharedCarsFragment, "MySharedCarsScreenFragment");
+                fragmentTransaction.addToBackStack(null).commit();
+                break;
+            case "MyCarsNowScreenFragment":
+                MyCarNowFragment = new MyCarsNowScreenFragment();
+                fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.main_frag_container, MyCarNowFragment, "MyCarsNowScreenFragment");
                 fragmentTransaction.addToBackStack(null).commit();
                 break;
         }
