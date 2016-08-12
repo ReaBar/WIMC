@@ -1,7 +1,6 @@
 package com.example.reabar.wimc.Fragments;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -16,10 +15,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.reabar.wimc.FragmentCommunicator;
-import com.example.reabar.wimc.Model.ModelCloudinary;
+import com.example.reabar.wimc.Model.Model;
 import com.example.reabar.wimc.Model.Parking;
 import com.example.reabar.wimc.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -36,7 +36,6 @@ public class MyCarsNowScreenFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        fragmentCommunicator.passString("enableDrawer");
     }
 
     @Override
@@ -45,11 +44,36 @@ public class MyCarsNowScreenFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_my_cars_now, container, false);
 
+        if(parkings == null) {
+            parkings = new ArrayList<>();
+        }
+
         progressBar = (ProgressBar) view.findViewById(R.id.myCarsNow_ProgressBar);
         progressBar.setVisibility(View.VISIBLE);
         parkingsList = (ListView) view.findViewById((R.id.myCarsNowList));
 
         //get the list by from function
+        Model.getInstance().getAllMyParkingSpots(new Model.SyncListener() {
+            @Override
+            public void isSuccessful(boolean success) {
+
+            }
+
+            @Override
+            public void failed(String message) {
+
+            }
+
+            @Override
+            public void PassData(Object data) {
+                parkings = (ArrayList) data;
+                progressBar.setVisibility(View.GONE);
+                adapter.notifyDataSetChanged();
+            }
+        });
+
+        adapter = new MyCarsNowAdapter();
+        parkingsList.setAdapter(adapter);
 
 
         return view;
@@ -105,17 +129,17 @@ public class MyCarsNowScreenFragment extends Fragment {
             ImageView parkingPhoto = (ImageView) convertView.findViewById(R.id.parkingPhoto);
 
             Parking parking = parkings.get(position);
-            myParkingCarDetails.setText(parking.getCarId());
+            myParkingCarDetails.setText("Car Number: " + parking.getCarId());
             myParkingCarCity.setText(parking.getCity());
             myParkingCarStreet.setText(parking.getStreet() + " " + parking.getStreetNumber());
             myParkingLotName.setText(parking.getParkingLotName());
             myParkingLotFloor.setText(parking.getParkingLotFloor());
             //load image from cloudinary
-            ModelCloudinary cloudinary = new ModelCloudinary(getActivity());
-            Bitmap image = cloudinary.loadImage(parking.getCarId());
-            if(image != null){
-                parkingPhoto.setImageBitmap(image);
-            }
+//            ModelCloudinary cloudinary = new ModelCloudinary(getActivity());
+//            Bitmap image = cloudinary.loadImage(parking.getCarId());
+//            if(image != null){
+//                parkingPhoto.setImageBitmap(image);
+//            }
 
             return convertView;
         }

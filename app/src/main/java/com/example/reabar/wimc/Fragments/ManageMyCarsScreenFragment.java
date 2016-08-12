@@ -52,6 +52,10 @@ public class ManageMyCarsScreenFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_manage_my_cars_screen, container, false);
 
+        if(cars == null) {
+            cars = new ArrayList<>();
+        }
+
         progressBar = (ProgressBar) view.findViewById(R.id.mainProgressBar);
         progressBar.setVisibility(View.VISIBLE);
 

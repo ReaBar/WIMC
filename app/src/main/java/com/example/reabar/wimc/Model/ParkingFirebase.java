@@ -11,9 +11,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by reabar on 30.7.2016.
@@ -141,7 +139,7 @@ public class ParkingFirebase {
             public void PassData(Object data) {
                 if(data instanceof ArrayList){
                     for (Car car: (ArrayList<Car>)data) {
-                        if((car.getUserOwnerId().equals(Model.getInstance().getCurrentUser().getUserId()) || car.getUsersList().contains(Model.getInstance().getCurrentUser().getUserId())) && car.getParkingIsActive() == true){
+                        if((car.getUserOwnerId().equals(Model.getInstance().getCurrentUser().getEmail()) || car.getUsersList().contains(Model.getInstance().getCurrentUser().getEmail())) && car.getParkingIsActive()){
                             carsList.add(car);
                         }
                     }

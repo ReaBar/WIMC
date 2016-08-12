@@ -13,13 +13,14 @@
         style="@android:style/Widget.Holo.ProgressBar.Large"
         android:indeterminate="true"
         android:background="#05fafafa"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="75dp"
         android:indeterminateBehavior="cycle" />
 
 
     <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="430dp"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:id="@+id/myCarsNowList"
-        android:layout_gravity="center_horizontal|top" />
+        android:layout_gravity="center_horizontal|top"
+        android:layout_marginTop="@dimen/design_fab_size_normal" />
 </LinearLayout>
