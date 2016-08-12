@@ -126,6 +126,29 @@ public class CarFirebase {
         });
     }
 
+    public void getListOfAllCarsInDB(FirebaseDatabase db, final Model.SyncListener listener) {
+        DatabaseReference dbRef = db.getReference(CARS_DB);
+        final ArrayList<Car> carsList = new ArrayList<>();
+        dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Iterable<DataSnapshot> children = dataSnapshot.getChildren();
+                while (children.iterator().hasNext()) {
+                    Car tempCar = children.iterator().next().getValue(Car.class);
+                    carsList.add(tempCar);
+                }
+                listener.isSuccessful(true);
+                listener.PassData(carsList);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                listener.isSuccessful(false);
+                listener.failed(databaseError.getMessage());
+            }
+        });
+    }
+
 //    public void getListOfSharedCars(FirebaseDatabase db,final String uId, final Model.SyncListener listener){
 //        DatabaseReference dbRef = db.getReference(CARS_DB);
 //        final ArrayList<Car> sharedCars = new ArrayList<>();

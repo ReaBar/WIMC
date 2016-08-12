@@ -86,9 +86,8 @@ public class Model {
         modelFirebase.updateCar(car,listener);
     }
 
-    private List<Car> data = new ArrayList<>();
-    public List<Car> getAllCars(){
-        return data;
+    public void getAllCars(SyncListener listener){
+        modelFirebase.getListOfAllCarsInDB(listener);
     }
 
     public void parkCar(Parking parking, SyncListener listener){
@@ -97,6 +96,14 @@ public class Model {
 
     public void getMyUnparkedCars(String uid, SyncListener listener){
         modelFirebase.getMyUnparkedCars(uid, listener);
+    }
+
+    public void getAllMyParkedCars(SyncListener listener){
+        modelFirebase.getAllMyParkedCars(listener);
+    }
+
+    public void getAllMyParkingSpots(SyncListener listener){
+        modelFirebase.getAllMyParkingSpots(listener);
     }
 
     //--- Listeners ---- //
