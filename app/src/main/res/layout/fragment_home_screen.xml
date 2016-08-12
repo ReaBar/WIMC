@@ -1,22 +1,22 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<FrameLayout
+android:id="@+id/FrameLayout1"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:layout_marginTop="50dp"
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools" >
+
+
+<LinearLayout
+    android:id="@+id/LinearLayout1"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:context="com.example.reabar.wimc.Fragments.HomeScreenFragment"
+    android:background="@drawable/bg"
     android:weightSum="1">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="36dp"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Hello username"
-        android:id="@+id/loggedinUser"
-        android:textIsSelectable="false"
-        android:textSize="18dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="60dp"
-        android:textAlignment="center" />
+
+
 
     <TextView
         android:layout_width="283dp"
@@ -24,13 +24,15 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Want to park your car? please choose the car below!"
         android:id="@+id/helloTextView"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="80dp"
         android:layout_marginBottom="15dp"
         android:layout_below="@+id/cars_list_row_car_model_company"
         android:layout_centerHorizontal="true"
         android:textAlignment="center"
         android:textStyle="bold|italic"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:background="#00ffffff"
+        android:textColor="#ffffff" />
 
     <ProgressBar
         android:layout_width="fill_parent"
@@ -38,7 +40,7 @@
         android:id="@+id/homepageProgressBar"
         style="@android:style/Widget.Holo.ProgressBar.Large"
         android:indeterminate="true"
-        android:background="#fafafa"
+        android:background="#00fafafa"
         android:layout_marginTop="25dp"
         android:indeterminateBehavior="cycle" />
 
@@ -53,3 +55,53 @@
 
 
 </LinearLayout>
+
+</FrameLayout>
+
+
+<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--xmlns:tools="http://schemas.android.com/tools"-->
+<!--android:layout_width="wrap_content"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:orientation="vertical"-->
+<!--android:background="@drawable/bg1"-->
+<!--android:weightSum="1">-->
+
+
+<!--<TextView-->
+    <!--android:layout_width="283dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:textAppearance="?android:attr/textAppearanceLarge"-->
+    <!--android:text="Want to park your car? please choose the car below!"-->
+    <!--android:id="@+id/helloTextView"-->
+    <!--android:layout_marginTop="110dp"-->
+    <!--android:layout_marginBottom="15dp"-->
+    <!--android:layout_below="@+id/cars_list_row_car_model_company"-->
+    <!--android:layout_centerHorizontal="true"-->
+    <!--android:textAlignment="center"-->
+    <!--android:textStyle="bold|italic"-->
+    <!--android:layout_gravity="center_horizontal"-->
+    <!--android:background="#ffffff" />-->
+
+<!--<ProgressBar-->
+    <!--android:layout_width="fill_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:id="@+id/homepageProgressBar"-->
+    <!--style="@android:style/Widget.Holo.ProgressBar.Large"-->
+    <!--android:indeterminate="true"-->
+    <!--android:background="#00fafafa"-->
+    <!--android:layout_marginTop="25dp"-->
+    <!--android:indeterminateBehavior="cycle" />-->
+
+<!--<ListView-->
+    <!--android:layout_width="325dp"-->
+    <!--android:layout_height="227dp"-->
+    <!--android:id="@+id/listCarsNotParkingNow"-->
+    <!--android:layout_alignParentStart="true"-->
+    <!--android:layout_gravity="center_horizontal" />-->
+
+
+
+
+<!--</LinearLayout>-->
+

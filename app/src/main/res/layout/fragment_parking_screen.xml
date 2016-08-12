@@ -160,15 +160,22 @@
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:orientation="horizontal"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="10dp"
+            android:weightSum="1">
 
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="226dp"
                 android:layout_height="match_parent"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="LongTitude and Latitude"
                 android:id="@+id/gpsText" />
+
+            <ImageView
+                android:layout_width="82dp"
+                android:layout_height="126dp"
+                android:id="@+id/imagePlace"
+                android:layout_weight="0.31" />
         </LinearLayout>
 
 

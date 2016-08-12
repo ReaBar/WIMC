@@ -9,8 +9,9 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="46dp"
-        android:weightSum="1">
+        android:layout_height="55dp"
+        android:weightSum="1"
+        android:background="#ffffff">
 
 
         <TextView
@@ -35,7 +36,8 @@
             android:layout_alignParentTop="true"
             android:layout_alignStart="@+id/cars_list_row_car_model_company"
             android:layout_alignEnd="@+id/textView2"
-            android:layout_weight="0.03" />
+            android:layout_weight="0.03"
+            android:textStyle="bold|italic" />
 
     </LinearLayout>
 </LinearLayout>

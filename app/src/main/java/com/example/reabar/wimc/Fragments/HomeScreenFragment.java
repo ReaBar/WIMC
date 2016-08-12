@@ -48,9 +48,6 @@ public class HomeScreenFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home_screen, container, false);
 
-        TextView user = (TextView) view.findViewById(R.id.loggedinUser);
-//        user.setText("Hello " + Model.getInstance().getCurrentUser().getEmail());
-
         progressBar = (ProgressBar) view.findViewById(R.id.homepageProgressBar);
         progressBar.setVisibility(View.VISIBLE);
         cars =  Model.getInstance().getAllCars();

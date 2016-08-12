@@ -137,12 +137,12 @@ public class Parking {
         }
 
         public ParkingBuilder parkingLonitude(double longitude){
-            this.parkingLonitude(longitude);
+            this.longitude = longitude;
             return this;
         }
 
         public ParkingBuilder parkingLatitude(double latitude){
-            this.parkingLatitude(latitude);
+            this.latitude = latitude;
             return this;
         }
 
