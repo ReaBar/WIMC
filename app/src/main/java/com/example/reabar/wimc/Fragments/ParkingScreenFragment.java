@@ -116,7 +116,7 @@ public class ParkingScreenFragment extends Fragment implements  LocationListener
                     Toast.makeText(MyApplication.getAppActivity(), "Must enter city and street to save parking",
                             Toast.LENGTH_SHORT).show();
                 } else {
-                    Parking parking = new Parking.ParkingBuilder(carID).street(street.getText().toString()).city(city.getText().toString()).parkingLotName(parkingLotName.getText().toString()).parkingLotFloor(FloorNumber.getText().toString()).parkingLotRowColor(RowColor.getText().toString()).parkingLatitude(latitude).parkingLonitude(longtitude).build();
+                    Parking parking = new Parking.ParkingBuilder(carID).street(street.getText().toString()).streetNumber(number.getText().toString()).city(city.getText().toString()).parkingLotName(parkingLotName.getText().toString()).parkingLotFloor(FloorNumber.getText().toString()).parkingLotRowColor(RowColor.getText().toString()).parkingLatitude(latitude).parkingLonitude(longtitude).build();
                     Model.getInstance().parkCar(parking, new Model.SyncListener() {
                         @Override
                         public void isSuccessful(boolean success) {

@@ -126,14 +126,14 @@ public class MyCarsNowScreenFragment extends Fragment {
             }
 
             TextView myParkingCarDetails = (TextView) convertView.findViewById(R.id.myParkingCarModelYear);
-            TextView myParkingCarCityStreetNumber = (TextView) convertView.findViewById(R.id.parkingCityInput);
+            TextView myParkingCarCityStreetNumber = (TextView) convertView.findViewById(R.id.parkingCityStreetInput1);
             TextView myParkingLotName = (TextView) convertView.findViewById(R.id.parkingLotNameInput);
             TextView myParkingLotFloor = (TextView) convertView.findViewById(R.id.parkingLotFloorInput);
             final ImageView parkingPhoto = (ImageView) convertView.findViewById(R.id.parkingPhoto);
 
             Parking parking = parkings.get(position);
             myParkingCarDetails.setText("Car Number: " + parking.getCarId());
-            myParkingCarCityStreetNumber.setText(parking.getCity() + " " + parking.getStreet() + " " + parking.getStreetNumber());
+            myParkingCarCityStreetNumber.setText(parking.getStreet() + " " + parking.getStreetNumber() + "St.  " + parking.getCity());
             myParkingLotName.setText(parking.getParkingLotName());
             myParkingLotFloor.setText(parking.getParkingLotFloor());
             //load image from cloudinary
