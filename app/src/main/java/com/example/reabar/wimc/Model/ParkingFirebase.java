@@ -11,6 +11,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -195,5 +196,63 @@ public class ParkingFirebase {
                 listener.failed(databaseError.getMessage());
             }
         });
+    }
+
+    public void stopParking(FirebaseDatabase db, final Parking parking) {
+        DatabaseReference dbRef = db.getReference(PARKING_DB);
+        Model.getInstance().getAllMyParkedCars(new Model.SyncListener() {
+            @Override
+            public void isSuccessful(boolean success) {
+
+            }
+
+            @Override
+            public void failed(String message) {
+
+            }
+
+            @Override
+            public void PassData(Object data) {
+                if(data instanceof ArrayList){
+                    for (Car car: (ArrayList<Car>)data) {
+                        if(car.getCarId().equals(parking.getCarId())){
+                            car.setParkingIsActive(false);
+                            car.updateThisCar();
+                            return;
+                        }
+                    }
+                }
+            }
+        });
+        dbRef.child(parking.getCarId()).removeValue();
+    }
+
+    public void stopParking(FirebaseDatabase db, final Car car) {
+        DatabaseReference dbRef = db.getReference(PARKING_DB);
+        Model.getInstance().getAllMyParkedCars(new Model.SyncListener() {
+            @Override
+            public void isSuccessful(boolean success) {
+
+            }
+
+            @Override
+            public void failed(String message) {
+
+            }
+
+            @Override
+            public void PassData(Object data) {
+                if(data instanceof ArrayList){
+                    for (Car car: (ArrayList<Car>)data) {
+                        if(car.getCarId().equals(car.getCarId())){
+                            car.setParkingIsActive(false);
+                            car.updateThisCar();
+                            return;
+                        }
+                    }
+                }
+            }
+        });
+        dbRef.child(car.getCarId()).removeValue();
     }
 }

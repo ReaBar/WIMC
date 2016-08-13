@@ -22,7 +22,11 @@ import com.example.reabar.wimc.Fragments.MySharedCarsScreenFragment;
 import com.example.reabar.wimc.Fragments.ParkingScreenFragment;
 import com.example.reabar.wimc.Fragments.SettingsScreenFragment;
 import com.example.reabar.wimc.Fragments.SignupScreenFragment;
+import com.example.reabar.wimc.Model.Car;
 import com.example.reabar.wimc.Model.Model;
+import com.example.reabar.wimc.Model.Parking;
+
+import java.util.ArrayList;
 
 
 public class MainActivity extends AppCompatActivity

@@ -92,4 +92,12 @@ public class ModelFirebase {
         parkingFirebase.getAllMyParkingSpots(firebaseDatabase,listener);
     }
 
+    public void stopParking(Parking parking){
+        parkingFirebase.stopParking(firebaseDatabase,parking);
+    }
+
+    public void stopParking(Car car){
+        parkingFirebase.stopParking(firebaseDatabase,car);
+    }
+
 }

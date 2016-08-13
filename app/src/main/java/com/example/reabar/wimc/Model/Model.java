@@ -106,6 +106,14 @@ public class Model {
         modelFirebase.getAllMyParkingSpots(listener);
     }
 
+    public void stopParking(Parking parking){
+        modelFirebase.stopParking(parking);
+    }
+
+    public void stopParking(Car car){
+        modelFirebase.stopParking(car);
+    }
+
     //--- Listeners ---- //
     public interface SyncListener{
         void isSuccessful(boolean success);
