@@ -9,13 +9,11 @@ import android.util.Log;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.nio.ByteBuffer;
 import java.util.Map;
 
 /**
@@ -77,5 +75,8 @@ public class ModelCloudinary {
 
         return null;
     }
+
+
 }
+
 

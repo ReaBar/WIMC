@@ -1,6 +1,7 @@
 package com.example.reabar.wimc.Fragments;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 
 import com.example.reabar.wimc.FragmentCommunicator;
 import com.example.reabar.wimc.Model.Model;
+import com.example.reabar.wimc.Model.ModelCloudinary;
 import com.example.reabar.wimc.Model.Parking;
 import com.example.reabar.wimc.R;
 
@@ -31,7 +33,7 @@ public class MyCarsNowScreenFragment extends Fragment {
     MyCarsNowAdapter adapter;
     ListView parkingsList;
     List<Parking> parkings;
-
+    ModelCloudinary cloudinary;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,6 +45,8 @@ public class MyCarsNowScreenFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_my_cars_now, container, false);
+
+        cloudinary = new ModelCloudinary(getActivity());
 
         if(parkings == null) {
             parkings = new ArrayList<>();
@@ -122,24 +126,25 @@ public class MyCarsNowScreenFragment extends Fragment {
             }
 
             TextView myParkingCarDetails = (TextView) convertView.findViewById(R.id.myParkingCarModelYear);
-            TextView myParkingCarCity = (TextView) convertView.findViewById(R.id.parkingCityInput);
-            TextView myParkingCarStreet = (TextView) convertView.findViewById(R.id.parkingStreetInput);
+            TextView myParkingCarCityStreetNumber = (TextView) convertView.findViewById(R.id.parkingCityInput);
             TextView myParkingLotName = (TextView) convertView.findViewById(R.id.parkingLotNameInput);
             TextView myParkingLotFloor = (TextView) convertView.findViewById(R.id.parkingLotFloorInput);
-            ImageView parkingPhoto = (ImageView) convertView.findViewById(R.id.parkingPhoto);
+            final ImageView parkingPhoto = (ImageView) convertView.findViewById(R.id.parkingPhoto);
 
             Parking parking = parkings.get(position);
             myParkingCarDetails.setText("Car Number: " + parking.getCarId());
-            myParkingCarCity.setText(parking.getCity());
-            myParkingCarStreet.setText(parking.getStreet() + " " + parking.getStreetNumber());
+            myParkingCarCityStreetNumber.setText(parking.getCity() + " " + parking.getStreet() + " " + parking.getStreetNumber());
             myParkingLotName.setText(parking.getParkingLotName());
             myParkingLotFloor.setText(parking.getParkingLotFloor());
             //load image from cloudinary
-//            ModelCloudinary cloudinary = new ModelCloudinary(getActivity());
-//            Bitmap image = cloudinary.loadImage(parking.getCarId());
-//            if(image != null){
-//                parkingPhoto.setImageBitmap(image);
-//            }
+            Model.getInstance().loadImage(parking.getCarId(), new Model.LoadImageListener() {
+                @Override
+                public void onResult(Bitmap imageBmp) {
+                    if(imageBmp != null){
+                        parkingPhoto.setImageBitmap(imageBmp);
+                    }
+                }
+            });
 
             return convertView;
         }

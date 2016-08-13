@@ -7,7 +7,6 @@ import com.example.reabar.wimc.FilesManagerHelper;
 import com.example.reabar.wimc.MyApplication;
 import com.google.firebase.auth.FirebaseAuth;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -129,15 +128,16 @@ public class Model {
         AsyncTask<String,String,Bitmap> task = new AsyncTask<String, String, Bitmap >() {
             @Override
             protected Bitmap doInBackground(String... params) {
+                Bitmap bmp = modelCloudinary.loadImage(imageName);
                 //first try to fin the image on the device
-                Bitmap bmp = fileManager.loadImageFromFile(imageName);
-
-                if (bmp == null) {
-                    bmp = modelCloudinary.loadImage(imageName);
-                    //save the image locally for next time
-                    if (bmp != null)
-                        fileManager.saveImageToFile(bmp,imageName);
-                }
+//                Bitmap bmp = fileManager.loadImageFromFile(imageName);
+//
+//                if (bmp == null) {
+//                    bmp = modelCloudinary.loadImage(imageName);
+//                    //save the image locally for next time
+//                    if (bmp != null)
+//                        fileManager.saveImageToFile(bmp,imageName);
+//                }
                 return bmp;
             }
             @Override
@@ -152,6 +152,11 @@ public class Model {
     public interface LoadImageListener{
         public void onResult(Bitmap imageBmp);
     }
+
+
+
+
+
   /*  public void SetLocalBitmap(Bitmap image)
     {
         this.image = image;
