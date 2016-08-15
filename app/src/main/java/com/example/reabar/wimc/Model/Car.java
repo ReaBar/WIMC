@@ -116,11 +116,10 @@ public class Car {
             @Override
             public void PassData(Object data) {
                 if (data instanceof List) {
-                    usersList = (ArrayList<String>) data;
                     if (((List<User>) data).contains(uId)) {
                         usersList.add(uId);
                     } else {
-                        Toast.makeText(MyApplication.getAppContext(), "User already in the DB", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MyApplication.getAppContext(), "No such user", Toast.LENGTH_SHORT).show();
                     }
                 }
                 updateThisCar();
