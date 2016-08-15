@@ -80,7 +80,8 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp">
+            android:layout_marginTop="20dp"
+            android:weightSum="1">
 
             <EditText
                 android:layout_width="173dp"
@@ -95,8 +96,19 @@
                 android:hint="@string/email"
                 android:textSize="28dp" />
 
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:weightSum="1">
+
+>>>>>>> 30ce1f0a00dcc97467e10ecb10c78adbe1175147
             <Button
-                android:layout_width="176dp"
+                android:layout_width="match_parent"
                 android:layout_height="58dp"
                 android:text="@string/add_user_to_share_this_car"
                 android:id="@+id/addUserButton"
@@ -104,6 +116,14 @@
                 android:layout_marginRight="20dp"
                 android:layout_gravity="right" />
         </LinearLayout>
+
+
+
+
+
+
+
+
 
         <TextView
             android:layout_width="match_parent"

@@ -2,7 +2,7 @@
 android:id="@+id/FrameLayout1"
 android:layout_width="match_parent"
 android:layout_height="wrap_content"
-android:layout_marginTop="50dp"
+android:layout_marginTop="52dp"
 xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:tools="http://schemas.android.com/tools" >
 
@@ -12,9 +12,8 @@ xmlns:tools="http://schemas.android.com/tools" >
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="@drawable/bg"
+    android:background="@drawable/bg2"
     android:weightSum="1">
-
 
 
 
@@ -25,14 +24,14 @@ xmlns:tools="http://schemas.android.com/tools" >
         android:text="Want to park your car? please choose the car below!"
         android:id="@+id/helloTextView"
         android:layout_marginTop="80dp"
-        android:layout_marginBottom="15dp"
+        android:layout_marginBottom="25dp"
         android:layout_below="@+id/cars_list_row_car_model_company"
         android:layout_centerHorizontal="true"
         android:textAlignment="center"
-        android:textStyle="bold|italic"
         android:layout_gravity="center_horizontal"
         android:background="#00ffffff"
-        android:textColor="#ffffff" />
+        android:textColor="#ffffff"
+        android:textSize="35dp" />
 
     <ProgressBar
         android:layout_width="fill_parent"

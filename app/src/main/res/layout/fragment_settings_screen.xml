@@ -1,21 +1,20 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<FrameLayout
+    android:id="@+id/FrameLayout1"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/parking"
-    tools:context=".Fragments.SettingsScreenFragment">
+    android:layout_height="wrap_content"
+    android:layout_marginTop="52dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" >
 
-
-    <RelativeLayout
+<RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_gravity="center_horizontal|top"
-        android:layout_marginTop="40dp">
-
+        android:background="@drawable/parking">
 
         <EditText
             android:layout_width="300dp"
-            android:layout_height="wrap_content"
+            android:layout_height="35dp"
             android:inputType="textPassword"
             android:ems="10"
             android:id="@+id/settingsPasswordInput"
@@ -26,7 +25,6 @@
             android:layout_marginTop="30dp"
             android:background="#ffffff" />
 
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -34,8 +32,7 @@
             android:text="@string/settings"
             android:id="@+id/settingsText"
             android:layout_gravity="center_horizontal|top"
-            android:textSize="35sp"
-            android:textStyle="bold"
+            android:textSize="65sp"
             android:textColor="#234f84"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
@@ -59,10 +56,10 @@
             android:id="@+id/settingsPasswordButton"
             android:layout_below="@+id/settingsPasswordInput"
             android:layout_alignEnd="@+id/settingsPasswordInput"
-            android:layout_alignStart="@+id/settingsPasswordInput" />
-
-
+            android:layout_alignStart="@+id/settingsPasswordInput"
+            android:background="#203455"
+            android:textColor="#ffffff"
+            android:textSize="25dp"
+            android:layout_marginTop="5dp" />
     </RelativeLayout>
-
-
-</LinearLayout>
+</FrameLayout>
