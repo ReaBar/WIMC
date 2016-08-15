@@ -13,6 +13,7 @@ public class Car {
     private String carId, color, model, company, userOwnerId;
     private ArrayList<String> usersList;
     private Boolean parkingIsActive;
+    private String TAG = "CarClass";
 
     public Car() {
         usersList = new ArrayList<>();
@@ -85,7 +86,7 @@ public class Car {
             @Override
             public void isSuccessful(boolean success) {
                 if(success){
-                    Log.d("UpdateThisCar", "Car updated!");
+                    Log.d(TAG, "Car updated!");
                 }
             }
 

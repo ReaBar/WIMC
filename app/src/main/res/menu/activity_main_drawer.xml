@@ -5,27 +5,27 @@
         <item
             android:id="@+id/nav_menu_homepage"
             android:icon="@drawable/home_24x24"
-            android:title="Home Page" />
+            android:title="@string/home_page" />
         <item
             android:id="@+id/nav_menu_settings"
             android:icon="@drawable/wrench_24x24"
-            android:title="Settings" />
+            android:title="@string/settings" />
         <item
             android:id="@+id/nav_menu_myCarsNow"
             android:icon="@drawable/map_pin_alt_16x32"
-            android:title="Where are my Cars Now?" />
+            android:title="@string/where_are_my_cars_now" />
         <item
             android:id="@+id/nav_menu_manageMyCars"
             android:icon="@drawable/star_24x24"
-            android:title="Manage My Cars" />
+            android:title="@string/manage_my_cars" />
         <item
             android:id="@+id/nav_menu_manageSahredCars"
             android:icon="@drawable/tag_fill_24x24"
-            android:title="Manage Shared Cars" />
+            android:title="@string/manage_shared_cars" />
         <item
             android:id="@+id/nav_menu_logoutapp"
             android:icon="@drawable/arrow_left_24x24"
-            android:title="Logout" />
+            android:title="@string/logout" />
     </group>
 
 </menu>

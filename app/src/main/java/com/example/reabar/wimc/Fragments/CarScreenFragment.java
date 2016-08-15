@@ -99,9 +99,6 @@ public class CarScreenFragment extends Fragment {
         super.onDetach();
     }
 
-
-
-
     public class MyUsersCarAdapter extends BaseAdapter {
 
         @Override

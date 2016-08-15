@@ -33,7 +33,7 @@
         android:id="@+id/textView"
         android:layout_width="220dp"
         android:layout_height="match_parent"
-        android:text="Save and Share your parking spot"
+        android:text="@string/save_and_share_your_parking_spot"
         android:textSize="17dp" />
 
 </LinearLayout>

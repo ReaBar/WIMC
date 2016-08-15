@@ -5,7 +5,6 @@
     android:orientation="vertical"
     tools:context=".Fragments.MyCarsNowScreenFragment">
 
-
     <ProgressBar
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -15,7 +14,6 @@
         android:background="#05fafafa"
         android:layout_marginTop="75dp"
         android:indeterminateBehavior="cycle" />
-
 
     <ListView
         android:layout_width="fill_parent"

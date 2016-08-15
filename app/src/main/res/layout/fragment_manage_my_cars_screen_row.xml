@@ -4,8 +4,6 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal">
 
-
-
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -15,18 +13,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Car License Number"
+                android:text="@string/car_license_number"
                 android:id="@+id/cars_list_row_car_license"
                 android:autoText="false"
                 android:textAlignment="center" />
-
-
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Model + Company"
+                android:text="@string/model_company"
                 android:id="@+id/cars_list_row_car_model_company" />
 
             <!--<TextView-->
@@ -50,14 +46,5 @@
                 <!--android:textAppearance="?android:attr/textAppearanceLarge"-->
                 <!--android:text="Shared User 3"-->
                 <!--android:id="@+id/cars_list_row_shared_user3" />-->
-
-
-
-
         </LinearLayout>
-
-
-
-
-
 </LinearLayout>

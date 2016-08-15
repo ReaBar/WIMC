@@ -26,7 +26,6 @@
         android:layout_gravity="center_horizontal|top"
         android:layout_marginTop="20dp">
 
-
         <EditText
             android:layout_width="300dp"
             android:layout_height="wrap_content"
@@ -35,15 +34,13 @@
             android:id="@+id/emailInput"
             android:layout_marginTop="132dp"
             android:singleLine="false"
-            android:hint="Email"
+            android:hint="@string/email"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:textSize="28dp"
             android:textStyle="italic"
             android:textColorHint="#ffffff"
             android:textColor="#ffffff" />
-
-
 
         <EditText
             android:layout_width="wrap_content"
@@ -53,7 +50,7 @@
             android:singleLine="false"
             android:layout_below="@+id/emailInput"
             android:layout_alignStart="@+id/emailInput"
-            android:hint="Password"
+            android:hint="@string/enter_password"
             android:layout_alignEnd="@+id/emailInput"
             android:inputType="textPassword"
             android:textSize="28dp"
@@ -64,7 +61,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="60dp"
-            android:text="Login"
+            android:text="@string/login"
             android:id="@+id/loginButton"
             android:layout_alignEnd="@+id/passwordInput"
             android:layout_alignStart="@+id/passwordInput"
@@ -76,7 +73,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="100dp"
-            android:text="Sign Up"
+            android:text="@string/sign_up"
             android:id="@+id/signUpButton"
             android:layout_alignParentBottom="true"
             android:layout_alignStart="@+id/loginButton"
@@ -88,7 +85,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="100dp"
-            android:text="Reset Password"
+            android:text="@string/reset_password"
             android:id="@+id/resetPasswordButton"
             android:layout_alignTop="@+id/signUpButton"
             android:layout_alignEnd="@+id/loginButton"

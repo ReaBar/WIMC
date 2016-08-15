@@ -10,5 +10,34 @@
     <string name="HomeScreen">Home Screen</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+    <string name="change_password">Change Password..</string>
+    <string name="car_model_year">Car Model Year</string>
+    <string name="your_car_parks_here">Your Car Parks Here:</string>
+    <string name="city_street_number">City Street Number</string>
+    <string name="parking_lot">Parking Lot:</string>
+    <string name="parking_lot_name">Parking Lot Name</string>
+    <string name="parking_lot_floor">Parking Lot Floor</string>
+    <string name="find_location_in_google_maps">Find Location in Google Maps</string>
+    <string name="home_page">Home Page</string>
+    <string name="settings">Settings</string>
+    <string name="where_are_my_cars_now">Where are my Cars Now?</string>
+    <string name="manage_my_cars">Manage My Cars</string>
+    <string name="manage_shared_cars">Manage Shared Cars</string>
+    <string name="logout">Logout</string>
+    <string name="save_and_share_your_parking_spot">Save and Share your parking spot</string>
+    <string name="car_model">Car Model:</string>
+    <string name="car_license">Car License:</string>
+    <string name="add_user_to_share_this_car">Add user To share this car</string>
+    <string name="to_delete_the_user_click_on_his_row">To delete the user, click on his row</string>
+    <string name="car_license_number">Car License Number</string>
+    <string name="model_company">Model + Company</string>
+    <string name="email">Email</string>
+    <string name="my_cars">My Cars</string>
+    <string name="save">Save</string>
+    <string name="re_enter_password">Re-Enter Password</string>
+    <string name="enter_password">Enter Password</string>
+    <string name="sign_up">Sign up!</string>
+    <string name="login">Login</string>
+    <string name="reset_password">Reset Password</string>
 </resources>
