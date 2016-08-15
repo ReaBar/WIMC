@@ -2,7 +2,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:background="#00ffffff">
 
 
 
@@ -11,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:weightSum="1"
-        android:background="#ffffff">
+        android:background="#00ffffff">
 
 
         <TextView

@@ -23,7 +23,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Car Model:"
+                android:text="Car License:"
                 android:id="@+id/textView4"
                 android:layout_below="@+id/textView3"
                 android:layout_alignStart="@+id/textView3"
@@ -55,7 +55,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Car License:"
+                android:text="Car Model:"
                 android:id="@+id/textView5"
                 android:layout_below="@+id/textView3"
                 android:layout_alignStart="@+id/textView3"
@@ -81,7 +81,8 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp">
+            android:layout_marginTop="20dp"
+            android:weightSum="1">
 
             <EditText
                 android:layout_width="173dp"
@@ -94,11 +95,20 @@
                 android:layout_alignStart="@+id/cars_list_row_car_model_company"
                 android:layout_alignEnd="@+id/textView2"
                 android:hint="Email"
-                android:textSize="28dp" />
+                android:textSize="28dp"
+                android:layout_weight="1.06" />
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:weightSum="1">
 
             <Button
-                android:layout_width="176dp"
+                android:layout_width="match_parent"
                 android:layout_height="58dp"
                 android:text="Add user To share this car"
                 android:id="@+id/addUserButton"
@@ -107,6 +117,14 @@
                 android:layout_gravity="right" />
 
         </LinearLayout>
+
+
+
+
+
+
+
+
 
         <TextView
             android:layout_width="match_parent"

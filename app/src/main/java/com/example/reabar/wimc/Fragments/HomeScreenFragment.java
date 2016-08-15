@@ -1,6 +1,7 @@
 package com.example.reabar.wimc.Fragments;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -47,6 +48,11 @@ public class HomeScreenFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home_screen, container, false);
+
+        TextView hello = (TextView) view.findViewById(R.id.helloTextView);
+        Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(),"Alyssa_Kayla.ttf"); // create a typeface from the raw ttf
+        hello.setTypeface(typeface);
+
 
         progressBar = (ProgressBar) view.findViewById(R.id.homepageProgressBar);
         progressBar.setVisibility(View.VISIBLE);

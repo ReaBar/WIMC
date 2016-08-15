@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.reabar.wimc.Model.Car;
+import com.example.reabar.wimc.Model.Model;
 import com.example.reabar.wimc.MyApplication;
 import com.example.reabar.wimc.R;
 
@@ -80,7 +81,10 @@ public class CarScreenFragment extends Fragment {
                     Toast.makeText(MyApplication.getAppActivity(), "You must enter email of the shared user",
                             Toast.LENGTH_SHORT).show();
                 } else {
-
+                    //add user to car by email
+                    car.setNewCarUser(Model.getInstance().getCurrentUser().getUserId());
+                    Toast.makeText(MyApplication.getAppActivity(), "User added To Car!",
+                            Toast.LENGTH_SHORT).show();
                 }
             }
         });

@@ -125,6 +125,7 @@ public class MyCarsNowScreenFragment extends Fragment {
                 Log.d("TAG", "use convert view:" + position);
             }
 
+            TextView parkingLotDetails = (TextView) convertView.findViewById(R.id.parkingLotText);
             TextView myParkingCarDetails = (TextView) convertView.findViewById(R.id.myParkingCarModelYear);
             TextView myParkingCarCityStreetNumber = (TextView) convertView.findViewById(R.id.parkingCityStreetInput1);
             TextView myParkingLotName = (TextView) convertView.findViewById(R.id.parkingLotNameInput);
@@ -134,8 +135,12 @@ public class MyCarsNowScreenFragment extends Fragment {
             Parking parking = parkings.get(position);
             myParkingCarDetails.setText("Car Number: " + parking.getCarId());
             myParkingCarCityStreetNumber.setText(parking.getStreet() + " " + parking.getStreetNumber() + "St.  " + parking.getCity());
-            myParkingLotName.setText(parking.getParkingLotName());
-            myParkingLotFloor.setText(parking.getParkingLotFloor());
+            if(parking.getParkingLotName() != null || parking.getParkingLotName() != ""){
+                parkingLotDetails.setText("");
+                myParkingLotName.setText(parking.getParkingLotName());
+                myParkingLotFloor.setText(parking.getParkingLotFloor());
+            }
+
             //load image from cloudinary
             Model.getInstance().loadImage(parking.getCarId(), new Model.LoadImageListener() {
                 @Override
