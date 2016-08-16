@@ -23,7 +23,8 @@
             android:layout_below="@+id/settingsText"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="30dp"
-            android:background="#ffffff" />
+            android:background="#ffffff"
+            android:imeOptions="actionDone" />
 
         <TextView
             android:layout_width="wrap_content"

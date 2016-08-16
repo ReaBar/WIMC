@@ -28,6 +28,7 @@ import com.example.reabar.wimc.MyApplication;
 import com.example.reabar.wimc.R;
 
 import java.io.ByteArrayOutputStream;
+import java.util.Date;
 
 public class ParkingScreenFragment extends Fragment implements  LocationListener{
 
@@ -106,6 +107,7 @@ public class ParkingScreenFragment extends Fragment implements  LocationListener
             }
         });
 
+        final Date nowDate = new Date();
 
         //Save parking
         Button saveParking = (Button) view.findViewById(R.id.SaveParkingButton);
@@ -116,7 +118,7 @@ public class ParkingScreenFragment extends Fragment implements  LocationListener
                     Toast.makeText(MyApplication.getAppActivity(), "Must enter city and street to save parking",
                             Toast.LENGTH_SHORT).show();
                 } else {
-                    Parking parking = new Parking.ParkingBuilder(carID).street(street.getText().toString()).streetNumber(number.getText().toString()).city(city.getText().toString()).parkingLotName(parkingLotName.getText().toString()).parkingLotFloor(FloorNumber.getText().toString()).parkingLotRowColor(RowColor.getText().toString()).parkingLatitude(latitude).parkingLonitude(longtitude).build();
+                    Parking parking = new Parking.ParkingBuilder(carID).street(street.getText().toString()).streetNumber(number.getText().toString()).city(city.getText().toString()).parkingLotName(parkingLotName.getText().toString()).parkingLotFloor(FloorNumber.getText().toString()).parkingLotRowColor(RowColor.getText().toString()).parkingLatitude(latitude).parkingLonitude(longtitude).startParking(nowDate).build();
                     Model.getInstance().parkCar(parking, new Model.SyncListener() {
                         @Override
                         public void isSuccessful(boolean success) {
@@ -124,7 +126,7 @@ public class ParkingScreenFragment extends Fragment implements  LocationListener
                             if(imageTaken){
                                 //call cloudinary function
                                 ModelCloudinary cloudinary = new ModelCloudinary(getActivity());
-                                cloudinary.uploadImage(carID, bitmap);
+                                cloudinary.uploadImage(carID+"_"+nowDate, bitmap);
                             }
                             //go to homepage fragment
                             Toast.makeText(MyApplication.getAppActivity(), "Parking place saved",

@@ -17,16 +17,13 @@ import android.view.View;
 import com.example.reabar.wimc.Fragments.HomeScreenFragment;
 import com.example.reabar.wimc.Fragments.LoginScreenFragment;
 import com.example.reabar.wimc.Fragments.ManageMyCarsScreenFragment;
+import com.example.reabar.wimc.Fragments.MapScreenFragment;
 import com.example.reabar.wimc.Fragments.MyCarsNowScreenFragment;
 import com.example.reabar.wimc.Fragments.MySharedCarsScreenFragment;
 import com.example.reabar.wimc.Fragments.ParkingScreenFragment;
 import com.example.reabar.wimc.Fragments.SettingsScreenFragment;
 import com.example.reabar.wimc.Fragments.SignupScreenFragment;
-import com.example.reabar.wimc.Model.Car;
 import com.example.reabar.wimc.Model.Model;
-import com.example.reabar.wimc.Model.Parking;
-
-import java.util.ArrayList;
 
 
 public class MainActivity extends AppCompatActivity
@@ -47,7 +44,7 @@ public class MainActivity extends AppCompatActivity
     MySharedCarsScreenFragment mySharedCarsFragment;
     ParkingScreenFragment parkingFragment;
     MyCarsNowScreenFragment MyCarNowFragment;
-
+    MapScreenFragment mapFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -241,6 +238,15 @@ public class MainActivity extends AppCompatActivity
                 parkingFragment.carID = (String) data[0];
                 fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.main_frag_container, parkingFragment, "ParkingScreenFragment");
+                fragmentTransaction.addToBackStack(null).commit();
+                break;
+            case "MapScreenFragment":
+                mapFragment = new MapScreenFragment();
+//                parkingFragment.carID = (String) data[0];
+                mapFragment.latitude = (double) data[0];
+                mapFragment.longitude = (double) data[1];
+                fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.main_frag_container, mapFragment, "MapScreenFragment");
                 fragmentTransaction.addToBackStack(null).commit();
                 break;
         }

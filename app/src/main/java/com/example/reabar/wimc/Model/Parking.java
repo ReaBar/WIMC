@@ -2,6 +2,8 @@ package com.example.reabar.wimc.Model;
 
 import android.media.Image;
 
+import java.util.Date;
+
 /**
  * Created by reabar on 25.5.2016.
  */
@@ -11,6 +13,7 @@ public class Parking {
     private double latitude, longitude;
     private boolean parkingIsActive;
     private Image parkingImage;
+    private Date startParking;
 
     public Parking(){}
 
@@ -26,6 +29,7 @@ public class Parking {
         this.longitude = parkingBuilder.longitude;
         this.parkingImage = parkingBuilder.parkingImage;
         this.parkingIsActive = parkingBuilder.parkingIsActive;
+        this.startParking = parkingBuilder.startParking;
     }
 
     public void setParkingObjectId(String parkingObjectId) {
@@ -122,7 +126,8 @@ public class Parking {
     }
 
 
-
+    public void setStartParking(Date startParking) { this.startParking = startParking; }
+    public Date getStartParking() { return this.startParking; }
 
     public static class ParkingBuilder {
         private String carId, street, city, parkingLotName,parkingLotRowColor;
@@ -130,6 +135,7 @@ public class Parking {
         private double latitude, longitude;
         private boolean parkingIsActive;
         private Image parkingImage;
+        private Date startParking;
 
         public ParkingBuilder(String carId) {
             this.carId = carId;
@@ -180,6 +186,12 @@ public class Parking {
             this.streetNumber = streetNumber;
             return this;
         }
+
+        public ParkingBuilder startParking(Date startParking){
+            this.startParking = startParking;
+            return this;
+        }
+
 
         public Parking build() {
             return new Parking(this);

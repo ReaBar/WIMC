@@ -25,7 +25,9 @@
                 android:text="@string/car_model_year"
                 android:textAlignment="center"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:layout_marginTop="20dp"
+                android:textSize="27dp" />
 
         </LinearLayout>
 
@@ -130,17 +132,21 @@
                 android:layout_height="170dp"
                 android:contentDescription="" />
 
-            <TextView
-                android:id="@+id/parkingLotGPS"
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_alignParentBottom="true"
+                android:gravity="center_horizontal">
+
+            <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignStart="@+id/textView3"
-                android:layout_below="@+id/textView3"
-                android:layout_weight="0.62"
-                android:text="@string/find_location_in_google_maps"
-                android:textAlignment="center"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textStyle="bold" />
+                android:layout_gravity="center"
+                android:id="@+id/googleMapsLocation"
+                android:background="@drawable/location" />
+            </LinearLayout>
+
         </LinearLayout>
 
         <RelativeLayout

@@ -42,7 +42,8 @@
             android:layout_alignStart="@+id/textView3"
             android:layout_weight="0.62"
             android:textAlignment="center"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:imeOptions="actionDone" />
 
         <EditText
             android:layout_width="173dp"
@@ -56,7 +57,8 @@
             android:layout_alignStart="@+id/cars_list_row_car_model_company"
             android:textStyle="bold"
             android:layout_alignEnd="@+id/textView2"
-            android:layout_weight="0.53" />
+            android:layout_weight="0.53"
+            android:imeOptions="actionDone" />
     </LinearLayout>
 
     <LinearLayout
@@ -76,7 +78,8 @@
             android:layout_alignStart="@+id/cars_list_row_car_model_company"
             android:layout_alignEnd="@+id/textView2"
             android:layout_weight="0.53"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:imeOptions="actionDone" />
         </LinearLayout>
 
     <LinearLayout
@@ -95,7 +98,8 @@
             android:layout_alignStart="@+id/textView3"
             android:layout_weight="0.62"
             android:textAlignment="center"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:imeOptions="actionDone" />
 
         <EditText
             android:layout_width="173dp"
@@ -109,7 +113,8 @@
             android:layout_alignStart="@+id/cars_list_row_car_model_company"
             android:textStyle="bold"
             android:layout_alignEnd="@+id/textView2"
-            android:layout_weight="0.53" />
+            android:layout_weight="0.53"
+            android:imeOptions="actionDone" />
 
     </LinearLayout>
 
@@ -131,7 +136,8 @@
                 android:layout_alignStart="@+id/cars_list_row_car_model_company"
                 android:textStyle="bold"
                 android:layout_alignEnd="@+id/textView2"
-                android:layout_weight="0.53" />
+                android:layout_weight="0.53"
+                android:imeOptions="actionDone" />
 
         </LinearLayout>
 
