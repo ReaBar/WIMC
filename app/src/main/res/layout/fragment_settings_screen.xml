@@ -14,7 +14,7 @@
 
         <EditText
             android:layout_width="300dp"
-            android:layout_height="35dp"
+            android:layout_height="55dp"
             android:inputType="textPassword"
             android:ems="10"
             android:id="@+id/settingsPasswordInput"
@@ -24,7 +24,8 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="30dp"
             android:background="#ffffff"
-            android:imeOptions="actionDone" />
+            android:imeOptions="actionDone"
+            android:textSize="23dp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -37,18 +38,8 @@
             android:textColor="#234f84"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="82dp"
+            android:layout_marginTop="90dp"
             android:background="#ffffff" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/my_cars"
-            android:id="@+id/button"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="67dp"
-            android:layout_alignStart="@+id/settingsPasswordInput"
-            android:layout_alignEnd="@+id/settingsPasswordInput" />
 
         <Button
             android:layout_width="wrap_content"
