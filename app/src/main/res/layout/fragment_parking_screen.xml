@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="We are parking the car - "
+        android:text="@string/we_are_parking_the_car"
         android:id="@+id/carnumber"
         android:layout_below="@+id/textView3"
         android:layout_alignStart="@+id/textView3"
@@ -36,7 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:hint="City"
+            android:hint="@string/city"
             android:id="@+id/parking_cityInput"
             android:layout_below="@+id/textView3"
             android:layout_alignStart="@+id/textView3"
@@ -51,7 +51,7 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:id="@+id/parking_streetInput"
             android:autoText="false"
-            android:hint="Street"
+            android:hint="@string/street"
             android:textAlignment="center"
             android:layout_alignParentTop="true"
             android:layout_alignStart="@+id/cars_list_row_car_model_company"
@@ -72,7 +72,7 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:id="@+id/parking_streetNumberInput"
             android:autoText="false"
-            android:hint="Number"
+            android:hint="@string/number"
             android:textAlignment="center"
             android:layout_alignParentTop="true"
             android:layout_alignStart="@+id/cars_list_row_car_model_company"
@@ -92,7 +92,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:hint="Parking Lot Name"
+            android:hint="@string/parking_lot_name"
             android:id="@+id/parking_parkingLotInput"
             android:layout_below="@+id/textView3"
             android:layout_alignStart="@+id/textView3"
@@ -107,7 +107,7 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:id="@+id/parking_parkingLotFloorNumberInput"
             android:autoText="false"
-            android:hint="Floor Number"
+            android:hint="@string/floor_number"
             android:textAlignment="center"
             android:layout_alignParentTop="true"
             android:layout_alignStart="@+id/cars_list_row_car_model_company"
@@ -130,7 +130,7 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:id="@+id/parking_parkingLotRowColorInput"
                 android:autoText="false"
-                android:hint="Row Color"
+                android:hint="@string/row_color"
                 android:textAlignment="center"
                 android:layout_alignParentTop="true"
                 android:layout_alignStart="@+id/cars_list_row_car_model_company"
@@ -152,14 +152,14 @@
                 android:layout_width="181dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/imageButton"
-                android:text="Take Photo" />
+                android:text="@string/take_photo" />
 
 
             <Button
                 android:layout_width="181dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/locationButton"
-                android:text="Get GPS Location " />
+                android:text="@string/get_gps_location" />
     </LinearLayout>
 
         <LinearLayout
@@ -174,7 +174,7 @@
                 android:layout_width="226dp"
                 android:layout_height="match_parent"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="LongTitude and Latitude"
+                android:text="@string/longitude_and_latitude"
                 android:id="@+id/gpsText" />
 
             <ImageView
@@ -189,7 +189,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/SaveParkingButton"
-            android:text="Save Parking" />
+            android:text="@string/save_parking" />
 
 
     </LinearLayout>

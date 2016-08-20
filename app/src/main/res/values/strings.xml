@@ -40,4 +40,20 @@
     <string name="sign_up">Sign up!</string>
     <string name="login">Login</string>
     <string name="reset_password">Reset Password</string>
+    <string name="we_are_parking_the_car">We are parking the car -</string>
+    <string name="city">City</string>
+    <string name="street">Street</string>
+    <string name="number">Number</string>
+    <string name="floor_number">Floor Number</string>
+    <string name="row_color">Row Color</string>
+    <string name="take_photo">Take Photo</string>
+    <string name="longitude_and_latitude">Longitude and Latitude</string>
+    <string name="get_gps_location">Get GPS Location</string>
+    <string name="save_parking">Save Parking</string>
+    <string name="shared_cars">Shared Cars</string>
+    <string name="you_are_not_the_owner_of_these_cars_but_you_can_park_them">You are not the owner of these cars, but you can park them!</string>
+    <string name="stop_parking">Stop Parking!</string>
+    <string name="color">Color..</string>
+    <string name="add_new_car">Add New Car</string>
+    <string name="manage_your_cars">Manage your cars</string>
 </resources>

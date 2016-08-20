@@ -33,4 +33,20 @@
     <string name="re_enter_password">הכנס סיסמה בשנית</string>
     <string name="login">התחברות</string>
     <string name="reset_password">שחזור סיסמה</string>
+    <string name="number">מספר</string>
+    <string name="street">רחוב</string>
+    <string name="we_are_parking_the_car">אתה מחנה כעת את רכב מס׳ -</string>
+    <string name="city">עיר</string>
+    <string name="floor_number">מספר קומה</string>
+    <string name="row_color">צבע שורה</string>
+    <string name="take_photo">צלם תמונה</string>
+    <string name="longitude_and_latitude">נקודות אורך וגובה</string>
+    <string name="get_gps_location">מצא מיקום ג׳יפיאס</string>
+    <string name="save_parking">שמור חניה</string>
+    <string name="shared_cars">מכוניות משותפות</string>
+    <string name="you_are_not_the_owner_of_these_cars_but_you_can_park_them">אינך הבעלים של מכוניות אלו, אך אתה יכול להחנות אותן</string>
+    <string name="stop_parking">סיים חניה</string>
+    <string name="color">צבע הרכב</string>
+    <string name="add_new_car">הוסף רכב חדש</string>
+    <string name="manage_your_cars">נהל את רכביך</string>
 </resources>

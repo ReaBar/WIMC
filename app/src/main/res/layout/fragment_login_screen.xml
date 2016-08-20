@@ -95,6 +95,4 @@
             android:textStyle="bold|italic" />
 
     </RelativeLayout>
-
-
 </FrameLayout>
