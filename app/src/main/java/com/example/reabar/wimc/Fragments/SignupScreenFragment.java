@@ -38,7 +38,7 @@ public class SignupScreenFragment extends Fragment {
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_signup_screen, container, false);
-        emailInput = (EditText) view.findViewById(R.id.passwordInput);
+        emailInput = (EditText) view.findViewById(R.id.emailInput);
         passwordInput = (EditText) view.findViewById(R.id.passwordInput);
         repasswordInput = (EditText) view.findViewById(R.id.repasswordInput);
 

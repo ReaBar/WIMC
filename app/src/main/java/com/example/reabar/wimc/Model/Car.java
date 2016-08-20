@@ -12,6 +12,8 @@ import java.util.List;
 public class Car {
     private String carId, color, model, company, userOwnerId;
     private ArrayList<String> usersList;
+    private Boolean parkingIsActive;
+    private String TAG = "CarClass";
 
     public Car() {
         usersList = new ArrayList<>();
@@ -24,6 +26,7 @@ public class Car {
         this.company = company;
         this.userOwnerId = userOwnerId;
         usersList = new ArrayList<>();
+        parkingIsActive = false;
     }
 
     public String getCarId() {
@@ -70,12 +73,20 @@ public class Car {
         return usersList;
     }
 
-    private void updateThisCar(){
+    public Boolean getParkingIsActive() {
+        return parkingIsActive;
+    }
+
+    public void setParkingIsActive(Boolean parkingIsActive) {
+        this.parkingIsActive = parkingIsActive;
+    }
+
+    protected void updateThisCar(){
         Model.getInstance().updateCar(this, new Model.SyncListener() {
             @Override
             public void isSuccessful(boolean success) {
                 if(success){
-                    Log.d("UpdateThisCar", "Car updated!");
+                    Log.d(TAG, "Car updated!");
                 }
             }
 
@@ -106,11 +117,10 @@ public class Car {
             @Override
             public void PassData(Object data) {
                 if (data instanceof List) {
-                    usersList = (ArrayList<String>) data;
                     if (((List<User>) data).contains(uId)) {
                         usersList.add(uId);
                     } else {
-                        Toast.makeText(MyApplication.getAppContext(), "User already in the DB", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MyApplication.getAppContext(), "No such user", Toast.LENGTH_SHORT).show();
                     }
                 }
                 updateThisCar();

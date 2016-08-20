@@ -41,10 +41,13 @@ public class MySharedCarsScreenFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_my_shared_cars_screen, container, false);
 
+        if(cars == null) {
+            cars = new ArrayList<>();
+        }
+
         progressBar = (ProgressBar) view.findViewById(R.id.mySharedCars_ProgressBar);
         progressBar.setVisibility(View.VISIBLE);
 
-        cars = Model.getInstance().getAllCars();
         carsList= (ListView) view.findViewById(R.id.listShredCars);
         Model.getInstance().getListOfSharedCars(Model.getInstance().getCurrentUser().getEmail(), new Model.SyncListener() {
             @Override

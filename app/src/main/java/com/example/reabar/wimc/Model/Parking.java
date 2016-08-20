@@ -2,15 +2,18 @@ package com.example.reabar.wimc.Model;
 
 import android.media.Image;
 
+import java.util.Date;
+
 /**
  * Created by reabar on 25.5.2016.
  */
 public class Parking {
     private String parkingObjectId, carId, street, city, parkingLotName,parkingLotRowColor;
-    private int streetNumber, parkingLotNumber, parkingLotFloor;
+    private String streetNumber, parkingLotFloor;
     private double latitude, longitude;
     private boolean parkingIsActive;
     private Image parkingImage;
+    private Date startParking;
 
     public Parking(){}
 
@@ -21,12 +24,12 @@ public class Parking {
         this.parkingLotName = parkingBuilder.parkingLotName;
         this.parkingLotRowColor = parkingBuilder.parkingLotRowColor;
         this.streetNumber = parkingBuilder.streetNumber;
-        this.parkingLotNumber = parkingBuilder.parkingLotNumber;
         this.parkingLotFloor = parkingBuilder.parkingLotFloor;
         this.latitude = parkingBuilder.latitude;
         this.longitude = parkingBuilder.longitude;
         this.parkingImage = parkingBuilder.parkingImage;
         this.parkingIsActive = parkingBuilder.parkingIsActive;
+        this.startParking = parkingBuilder.startParking;
     }
 
     public void setParkingObjectId(String parkingObjectId) {
@@ -73,27 +76,20 @@ public class Parking {
         this.parkingLotRowColor = parkingLotRowColor;
     }
 
-    public int getStreetNumber() {
+    public String getStreetNumber() {
         return streetNumber;
     }
 
-    public void setStreetNumber(int streetNumber) {
+    public void setStreetNumber(String streetNumber) {
         this.streetNumber = streetNumber;
     }
 
-    public int getParkingLotNumber() {
-        return parkingLotNumber;
-    }
 
-    public void setParkingLotNumber(int parkingLotNumber) {
-        this.parkingLotNumber = parkingLotNumber;
-    }
-
-    public int getParkingLotFloor() {
+    public String getParkingLotFloor() {
         return parkingLotFloor;
     }
 
-    public void setParkingLotFloor(int parkingLotFloor) {
+    public void setParkingLotFloor(String parkingLotFloor) {
         this.parkingLotFloor = parkingLotFloor;
     }
 
@@ -129,39 +125,34 @@ public class Parking {
         this.parkingImage = parkingImage;
     }
 
+
+    public void setStartParking(Date startParking) { this.startParking = startParking; }
+    public Date getStartParking() { return this.startParking; }
+
     public static class ParkingBuilder {
         private String carId, street, city, parkingLotName,parkingLotRowColor;
-        private int streetNumber, parkingLotNumber, parkingLotFloor;
+        private String streetNumber, parkingLotNumber, parkingLotFloor;
         private double latitude, longitude;
         private boolean parkingIsActive;
         private Image parkingImage;
+        private Date startParking;
 
         public ParkingBuilder(String carId) {
             this.carId = carId;
             this.parkingIsActive = true;
         }
 
-/*        public ParkingBuilder carId(String carId){
-            this.carId = carId;
-            return this;
-        }*/
-
         public ParkingBuilder parkingLonitude(double longitude){
-            this.parkingLonitude(longitude);
+            this.longitude = longitude;
             return this;
         }
 
         public ParkingBuilder parkingLatitude(double latitude){
-            this.parkingLatitude(latitude);
+            this.latitude = latitude;
             return this;
         }
 
-        public ParkingBuilder parkingLotNumber(int parkingLotNumber) {
-            this.parkingLotNumber = parkingLotNumber;
-            return this;
-        }
-
-        public ParkingBuilder parkingLotFloor(int parkingLotFloor){
+        public ParkingBuilder parkingLotFloor(String parkingLotFloor){
             this.parkingLotFloor = parkingLotFloor;
             return this;
         }
@@ -191,10 +182,16 @@ public class Parking {
             return this;
         }
 
-        public ParkingBuilder streetNumber(int streetNumber){
+        public ParkingBuilder streetNumber(String streetNumber){
             this.streetNumber = streetNumber;
             return this;
         }
+
+        public ParkingBuilder startParking(Date startParking){
+            this.startParking = startParking;
+            return this;
+        }
+
 
         public Parking build() {
             return new Parking(this);

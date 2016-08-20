@@ -1,5 +1,6 @@
 package com.example.reabar.wimc;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
@@ -9,23 +10,20 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.example.reabar.wimc.Fragments.HomeScreenFragment;
 import com.example.reabar.wimc.Fragments.LoginScreenFragment;
 import com.example.reabar.wimc.Fragments.ManageMyCarsScreenFragment;
+import com.example.reabar.wimc.Fragments.MapScreenFragment;
+import com.example.reabar.wimc.Fragments.MyCarsNowScreenFragment;
 import com.example.reabar.wimc.Fragments.MySharedCarsScreenFragment;
+import com.example.reabar.wimc.Fragments.ParkingScreenFragment;
 import com.example.reabar.wimc.Fragments.SettingsScreenFragment;
 import com.example.reabar.wimc.Fragments.SignupScreenFragment;
-import com.example.reabar.wimc.Model.Car;
 import com.example.reabar.wimc.Model.Model;
-import com.example.reabar.wimc.Model.Parking;
-
-import java.util.ArrayList;
 
 
 public class MainActivity extends AppCompatActivity
@@ -44,7 +42,9 @@ public class MainActivity extends AppCompatActivity
     SettingsScreenFragment settingsFragment;
     ManageMyCarsScreenFragment manageMyCarsFragment;
     MySharedCarsScreenFragment mySharedCarsFragment;
-
+    ParkingScreenFragment parkingFragment;
+    MyCarsNowScreenFragment MyCarNowFragment;
+    MapScreenFragment mapFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +62,13 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+//        View headerView = navigationView.getHeaderView(0);
+//        TextView navUsername = (TextView) headerView.findViewById(R.id.loggedinUser);
+//        navUsername.setText("Hello " + Model.getInstance().getCurrentUser().getEmail());
+
+
+        //Parking parking = new Parking.ParkingBuilder("12345555556").city("Tel Aviv").street("dalia").build();
 
 //        Car car = new Car("112233", "Blue", "2015", "Honda", "rea.bar@gmail.com");
 //        String share1 = "tomer_aronovsky@hotmail.com";
@@ -107,10 +114,6 @@ public class MainActivity extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -129,7 +132,7 @@ public class MainActivity extends AppCompatActivity
                 passString("SettingsScreenFragment");
                 break;
             case R.id.nav_menu_myCarsNow:
-                Toast.makeText(this, "MyCarsNow", Toast.LENGTH_SHORT).show();
+                passString("MyCarsNowScreenFragment");
                 break;
             case R.id.nav_menu_manageMyCars:
                 passString("ManageMyCarsScreenFragment");
@@ -154,7 +157,6 @@ public class MainActivity extends AppCompatActivity
             drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
             toggle.setDrawerIndicatorEnabled(true);
             toggle.syncState();
-
         } else {
             drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
             toggle.setDrawerIndicatorEnabled(false);
@@ -214,19 +216,47 @@ public class MainActivity extends AppCompatActivity
                 fragmentTransaction.replace(R.id.main_frag_container, mySharedCarsFragment, "MySharedCarsScreenFragment");
                 fragmentTransaction.addToBackStack(null).commit();
                 break;
+            case "MyCarsNowScreenFragment":
+                MyCarNowFragment = new MyCarsNowScreenFragment();
+                fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.main_frag_container, MyCarNowFragment, "MyCarsNowScreenFragment");
+                fragmentTransaction.addToBackStack(null).commit();
+                break;
         }
     }
 
     @Override
-    public void passData(Object[] data) {
+    public void passData(Object[] data, String text) {
+
+        switch (text) {
+            case "ParkingScreenFragment":
+                parkingFragment = new ParkingScreenFragment();
+                parkingFragment.carID = (String) data[0];
+                fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.main_frag_container, parkingFragment, "ParkingScreenFragment");
+                fragmentTransaction.addToBackStack(null).commit();
+                break;
+            case "MapScreenFragment":
+                mapFragment = new MapScreenFragment();
+//                parkingFragment.carID = (String) data[0];
+                mapFragment.latitude = (double) data[0];
+                mapFragment.longitude = (double) data[1];
+                fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.main_frag_container, mapFragment, "MapScreenFragment");
+                fragmentTransaction.addToBackStack(null).commit();
+                break;
+        }
 
     }
 
 
-    //        fragmentManager = getSupportFragmentManager();
-//        fragmentTransaction = getSupportFragmentManager().beginTransaction();
-//        loginFragment = new LoginScreenFragment();
-//        fragmentTransaction.add(R.id.main_frag_container,loginFragment,"loginFragment");
-//        fragmentTransaction.show(loginFragment).addToBackStack("loginFragment").commit();
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+
+
+
 
 }

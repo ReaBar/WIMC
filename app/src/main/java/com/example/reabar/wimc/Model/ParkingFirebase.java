@@ -11,6 +11,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -29,6 +30,29 @@ public class ParkingFirebase {
                 if (task.isSuccessful()) {
                     Log.d(TAG, "Parking was saved!");
                     listener.isSuccessful(true);
+                     Model.getInstance().getAllCars(new Model.SyncListener() {
+                         @Override
+                         public void isSuccessful(boolean success) {
+
+                         }
+
+                         @Override
+                         public void failed(String message) {
+
+                         }
+
+                         @Override
+                         public void PassData(Object data) {
+                            if(data instanceof ArrayList){
+                                for (Car car: (ArrayList<Car>)data) {
+                                    if(car.getCarId().equals(parkingLocation.getCarId())){
+                                        car.setParkingIsActive(true);
+                                        car.updateThisCar();
+                                    }
+                                }
+                            }
+                         }
+                     });
                 } else {
                     Log.d(TAG, "Error to add the new car");
                     listener.failed(task.getException().getMessage());
@@ -40,6 +64,7 @@ public class ParkingFirebase {
     public void getMyUnparkedCars(final FirebaseDatabase db, final String uId, final Model.SyncListener listener) {
         final DatabaseReference carDbRef = db.getReference("cars");
         final ArrayList<Car> carsList = new ArrayList<>();
+
         carDbRef.orderByChild("userOwnerId").equalTo(uId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -67,13 +92,6 @@ public class ParkingFirebase {
                                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
                                 while (children.iterator().hasNext()) {
                                     Parking tempCar = children.iterator().next().getValue(Parking.class);
-/*                                    while (carList.size() == 0) {
-                                        try {
-                                            Thread.sleep(1000);
-                                        } catch (InterruptedException e) {
-                                            e.printStackTrace();
-                                        }
-                                    }*/
                                     for (int i = 0; i < carsList.size(); i++) {
                                         if (carsList.get(i).getCarId().equals(tempCar.getCarId())) {
                                             Log.d("TESTTEST", "Removed " + carsList.get(i).getCarId());
@@ -91,7 +109,6 @@ public class ParkingFirebase {
                                 listener.failed(databaseError.getMessage());
                             }
                         });
-
                     }
 
                     @Override
@@ -104,5 +121,138 @@ public class ParkingFirebase {
             public void onCancelled(DatabaseError databaseError) {
             }
         });
+    }
+
+    public void getAllMyParkedCars(final Model.SyncListener listener) {
+        final ArrayList<Car> carsList = new ArrayList<>();
+        Model.getInstance().getAllCars(new Model.SyncListener() {
+            @Override
+            public void isSuccessful(boolean success) {
+
+            }
+
+            @Override
+            public void failed(String message) {
+
+            }
+
+            @Override
+            public void PassData(Object data) {
+                if(data instanceof ArrayList){
+                    for (Car car: (ArrayList<Car>)data) {
+                        if((car.getUserOwnerId().equals(Model.getInstance().getCurrentUser().getEmail()) || car.getUsersList().contains(Model.getInstance().getCurrentUser().getEmail())) && car.getParkingIsActive()){
+                            carsList.add(car);
+                        }
+                    }
+                    listener.PassData(carsList);
+                    listener.isSuccessful(true);
+                }
+            }
+        });
+    }
+
+    public void getAllMyParkingSpots(final FirebaseDatabase db,final Model.SyncListener listener) {
+        final ArrayList<Parking> parkingSpots = new ArrayList<>();
+        final ArrayList<Parking> finalParkingList = new ArrayList<>();
+        DatabaseReference dbRef = db.getReference(PARKING_DB);
+        dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Iterable<DataSnapshot> children = dataSnapshot.getChildren();
+                while (children.iterator().hasNext()) {
+                    parkingSpots.add(children.iterator().next().getValue(Parking.class));
+                }
+                Model.getInstance().getAllMyParkedCars(new Model.SyncListener() {
+                    @Override
+                    public void isSuccessful(boolean success) {
+
+                    }
+
+                    @Override
+                    public void failed(String message) {
+
+                    }
+
+                    @Override
+                    public void PassData(Object data) {
+                        if(data instanceof ArrayList){
+                            for (Car car: (ArrayList<Car>)data) {
+                                for (Parking parking: parkingSpots) {
+                                    if(parking.getCarId().equals(car.getCarId())){
+                                        finalParkingList.add(parking);
+                                    }
+                                }
+                            }
+                            listener.PassData(finalParkingList);
+                            listener.isSuccessful(true);
+                        }
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                listener.isSuccessful(false);
+                listener.failed(databaseError.getMessage());
+            }
+        });
+    }
+
+    public void stopParking(FirebaseDatabase db, final Parking parking) {
+        DatabaseReference dbRef = db.getReference(PARKING_DB);
+        Model.getInstance().getAllMyParkedCars(new Model.SyncListener() {
+            @Override
+            public void isSuccessful(boolean success) {
+
+            }
+
+            @Override
+            public void failed(String message) {
+
+            }
+
+            @Override
+            public void PassData(Object data) {
+                if(data instanceof ArrayList){
+                    for (Car car: (ArrayList<Car>)data) {
+                        if(car.getCarId().equals(parking.getCarId())){
+                            car.setParkingIsActive(false);
+                            car.updateThisCar();
+                            return;
+                        }
+                    }
+                }
+            }
+        });
+        dbRef.child(parking.getCarId()).removeValue();
+    }
+
+    public void stopParking(FirebaseDatabase db, final Car car) {
+        DatabaseReference dbRef = db.getReference(PARKING_DB);
+        Model.getInstance().getAllMyParkedCars(new Model.SyncListener() {
+            @Override
+            public void isSuccessful(boolean success) {
+
+            }
+
+            @Override
+            public void failed(String message) {
+
+            }
+
+            @Override
+            public void PassData(Object data) {
+                if(data instanceof ArrayList){
+                    for (Car car: (ArrayList<Car>)data) {
+                        if(car.getCarId().equals(car.getCarId())){
+                            car.setParkingIsActive(false);
+                            car.updateThisCar();
+                            return;
+                        }
+                    }
+                }
+            }
+        });
+        dbRef.child(car.getCarId()).removeValue();
     }
 }

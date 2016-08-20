@@ -4,28 +4,28 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_menu_homepage"
-            android:icon="@drawable/common_ic_googleplayservices"
-            android:title="Home Page" />
+            android:icon="@drawable/home_24x24"
+            android:title="@string/home_page" />
         <item
             android:id="@+id/nav_menu_settings"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Settings" />
+            android:icon="@drawable/wrench_24x24"
+            android:title="@string/settings" />
         <item
             android:id="@+id/nav_menu_myCarsNow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Where are my Cars Now?" />
+            android:icon="@drawable/map_pin_alt_16x32"
+            android:title="@string/where_are_my_cars_now" />
         <item
             android:id="@+id/nav_menu_manageMyCars"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Manage My Cars" />
+            android:icon="@drawable/star_24x24"
+            android:title="@string/manage_my_cars" />
         <item
             android:id="@+id/nav_menu_manageSahredCars"
-            android:icon="@drawable/ic_menu_send"
-            android:title="Manage Shared Cars" />
+            android:icon="@drawable/tag_fill_24x24"
+            android:title="@string/manage_shared_cars" />
         <item
             android:id="@+id/nav_menu_logoutapp"
-            android:icon="@drawable/ic_menu_send"
-            android:title="Logout" />
+            android:icon="@drawable/arrow_left_24x24"
+            android:title="@string/logout" />
     </group>
 
 </menu>

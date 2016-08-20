@@ -2,26 +2,28 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:background="#00ffffff">
 
 
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="46dp"
-        android:weightSum="1">
+        android:layout_height="55dp"
+        android:weightSum="1"
+        android:background="#00ffffff">
 
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Car Model:"
-            android:id="@+id/mySharedCarsText1"
+            android:text="Car Model"
+            android:id="@+id/home_car_modelCompany"
             android:layout_below="@+id/textView3"
             android:layout_alignStart="@+id/textView3"
-            android:layout_weight="0.62"
+            android:layout_weight="1.02"
             android:textAlignment="center"
             android:textStyle="bold" />
 
@@ -35,7 +37,8 @@
             android:layout_alignParentTop="true"
             android:layout_alignStart="@+id/cars_list_row_car_model_company"
             android:layout_alignEnd="@+id/textView2"
-            android:layout_weight="0.53" />
+            android:layout_weight="0.03"
+            android:textStyle="bold|italic" />
 
     </LinearLayout>
 </LinearLayout>
