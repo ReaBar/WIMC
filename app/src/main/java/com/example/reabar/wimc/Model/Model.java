@@ -7,6 +7,7 @@ import com.example.reabar.wimc.FilesManagerHelper;
 import com.example.reabar.wimc.MyApplication;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -70,11 +71,11 @@ public class Model {
     }
 
     public void getOwnedCars(String uId,SyncListener listener){
-        modelFirebase.getOwnedCars(uId,listener);
+        modelFirebase.getOwnedCars(uId, listener);
     }
 
     public void getListOfSharedCars(String uId, SyncListener listener){
-        modelFirebase.getListOfSharedCars(uId,listener);
+        modelFirebase.getListOfSharedCars(uId, listener);
     }
 
     public void addCarToDB(final Car car, final SyncListener listener){
@@ -82,15 +83,53 @@ public class Model {
     }
 
     public void updateCar(Car car,Model.SyncListener listener){
-        modelFirebase.updateCar(car,listener);
+        modelFirebase.updateCar(car, listener);
     }
 
     public void getAllCars(SyncListener listener){
-        modelFirebase.getListOfAllCarsInDB(listener);
+        final String lastUpdateDate = modelSql.getCarLastUpdate();
+        modelFirebase.getCarDbTime(new SyncListener() {
+            @Override
+            public void isSuccessful(boolean success) {
+
+            }
+
+            @Override
+            public void failed(String message) {
+
+            }
+
+            @Override
+            public void PassData(Object data) {
+                if(data.toString().compareTo(lastUpdateDate)>0){
+                    ArrayList<Car> carList= new ArrayList<Car>();
+                    modelFirebase.getListOfAllCarsInDB(new SyncListener() {
+                        @Override
+                        public void isSuccessful(boolean success) {
+
+                        }
+
+                        @Override
+                        public void failed(String message) {
+
+                        }
+
+                        @Override
+                        public void PassData(Object data) {
+                            for (Car car: (ArrayList<Car>)data) {
+                                if(modelSql.getCarById(car.getCarId()) == null){
+                                    modelSql.addCar(car);
+                                }
+                            }
+                        }
+                    });
+                }
+            }
+        });
     }
 
     public void parkCar(Parking parking, SyncListener listener){
-        modelFirebase.parkCar(parking,listener);
+        modelFirebase.parkCar(parking, listener);
     }
 
     public void getMyUnparkedCars(String uid, SyncListener listener){
@@ -117,24 +156,12 @@ public class Model {
         modelFirebase.updateCarDbTime();
     }
 
-    public void getCarDbTime(SyncListener listener){
-        modelFirebase.getCarDbTime(listener);
-    }
-
     public void updateParkingDbTime(){
         modelFirebase.updateParkingDbTime();
     }
 
-    public void getParkingDbTime(SyncListener listener){
-        modelFirebase.getParkingDbTime(listener);
-    }
-
     public void updateUsersDbTime(){
         modelFirebase.updateUsersDbTime();
-    }
-
-    public void getUsersDbTime(SyncListener listener){
-        modelFirebase.getUsersDbTime(listener);
     }
 
     //--- Listeners ---- //

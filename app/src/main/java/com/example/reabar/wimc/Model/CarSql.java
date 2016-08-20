@@ -23,7 +23,7 @@ public class CarSql {
     final static String CAR_TABLE_COMPANY = "company";
     final static String CAR_TABLE_USER_OWNER_ID = "user_owner_id";
 
-    static public void create(SQLiteDatabase db) {
+    public void create(SQLiteDatabase db) {
         db.execSQL("create table " + CAR_TABLE + " (" +
                 CAR_TABLE_ID + " TEXT PRIMARY KEY," +
                 CAR_TABLE_COLOR + " TEXT," +
@@ -32,12 +32,12 @@ public class CarSql {
                 CAR_TABLE_USER_OWNER_ID + " TEXT);");
     }
 
-    public static void drop(SQLiteDatabase db) {
+    public void drop(SQLiteDatabase db) {
         db.execSQL("drop table " + CAR_TABLE + ";");
     }
 
-    public static List<Car> getAllCars(SQLiteDatabase db) {
-        Cursor cursor = db.query(CAR_TABLE, null, null , null, null, null, null);
+    public List<Car> getAllCars(SQLiteDatabase db) {
+        Cursor cursor = db.query(CAR_TABLE, null, null, null, null, null, null);
         List<Car> cars = new ArrayList<Car>();
 
         if (cursor.moveToFirst()) {
@@ -54,16 +54,14 @@ public class CarSql {
                 String company = cursor.getString(companyIndex);
                 String userOwnerId = cursor.getString(userOwnerIdIndex);
                 //0 false / 1 true
-                Car cr = new Car(id,color,model,company,userOwnerId);
+                Car cr = new Car(id, color, model, company, userOwnerId);
                 cars.add(cr);
             } while (cursor.moveToNext());
         }
         return cars;
     }
 
-    public static Car getCarById(SQLiteDatabase db, String id) {
-
-
+    public Car getCarById(SQLiteDatabase db, String id) {
         String[] params = new String[1];
         params[0] = id;
         Cursor cursor = db.query(CAR_TABLE, null, CAR_TABLE_ID, params, null, null, null);
@@ -80,34 +78,35 @@ public class CarSql {
             String model = cursor.getString(modelIndex);
             String company = cursor.getString(companyIndex);
             String userOwnerId = cursor.getString(userOwnerIdIndex);
-            if (cursor != null)
+            if (cursor != null) {
                 cursor.close();
-
+            }
 
             //0 false / 1 true
-            Car cr = new Car(objectId, color, model, company, userOwnerId);
-            return cr;
+            Car car = new Car(objectId, color, model, company, userOwnerId);
+            return car;
         }
         return null;
     }
 
-    public static void add(SQLiteDatabase db, Car cr) {
+    public void addCar(SQLiteDatabase db, Car car) {
         ContentValues values = new ContentValues();
-        values.put(CAR_TABLE_ID, cr.getCarId());
-        values.put(CAR_TABLE_COLOR, cr.getColor());
-        values.put(CAR_TABLE_MODEL, cr.getModel());
-        values.put(CAR_TABLE_COMPANY, cr.getCompany());
-        values.put(CAR_TABLE_USER_OWNER_ID, cr.getUserOwnerId());
+        values.put(CAR_TABLE_ID, car.getCarId());
+        values.put(CAR_TABLE_COLOR, car.getColor());
+        values.put(CAR_TABLE_MODEL, car.getModel());
+        values.put(CAR_TABLE_COMPANY, car.getCompany());
+        values.put(CAR_TABLE_USER_OWNER_ID, car.getUserOwnerId());
 
 
         db.insertWithOnConflict(CAR_TABLE, CAR_TABLE_ID, values, SQLiteDatabase.CONFLICT_REPLACE);
     }
 
-    public static String getLastUpdateDate(SQLiteDatabase db){
-        return LastUpdateSql.getLastUpdate(db,CAR_TABLE);
+    public String getLastUpdateDate(SQLiteDatabase db) {
+        return LastUpdateSql.getLastUpdate(db, CAR_TABLE);
     }
-    public static void setLastUpdateDate(SQLiteDatabase db, String date){
-        LastUpdateSql.setLastUpdate(db,CAR_TABLE, date);
+
+    public void setLastUpdateDate(SQLiteDatabase db, String date) {
+        LastUpdateSql.setLastUpdate(db, CAR_TABLE, date);
     }
 }
 
