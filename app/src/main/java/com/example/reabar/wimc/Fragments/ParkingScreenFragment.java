@@ -69,7 +69,7 @@ public class ParkingScreenFragment extends Fragment implements LocationListener 
         imageTaken = false;
         gpsText = (TextView) view.findViewById(R.id.gpsText);
         carNumber = (TextView) view.findViewById(R.id.carnumber);
-        carNumber.setText("Save location for car " + carID);
+        carNumber.setText(carNumber.getText().toString() + carID);
         city = (EditText) view.findViewById(R.id.parking_cityInput);
         street = (EditText) view.findViewById(R.id.parking_streetInput);
         number = (EditText) view.findViewById(R.id.parking_streetNumberInput);

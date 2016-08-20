@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/we_are_parking_the_car"
+        android:text="@string/save_location_for_car"
         android:id="@+id/carnumber"
         android:layout_below="@+id/textView3"
         android:layout_alignStart="@+id/textView3"

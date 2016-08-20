@@ -56,4 +56,6 @@
     <string name="color">Color..</string>
     <string name="add_new_car">Add New Car</string>
     <string name="manage_your_cars">Manage your cars</string>
+    <string name="want_to_park_your_car_please_choose_the_car_below">Want to park your car? please choose the car below!</string>
+    <string name="save_location_for_car">Save location for car</string>
 </resources>

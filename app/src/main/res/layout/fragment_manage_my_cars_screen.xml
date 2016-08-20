@@ -15,9 +15,9 @@
         android:hint="@string/car_license"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginLeft="50dp"
         android:layout_marginTop="65dp"
-        android:imeOptions="actionDone" />
+        android:imeOptions="actionDone"
+        android:layout_gravity="center_horizontal" />
 
     <EditText
         android:layout_width="300dp"
@@ -29,8 +29,8 @@
         android:hint="@string/model_company"
         android:layout_above="@+id/newCarButton"
         android:layout_alignStart="@+id/carModelInput"
-        android:layout_marginLeft="50dp"
-        android:imeOptions="actionDone" />
+        android:imeOptions="actionDone"
+        android:layout_gravity="center_horizontal" />
 
     <EditText
         android:layout_width="300dp"
@@ -42,8 +42,8 @@
         android:hint="@string/color"
         android:layout_below="@+id/carLicenseInput"
         android:layout_alignStart="@+id/carLicenseInput"
-        android:layout_marginLeft="50dp"
-        android:imeOptions="actionDone" />
+        android:imeOptions="actionDone"
+        android:layout_gravity="center_horizontal" />
 
     <EditText
         android:layout_width="300dp"
@@ -55,8 +55,8 @@
         android:hint="@string/car_model"
         android:layout_above="@+id/carCompanyInput"
         android:layout_alignStart="@+id/carColorInput"
-        android:layout_marginLeft="50dp"
-        android:imeOptions="actionDone" />
+        android:imeOptions="actionDone"
+        android:layout_gravity="center_horizontal" />
 
     <Button
         android:layout_width="215dp"

@@ -148,8 +148,8 @@ public class MyCarsNowScreenFragment extends Fragment {
 
 
             final Parking parking = parkings.get(position);
-            myParkingCarDetails.setText("Car Number: " + parking.getCarId());
-            myParkingCarCityStreetNumber.setText(parking.getStreet() + " " + parking.getStreetNumber() + "St.  " + parking.getCity());
+            myParkingCarDetails.setText(myParkingCarDetails.getText().toString() + parking.getCarId());
+            myParkingCarCityStreetNumber.setText(parking.getStreet() + " " + parking.getStreetNumber() + "  " + parking.getCity());
             if(parking.getParkingLotName() != null || parking.getParkingLotName() != ""){
                 parkingLotDetails.setText("");
                 myParkingLotName.setText(parking.getParkingLotName());

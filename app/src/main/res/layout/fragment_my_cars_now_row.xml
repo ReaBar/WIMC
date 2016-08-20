@@ -22,7 +22,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignStart="@+id/textView3"
                 android:layout_below="@+id/textView3"
-                android:text="@string/car_model_year"
+                android:text="Car Number: "
                 android:textAlignment="center"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textStyle="bold"

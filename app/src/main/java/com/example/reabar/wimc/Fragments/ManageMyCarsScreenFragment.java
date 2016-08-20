@@ -130,7 +130,7 @@ public class ManageMyCarsScreenFragment extends Fragment {
                 carFragment.users = cars.get(position).getUsersList();
                 carFragment.carLicense = cars.get(position).getCarId();
                 carFragment.car = cars.get(position);
-                carFragment.modelCompany = cars.get(position).getModel() + " " + cars.get(position).getCompany();
+                carFragment.modelCompany = cars.get(position).getCompany() + " " + cars.get(position).getModel();
                 fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.main_frag_container, carFragment, "CarScreenFragment");
                 fragmentTransaction.addToBackStack(null).commit();
