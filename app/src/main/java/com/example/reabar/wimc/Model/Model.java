@@ -113,6 +113,30 @@ public class Model {
         modelFirebase.stopParking(car);
     }
 
+    public void updateCarDbTime(){
+        modelFirebase.updateCarDbTime();
+    }
+
+    public void getCarDbTime(SyncListener listener){
+        modelFirebase.getCarDbTime(listener);
+    }
+
+    public void updateParkingDbTime(){
+        modelFirebase.updateParkingDbTime();
+    }
+
+    public void getParkingDbTime(SyncListener listener){
+        modelFirebase.getParkingDbTime(listener);
+    }
+
+    public void updateUsersDbTime(){
+        modelFirebase.updateUsersDbTime();
+    }
+
+    public void getUsersDbTime(SyncListener listener){
+        modelFirebase.getUsersDbTime(listener);
+    }
+
     //--- Listeners ---- //
     public interface SyncListener{
         void isSuccessful(boolean success);

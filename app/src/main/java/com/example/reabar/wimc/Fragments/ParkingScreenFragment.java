@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +31,7 @@ import com.example.reabar.wimc.R;
 import java.io.ByteArrayOutputStream;
 import java.util.Date;
 
-public class ParkingScreenFragment extends Fragment implements  LocationListener{
+public class ParkingScreenFragment extends Fragment implements LocationListener {
 
     FragmentTransaction fragmentTransaction;
     FragmentCommunicator fragmentCommunicator;
@@ -92,16 +93,15 @@ public class ParkingScreenFragment extends Fragment implements  LocationListener
 
         //GPS Button flow..
         gpsLocation = (Button) view.findViewById(R.id.locationButton);
-        gpsLocation.setOnClickListener(new View.OnClickListener(){
+        gpsLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 gps1 = new GPSTracker(getActivity());
-                if(gps1.canGetLocation()){
+                if (gps1.canGetLocation()) {
                     longtitude = gps1.getLongtitude();
                     latitude = gps1.getLatitude();
                     gpsText.setText("Longtitude: " + longtitude + "\nLatitude: " + latitude);
-                }
-                else {
+                } else {
                     gps1.showSettingsAlert();
                 }
             }
@@ -123,10 +123,10 @@ public class ParkingScreenFragment extends Fragment implements  LocationListener
                         @Override
                         public void isSuccessful(boolean success) {
                             //save image to cloudinary
-                            if(imageTaken){
+                            if (imageTaken) {
                                 //call cloudinary function
                                 ModelCloudinary cloudinary = new ModelCloudinary(getActivity());
-                                cloudinary.uploadImage(carID+"_"+nowDate, bitmap);
+                                cloudinary.uploadImage(carID + "_" + nowDate, bitmap);
                             }
                             //go to homepage fragment
                             Toast.makeText(MyApplication.getAppActivity(), "Parking place saved",
@@ -151,7 +151,6 @@ public class ParkingScreenFragment extends Fragment implements  LocationListener
     }
 
 
-
     //for camera functionality
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -172,7 +171,7 @@ public class ParkingScreenFragment extends Fragment implements  LocationListener
     }
 
 
-        @Override
+    @Override
     public void onLocationChanged(Location location) {
 
     }

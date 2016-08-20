@@ -21,7 +21,6 @@ public class CarFirebase {
     private String TAG = "CarsFirebase";
     private String CARS_DB = "cars";
 
-
     public void addCarToDB(FirebaseDatabase db, Car car, final Model.SyncListener listener) {
         DatabaseReference dbRef = db.getReference(CARS_DB);
         dbRef.child(car.getCarId()).setValue(car).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -30,6 +29,7 @@ public class CarFirebase {
                 if (task.isSuccessful()) {
                     Log.d(TAG, "Car Added!");
                     listener.isSuccessful(true);
+                    Model.getInstance().updateCarDbTime();
                 } else {
                     Log.d(TAG, "Error to add the new car");
                     listener.failed(task.getException().getMessage());
@@ -41,6 +41,7 @@ public class CarFirebase {
     public void removeCarFromDB(FirebaseDatabase db, Car car) {
         DatabaseReference dbRef = db.getReference(CARS_DB);
         dbRef.child(car.getCarId()).removeValue();
+        Model.getInstance().updateCarDbTime();
     }
 
     public void updateCar(FirebaseDatabase db, Car car, final Model.SyncListener listener) {
@@ -49,6 +50,7 @@ public class CarFirebase {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
+                    Model.getInstance().updateCarDbTime();
                     listener.isSuccessful(true);
                 } else {
                     Log.d(TAG, "Error to update car");

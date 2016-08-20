@@ -48,6 +48,7 @@ public class ParkingFirebase {
                                     if(car.getCarId().equals(parkingLocation.getCarId())){
                                         car.setParkingIsActive(true);
                                         car.updateThisCar();
+                                        Model.getInstance().updateParkingDbTime();
                                     }
                                 }
                             }
@@ -94,7 +95,6 @@ public class ParkingFirebase {
                                     Parking tempCar = children.iterator().next().getValue(Parking.class);
                                     for (int i = 0; i < carsList.size(); i++) {
                                         if (carsList.get(i).getCarId().equals(tempCar.getCarId())) {
-                                            Log.d("TESTTEST", "Removed " + carsList.get(i).getCarId());
                                             carsList.remove(i);
                                         }
                                     }
@@ -218,6 +218,7 @@ public class ParkingFirebase {
                         if(car.getCarId().equals(parking.getCarId())){
                             car.setParkingIsActive(false);
                             car.updateThisCar();
+                            Model.getInstance().updateParkingDbTime();
                             return;
                         }
                     }
@@ -247,6 +248,7 @@ public class ParkingFirebase {
                         if(car.getCarId().equals(car.getCarId())){
                             car.setParkingIsActive(false);
                             car.updateThisCar();
+                            Model.getInstance().updateParkingDbTime();
                             return;
                         }
                     }
