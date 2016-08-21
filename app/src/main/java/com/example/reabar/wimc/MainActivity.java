@@ -75,8 +75,8 @@ public class MainActivity extends AppCompatActivity
 //        String share1 = "tomer_aronovsky@hotmail.com";
 //        String share2 = "tasolutions2012@gmail.com";
 //        ArrayList<String> s = new ArrayList<String>();
-//        s.add(share1);
-//        s.add(share2);
+//        s.addUser(share1);
+//        s.addUser(share2);
 //        car.setUsersList(s);
 //        Model.getInstance().addCarToDB(car, new Model.AddNewCarListener() {
 //            @Override
@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity
             }
 
             @Override
-            public void PassData(Object data) {
+            public void passData(Object data) {
                 Log.d("TESTTEST","test");
             }
         });

@@ -60,7 +60,7 @@ public class HomeScreenFragment extends Fragment {
         if(Model.getInstance().getCurrentUser() != null) {
             Model.getInstance().getMyUnparkedCars(Model.getInstance().getCurrentUser().getEmail(), new Model.SyncListener() {
                 @Override
-                public void PassData(Object allCars) {
+                public void passData(Object allCars) {
                     cars = (ArrayList) allCars;
                     progressBar.setVisibility(View.GONE);
                     adapter.notifyDataSetChanged();

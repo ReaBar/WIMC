@@ -68,7 +68,7 @@ public class SignupScreenFragment extends Fragment {
                         }
 
                         @Override
-                        public void PassData(Object data) {
+                        public void passData(Object data) {
 
                         }
 

@@ -11,7 +11,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -42,7 +41,7 @@ public class ParkingFirebase {
                          }
 
                          @Override
-                         public void PassData(Object data) {
+                         public void passData(Object data) {
                             if(data instanceof ArrayList){
                                 for (Car car: (ArrayList<Car>)data) {
                                     if(car.getCarId().equals(parkingLocation.getCarId())){
@@ -55,7 +54,7 @@ public class ParkingFirebase {
                          }
                      });
                 } else {
-                    Log.d(TAG, "Error to add the new car");
+                    Log.d(TAG, "Error to addUser the new car");
                     listener.failed(task.getException().getMessage());
                 }
             }
@@ -100,7 +99,7 @@ public class ParkingFirebase {
                                     }
                                 }
                                 listener.isSuccessful(true);
-                                listener.PassData(carsList);
+                                listener.passData(carsList);
                             }
 
                             @Override
@@ -137,14 +136,14 @@ public class ParkingFirebase {
             }
 
             @Override
-            public void PassData(Object data) {
+            public void passData(Object data) {
                 if(data instanceof ArrayList){
                     for (Car car: (ArrayList<Car>)data) {
                         if((car.getUserOwnerId().equals(Model.getInstance().getCurrentUser().getEmail()) || car.getUsersList().contains(Model.getInstance().getCurrentUser().getEmail())) && car.getParkingIsActive()){
                             carsList.add(car);
                         }
                     }
-                    listener.PassData(carsList);
+                    listener.passData(carsList);
                     listener.isSuccessful(true);
                 }
             }
@@ -174,7 +173,7 @@ public class ParkingFirebase {
                     }
 
                     @Override
-                    public void PassData(Object data) {
+                    public void passData(Object data) {
                         if(data instanceof ArrayList){
                             for (Car car: (ArrayList<Car>)data) {
                                 for (Parking parking: parkingSpots) {
@@ -183,7 +182,7 @@ public class ParkingFirebase {
                                     }
                                 }
                             }
-                            listener.PassData(finalParkingList);
+                            listener.passData(finalParkingList);
                             listener.isSuccessful(true);
                         }
                     }
@@ -212,7 +211,7 @@ public class ParkingFirebase {
             }
 
             @Override
-            public void PassData(Object data) {
+            public void passData(Object data) {
                 if(data instanceof ArrayList){
                     for (Car car: (ArrayList<Car>)data) {
                         if(car.getCarId().equals(parking.getCarId())){
@@ -242,7 +241,7 @@ public class ParkingFirebase {
             }
 
             @Override
-            public void PassData(Object data) {
+            public void passData(Object data) {
                 if(data instanceof ArrayList){
                     for (Car car: (ArrayList<Car>)data) {
                         if(car.getCarId().equals(car.getCarId())){

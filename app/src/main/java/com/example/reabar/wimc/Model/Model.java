@@ -39,6 +39,7 @@ public class Model {
 
     public void signupUser(final User user, final String password, final SyncListener listener){
         modelFirebase.signupUser(user, password, listener);
+        modelSql.addUser(user);
     }
 
     public void signInUser(User user, String password, final SyncListener listener){
@@ -84,10 +85,12 @@ public class Model {
 
     public void updateCar(Car car,Model.SyncListener listener){
         modelFirebase.updateCar(car, listener);
+        modelSql.updateCar(car);
     }
 
-    public void getAllCars(SyncListener listener){
+    public void getAllCars(final SyncListener listener){
         final String lastUpdateDate = modelSql.getCarLastUpdate();
+        final ArrayList<Car> carList= new ArrayList<>();
         modelFirebase.getCarDbTime(new SyncListener() {
             @Override
             public void isSuccessful(boolean success) {
@@ -100,9 +103,8 @@ public class Model {
             }
 
             @Override
-            public void PassData(Object data) {
-                if(data.toString().compareTo(lastUpdateDate)>0){
-                    ArrayList<Car> carList= new ArrayList<Car>();
+            public void passData(Object data) {
+                if (lastUpdateDate == null || data.toString().compareTo(lastUpdateDate) > 0) {
                     modelFirebase.getListOfAllCarsInDB(new SyncListener() {
                         @Override
                         public void isSuccessful(boolean success) {
@@ -115,14 +117,18 @@ public class Model {
                         }
 
                         @Override
-                        public void PassData(Object data) {
-                            for (Car car: (ArrayList<Car>)data) {
-                                if(modelSql.getCarById(car.getCarId()) == null){
+                        public void passData(Object data) {
+                            for (Car car : (ArrayList<Car>) data) {
+                                carList.add(car);
+                                if (modelSql.getCarById(car.getCarId()) == null) {
                                     modelSql.addCar(car);
                                 }
                             }
+                            listener.passData(carList);
                         }
                     });
+                } else {
+                    listener.passData(modelSql.getAllCars());
                 }
             }
         });
@@ -130,14 +136,17 @@ public class Model {
 
     public void parkCar(Parking parking, SyncListener listener){
         modelFirebase.parkCar(parking, listener);
+        modelSql.parkCar(parking);
     }
 
     public void getMyUnparkedCars(String uid, SyncListener listener){
         modelFirebase.getMyUnparkedCars(uid, listener);
+        modelSql.getMyUnparkedCars();
     }
 
-    public void getAllMyParkedCars(SyncListener listener){
+    public List<Car> getAllMyParkedCars(SyncListener listener){
         modelFirebase.getAllMyParkedCars(listener);
+        return modelSql.getMyParkedCars();
     }
 
     public void getAllMyParkingSpots(SyncListener listener){
@@ -146,10 +155,12 @@ public class Model {
 
     public void stopParking(Parking parking){
         modelFirebase.stopParking(parking);
+        modelSql.stopParking(parking);
     }
 
     public void stopParking(Car car){
         modelFirebase.stopParking(car);
+        modelSql.stopParking(car);
     }
 
     public void updateCarDbTime(){
@@ -168,7 +179,7 @@ public class Model {
     public interface SyncListener{
         void isSuccessful(boolean success);
         void failed(String message);
-        void PassData(Object data);
+        void passData(Object data);
     }
 
 
@@ -271,12 +282,12 @@ public class Model {
             imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
             out.close();
 
-            //add the picture to the gallery so we dont need to manage the cache size
+            //addUser the picture to the gallery so we dont need to manage the cache size
             Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
             Uri contentUri = Uri.fromFile(imageFile);
             mediaScanIntent.setData(contentUri);
             context.sendBroadcast(mediaScanIntent);
-            Log.d("tag","add image to cache: " + imageFileName);
+            Log.d("tag","addUser image to cache: " + imageFileName);
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();

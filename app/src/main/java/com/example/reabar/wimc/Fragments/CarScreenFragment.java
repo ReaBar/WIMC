@@ -81,10 +81,9 @@ public class CarScreenFragment extends Fragment {
                     Toast.makeText(MyApplication.getAppActivity(), "You must enter email of the shared user",
                             Toast.LENGTH_SHORT).show();
                 } else {
-                    //add user to car by email
-                    car.setNewCarUser(Model.getInstance().getCurrentUser().getUserId());
-                    Toast.makeText(MyApplication.getAppActivity(), "User added To Car!",
-                            Toast.LENGTH_SHORT).show();
+                    //addUser user to car by email
+                    car.setNewCarUser(emailSharedinput.getText().toString());
+                    emailSharedinput.setText("");
                 }
             }
         });

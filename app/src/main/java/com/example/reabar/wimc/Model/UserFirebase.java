@@ -142,7 +142,7 @@ public class UserFirebase {
                 while (children.iterator().hasNext()) {
                     users.add(children.iterator().next().getValue(User.class).getEmail());
                 }
-                listener.PassData(users);
+                listener.passData(users);
             }
 
             @Override

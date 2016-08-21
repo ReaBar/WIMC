@@ -40,7 +40,7 @@ public class LastUpdateFirebase {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Object time = dataSnapshot.getValue();
                 Log.d(TAG, "Last update parking time is: " + time.toString());
-                listener.PassData(time);
+                listener.passData(time);
 
             }
 
@@ -74,7 +74,7 @@ public class LastUpdateFirebase {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Object time = dataSnapshot.getValue();
                 Log.d(TAG, "Last update car time is: " + time.toString());
-                listener.PassData(time);
+                listener.passData(time);
 
             }
 
@@ -108,7 +108,7 @@ public class LastUpdateFirebase {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Object time = dataSnapshot.getValue();
                 Log.d(TAG, "Last update users time is: " + time.toString());
-                listener.PassData(time);
+                listener.passData(time);
 
             }
 

@@ -96,13 +96,13 @@ public class Car {
             }
 
             @Override
-            public void PassData(Object data) {
+            public void passData(Object data) {
 
             }
         });
     }
 
-    public void setNewCarUser(final String uId) {
+    public void setNewCarUser(final String email) {
         Model.getInstance().getUsersList(new Model.SyncListener() {
             @Override
             public void isSuccessful(boolean success) {
@@ -115,15 +115,18 @@ public class Car {
             }
 
             @Override
-            public void PassData(Object data) {
+            public void passData(Object data) {
                 if (data instanceof List) {
-                    if (((List<User>) data).contains(uId)) {
-                        usersList.add(uId);
+                    if (((List<User>) data).contains(email) && !usersList.contains(email)) {
+                        usersList.add(email);
+                        Toast.makeText(MyApplication.getAppActivity(), "User added To Car!",
+                                Toast.LENGTH_SHORT).show();
+                        updateThisCar();
+
                     } else {
-                        Toast.makeText(MyApplication.getAppContext(), "No such user", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MyApplication.getAppContext(), "User not found or already shared with", Toast.LENGTH_SHORT).show();
                     }
                 }
-                updateThisCar();
             }
         });
     }
