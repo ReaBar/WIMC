@@ -12,12 +12,14 @@ public class ModelFirebase {
     private CarFirebase carFirebase;
     private UserFirebase userFirebase;
     private ParkingFirebase parkingFirebase;
+    private LastUpdateFirebase lastUpdateFirebase;
 
     public ModelFirebase(){
         firebaseDatabase = FirebaseDatabase.getInstance();
         carFirebase = new CarFirebase();
         userFirebase = new UserFirebase();
         parkingFirebase = new ParkingFirebase();
+        lastUpdateFirebase = new LastUpdateFirebase();
     }
 
     // ---- User Functions ---- //
@@ -98,6 +100,32 @@ public class ModelFirebase {
 
     public void stopParking(Car car){
         parkingFirebase.stopParking(firebaseDatabase,car);
+    }
+
+    // ---- Last Update Functions --- //
+
+    public void updateParkingDbTime(){
+        lastUpdateFirebase.updateParkingDbTime(firebaseDatabase);
+    }
+
+    public void getParkingDbTime(Model.SyncListener listener){
+        lastUpdateFirebase.getParkingDbTime(firebaseDatabase,listener);
+    }
+
+    public void updateCarDbTime(){
+        lastUpdateFirebase.updateCarDbTime(firebaseDatabase);
+    }
+
+    public void getCarDbTime(Model.SyncListener listener){
+        lastUpdateFirebase.getCarDbTime(firebaseDatabase,listener);
+    }
+
+    public void updateUsersDbTime(){
+        lastUpdateFirebase.updateUsersDbTime(firebaseDatabase);
+    }
+
+    public void getUsersDbTime(Model.SyncListener listener){
+        lastUpdateFirebase.getUsersDbTime(firebaseDatabase,listener);
     }
 
 }

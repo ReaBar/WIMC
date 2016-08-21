@@ -2,6 +2,7 @@ package com.example.reabar.wimc.Fragments;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -10,15 +11,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.reabar.wimc.FragmentCommunicator;
 import com.example.reabar.wimc.Model.Model;
 import com.example.reabar.wimc.Model.ModelCloudinary;
 import com.example.reabar.wimc.Model.Parking;
+import com.example.reabar.wimc.MyApplication;
 import com.example.reabar.wimc.R;
 
 import java.util.ArrayList;
@@ -45,6 +50,8 @@ public class MyCarsNowScreenFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_my_cars_now, container, false);
+        fragmentCommunicator = (FragmentCommunicator) getActivity();
+
 
         cloudinary = new ModelCloudinary(getActivity());
 
@@ -125,16 +132,24 @@ public class MyCarsNowScreenFragment extends Fragment {
                 Log.d("TAG", "use convert view:" + position);
             }
 
+            Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(),"Alyssa_Kayla.ttf"); // create a typeface from the raw ttf
+            TextView yourCarParkingHere = (TextView) convertView.findViewById(R.id.parkingText1);
+            yourCarParkingHere.setTypeface(typeface);
             TextView parkingLotDetails = (TextView) convertView.findViewById(R.id.parkingLotText);
             TextView myParkingCarDetails = (TextView) convertView.findViewById(R.id.myParkingCarModelYear);
+            myParkingCarDetails.setTypeface(typeface);
+
             TextView myParkingCarCityStreetNumber = (TextView) convertView.findViewById(R.id.parkingCityStreetInput1);
             TextView myParkingLotName = (TextView) convertView.findViewById(R.id.parkingLotNameInput);
             TextView myParkingLotFloor = (TextView) convertView.findViewById(R.id.parkingLotFloorInput);
             final ImageView parkingPhoto = (ImageView) convertView.findViewById(R.id.parkingPhoto);
+            ImageButton gpsLink = (ImageButton) convertView.findViewById(R.id.googleMapsLocation);
+            Button stopParkingButton = (Button) convertView.findViewById(R.id.stopParkingButton);
 
-            Parking parking = parkings.get(position);
-            myParkingCarDetails.setText("Car Number: " + parking.getCarId());
-            myParkingCarCityStreetNumber.setText(parking.getStreet() + " " + parking.getStreetNumber() + "St.  " + parking.getCity());
+
+            final Parking parking = parkings.get(position);
+            myParkingCarDetails.setText(myParkingCarDetails.getText().toString() + parking.getCarId());
+            myParkingCarCityStreetNumber.setText(parking.getStreet() + " " + parking.getStreetNumber() + "  " + parking.getCity());
             if(parking.getParkingLotName() != null || parking.getParkingLotName() != ""){
                 parkingLotDetails.setText("");
                 myParkingLotName.setText(parking.getParkingLotName());
@@ -142,7 +157,7 @@ public class MyCarsNowScreenFragment extends Fragment {
             }
 
             //load image from cloudinary
-            Model.getInstance().loadImage(parking.getCarId(), new Model.LoadImageListener() {
+            Model.getInstance().loadImage(parking.getCarId()+"_"+parking.getStartParking(), new Model.LoadImageListener() {
                 @Override
                 public void onResult(Bitmap imageBmp) {
                     if(imageBmp != null){
@@ -151,6 +166,26 @@ public class MyCarsNowScreenFragment extends Fragment {
                 }
             });
 
+            gpsLink.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Object[] data = new Object[2];
+                    data[0] = parking.getLatitude();
+                    data[1] = parking.getLongitude();
+                    fragmentCommunicator.passData(data, "MapScreenFragment");
+                }
+            });
+
+            stopParkingButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Model.getInstance().stopParking(parking);
+                    Toast.makeText(MyApplication.getAppActivity(), "Parking has ended. Drive carefully!",
+                            Toast.LENGTH_SHORT).show();
+                    fragmentCommunicator.passString("HomeScreenFragment");
+
+                }
+            });
             return convertView;
         }
     }
