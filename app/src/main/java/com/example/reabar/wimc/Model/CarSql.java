@@ -19,6 +19,7 @@ import java.util.List;
 public class CarSql {
 
     public static void create(SQLiteDatabase db) {
+        //TODO add isParkingActive
         db.execSQL("CREATE TABLE IF NOT EXISTS " +
                 Constants.CAR_TABLE + " (" +
                 Constants.CAR_ID + " TEXT PRIMARY KEY," +
@@ -54,8 +55,10 @@ public class CarSql {
                 List<String> usersList = convertStringToList(cursor.getString(userListIndex));
                 //0 false / 1 true
                 Car car = new Car(id, color, model, company, userOwnerId);
-                for (String user : usersList) {
-                    car.setNewCarUser(user);
+                if(usersList != null){
+                    for (String user : usersList) {
+                        car.setNewCarUser(user);
+                    }
                 }
                 cars.add(car);
             } while (cursor.moveToNext());
@@ -235,6 +238,9 @@ public class CarSql {
     }
 
     public static List<String> convertStringToList(String str) {
+        if(str == null){
+            return null;
+        }
         return Arrays.asList(str.split(Constants.LIST_SEPARATOR));
     }
 

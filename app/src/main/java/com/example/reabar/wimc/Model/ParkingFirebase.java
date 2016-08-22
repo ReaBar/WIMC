@@ -12,6 +12,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by reabar on 30.7.2016.
@@ -19,29 +20,28 @@ import java.util.ArrayList;
 public class ParkingFirebase {
 
     private String TAG = "ParkingFirebase";
-    private String PARKING_DB = "parking";
 
     public void parkCar(final FirebaseDatabase db, final Parking parkingLocation, final Model.SyncListener listener) {
-        DatabaseReference dbRef = db.getReference(PARKING_DB);
+        DatabaseReference dbRef = db.getReference(Constants.PARKING_TABLE);
         dbRef.child(parkingLocation.getCarId()).setValue(parkingLocation).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
                     Log.d(TAG, "Parking was saved!");
                     listener.isSuccessful(true);
-                     Model.getInstance().getAllCars(new Model.SyncListener() {
-                         @Override
-                         public void isSuccessful(boolean success) {
+                    CarFirebase.getListOfAllCarsInDB(db, new Model.SyncListener() {
+                        @Override
+                        public void isSuccessful(boolean success) {
 
-                         }
+                        }
 
-                         @Override
-                         public void failed(String message) {
+                        @Override
+                        public void failed(String message) {
 
-                         }
+                        }
 
-                         @Override
-                         public void passData(Object data) {
+                        @Override
+                        public void passData(Object data) {
                             if(data instanceof ArrayList){
                                 for (Car car: (ArrayList<Car>)data) {
                                     if(car.getCarId().equals(parkingLocation.getCarId())){
@@ -51,8 +51,8 @@ public class ParkingFirebase {
                                     }
                                 }
                             }
-                         }
-                     });
+                        }
+                    });
                 } else {
                     Log.d(TAG, "Error to addUser the new car");
                     listener.failed(task.getException().getMessage());
@@ -62,7 +62,7 @@ public class ParkingFirebase {
     }
 
     public void getMyUnparkedCars(final FirebaseDatabase db, final String uId, final Model.SyncListener listener) {
-        final DatabaseReference carDbRef = db.getReference("cars");
+        final DatabaseReference carDbRef = db.getReference(Constants.CAR_TABLE);
         final ArrayList<Car> carsList = new ArrayList<>();
 
         carDbRef.orderByChild("userOwnerId").equalTo(uId).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -84,7 +84,7 @@ public class ParkingFirebase {
                                 carsList.add(tempCar);
                             }
                         }
-                        DatabaseReference parkingDbRef = db.getReference(PARKING_DB);
+                        DatabaseReference parkingDbRef = db.getReference(Constants.PARKING_TABLE);
 
                         parkingDbRef.orderByChild("carId").addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
@@ -122,9 +122,9 @@ public class ParkingFirebase {
         });
     }
 
-    public void getAllMyParkedCars(final Model.SyncListener listener) {
+    public void getAllMyParkedCars(FirebaseDatabase db,final Model.SyncListener listener) {
         final ArrayList<Car> carsList = new ArrayList<>();
-        Model.getInstance().getAllCars(new Model.SyncListener() {
+        CarFirebase.getListOfAllCarsInDB(db, new Model.SyncListener() {
             @Override
             public void isSuccessful(boolean success) {
 
@@ -153,7 +153,7 @@ public class ParkingFirebase {
     public void getAllMyParkingSpots(final FirebaseDatabase db,final Model.SyncListener listener) {
         final ArrayList<Parking> parkingSpots = new ArrayList<>();
         final ArrayList<Parking> finalParkingList = new ArrayList<>();
-        DatabaseReference dbRef = db.getReference(PARKING_DB);
+        DatabaseReference dbRef = db.getReference(Constants.PARKING_TABLE);
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -161,7 +161,7 @@ public class ParkingFirebase {
                 while (children.iterator().hasNext()) {
                     parkingSpots.add(children.iterator().next().getValue(Parking.class));
                 }
-                Model.getInstance().getAllMyParkedCars(new Model.SyncListener() {
+                getAllMyParkedCars(db,new Model.SyncListener() {
                     @Override
                     public void isSuccessful(boolean success) {
 
@@ -174,17 +174,14 @@ public class ParkingFirebase {
 
                     @Override
                     public void passData(Object data) {
-                        if(data instanceof ArrayList){
-                            for (Car car: (ArrayList<Car>)data) {
-                                for (Parking parking: parkingSpots) {
-                                    if(parking.getCarId().equals(car.getCarId())){
-                                        finalParkingList.add(parking);
-                                    }
+                        for (Car car: (List<Car>)data) {
+                            for (Parking parking: parkingSpots) {
+                                if(car.getCarId().equals(parking.getCarId())){
+                                    finalParkingList.add(parking);
                                 }
                             }
-                            listener.passData(finalParkingList);
-                            listener.isSuccessful(true);
                         }
+                        listener.passData(finalParkingList);
                     }
                 });
             }
@@ -198,7 +195,7 @@ public class ParkingFirebase {
     }
 
     public void stopParking(FirebaseDatabase db, final Parking parking) {
-        DatabaseReference dbRef = db.getReference(PARKING_DB);
+        DatabaseReference dbRef = db.getReference(Constants.PARKING_TABLE);
         Model.getInstance().getAllMyParkedCars(new Model.SyncListener() {
             @Override
             public void isSuccessful(boolean success) {
@@ -227,7 +224,7 @@ public class ParkingFirebase {
     }
 
     public void stopParking(FirebaseDatabase db, final Car car) {
-        DatabaseReference dbRef = db.getReference(PARKING_DB);
+        DatabaseReference dbRef = db.getReference(Constants.PARKING_TABLE);
         Model.getInstance().getAllMyParkedCars(new Model.SyncListener() {
             @Override
             public void isSuccessful(boolean success) {

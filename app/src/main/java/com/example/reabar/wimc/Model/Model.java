@@ -31,6 +31,65 @@ public class Model {
         modelFirebase = new ModelFirebase();
         modelSql = new ModelSql();
         modelCloudinary = new ModelCloudinary(MyApplication.getAppContext());
+        modelFirebase.getListOfAllCarsInDB(new SyncListener() {
+            @Override
+            public void isSuccessful(boolean success) {
+
+            }
+
+            @Override
+            public void failed(String message) {
+
+            }
+
+            @Override
+            public void passData(Object data) {
+                for (Car car:(List<Car>)data) {
+                    modelSql.addCar(car);
+                }
+                updateCarDbTime();
+            }
+        });
+
+        modelFirebase.getAllMyParkingSpots(new SyncListener() {
+            @Override
+            public void isSuccessful(boolean success) {
+
+            }
+
+            @Override
+            public void failed(String message) {
+
+            }
+
+            @Override
+            public void passData(Object data) {
+                for (Parking parking:(List<Parking>)data) {
+                    modelSql.parkCar(parking);
+                }
+                updateParkingDbTime();
+            }
+        });
+
+        modelFirebase.getUsersList(new SyncListener() {
+            @Override
+            public void isSuccessful(boolean success) {
+
+            }
+
+            @Override
+            public void failed(String message) {
+
+            }
+
+            @Override
+            public void passData(Object data) {
+                for (User user:(List<User>)data) {
+                    modelSql.addUser(user);
+                }
+                updateUsersDbTime();
+            }
+        });
     }
 
     public void setCurrentUser(User currentUser) {
@@ -107,7 +166,11 @@ public class Model {
 
             @Override
             public void passData(Object data) {
-                if (lastUpdateDate == null || data.toString().compareTo(lastUpdateDate) > 0) {
+                if(data == null){
+                    listener.passData(carList);
+                }
+
+                else if (lastUpdateDate == null || data.toString().compareTo(lastUpdateDate) > 0) {
                     modelFirebase.getListOfAllCarsInDB(new SyncListener() {
                         @Override
                         public void isSuccessful(boolean success) {
@@ -146,12 +209,10 @@ public class Model {
 
     public void getMyUnparkedCars(String uid, SyncListener listener){
         modelFirebase.getMyUnparkedCars(uid, listener);
-        modelSql.getMyUnparkedCars(listener);
     }
 
     public void getAllMyParkedCars(SyncListener listener){
         modelFirebase.getAllMyParkedCars(listener);
-        modelSql.getMyParkedCars(listener);
     }
 
     public void getAllMyParkingSpots(SyncListener listener){

@@ -105,7 +105,7 @@ public class CarFirebase {
         });
     }
 
-    public void getListOfAllCarsInDB(FirebaseDatabase db, final Model.SyncListener listener) {
+    public static void getListOfAllCarsInDB(FirebaseDatabase db, final Model.SyncListener listener) {
         DatabaseReference dbRef = db.getReference(Constants.CAR_TABLE);
         final ArrayList<Car> carsList = new ArrayList<>();
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {

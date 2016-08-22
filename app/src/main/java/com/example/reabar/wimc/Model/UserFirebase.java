@@ -131,15 +131,15 @@ public class UserFirebase {
         }
     }
 
-    public List<String> getUsersList(FirebaseDatabase db, final Model.SyncListener listener) {
-        final List<String> users = new ArrayList<String>();
+    public void getUsersList(FirebaseDatabase db, final Model.SyncListener listener) {
+        final List<User> users = new ArrayList<>();
         DatabaseReference dbRef = db.getReference(USERS_DB);
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
                 while (children.iterator().hasNext()) {
-                    users.add(children.iterator().next().getValue(User.class).getEmail());
+                    users.add(children.iterator().next().getValue(User.class));
                 }
                 listener.passData(users);
             }
@@ -149,8 +149,6 @@ public class UserFirebase {
                 listener.failed(databaseError.toString());
             }
         });
-
-        return users;
     }
 
 

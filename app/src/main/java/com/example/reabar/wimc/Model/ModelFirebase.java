@@ -61,8 +61,8 @@ public class ModelFirebase {
         carFirebase.updateCar(firebaseDatabase, car,listener);
     }
 
-    public List<String> getUsersList(Model.SyncListener listener){
-       return userFirebase.getUsersList(firebaseDatabase, listener);
+    public void getUsersList(Model.SyncListener listener){
+       userFirebase.getUsersList(firebaseDatabase, listener);
     }
 
     public void getOwnedCars(String uId,Model.SyncListener listener){
@@ -87,7 +87,7 @@ public class ModelFirebase {
     }
 
     public void getAllMyParkedCars(Model.SyncListener listener){
-        parkingFirebase.getAllMyParkedCars(listener);
+        parkingFirebase.getAllMyParkedCars(firebaseDatabase,listener);
     }
 
     public void getAllMyParkingSpots(Model.SyncListener listener){
