@@ -19,7 +19,6 @@ import java.util.List;
 public class CarSql {
 
     public static void create(SQLiteDatabase db) {
-        //TODO add isParkingActive
         db.execSQL("CREATE TABLE IF NOT EXISTS " +
                 Constants.CAR_TABLE + " (" +
                 Constants.CAR_ID + " TEXT PRIMARY KEY," +
@@ -27,7 +26,8 @@ public class CarSql {
                 Constants.CAR_MODEL + " TEXT," +
                 Constants.CAR_COMPANY + " TEXT," +
                 Constants.CAR_USER_OWNER_ID + " TEXT, " +
-                Constants.CAR_USERS_LIST + " TEXT);");
+                Constants.CAR_USERS_LIST + " TEXT, " +
+                Constants.CAR_IS_PARKING_ACTIVE + " BOOLEAN);");
     }
 
     public static void drop(SQLiteDatabase db) {
@@ -45,6 +45,7 @@ public class CarSql {
             int companyIndex = cursor.getColumnIndex(Constants.CAR_COMPANY);
             int userOwnerIdIndex = cursor.getColumnIndex(Constants.CAR_USER_OWNER_ID);
             int userListIndex = cursor.getColumnIndex(Constants.CAR_USERS_LIST);
+            int isParkingActiveIndex = cursor.getColumnIndex(Constants.CAR_IS_PARKING_ACTIVE);
 
             do {
                 String id = cursor.getString(idIndex);
@@ -52,6 +53,8 @@ public class CarSql {
                 String model = cursor.getString(modelIndex);
                 String company = cursor.getString(companyIndex);
                 String userOwnerId = cursor.getString(userOwnerIdIndex);
+                boolean isParkingActive = cursor.getInt(isParkingActiveIndex) != 0;
+
                 List<String> usersList = convertStringToList(cursor.getString(userListIndex));
                 //0 false / 1 true
                 Car car = new Car(id, color, model, company, userOwnerId);
@@ -60,6 +63,7 @@ public class CarSql {
                         car.setNewCarUser(user);
                     }
                 }
+                car.setParkingIsActive(isParkingActive);
                 cars.add(car);
             } while (cursor.moveToNext());
         }
@@ -77,18 +81,22 @@ public class CarSql {
             int modelIndex = cursor.getColumnIndex(Constants.CAR_MODEL);
             int companyIndex = cursor.getColumnIndex(Constants.CAR_COMPANY);
             int userOwnerIdIndex = cursor.getColumnIndex(Constants.CAR_USER_OWNER_ID);
+            int isParkingActiveIndex = cursor.getColumnIndex(Constants.CAR_IS_PARKING_ACTIVE);
 
             String objectId = cursor.getString(idIndex);
             String color = cursor.getString(colorIndex);
             String model = cursor.getString(modelIndex);
             String company = cursor.getString(companyIndex);
             String userOwnerId = cursor.getString(userOwnerIdIndex);
+            boolean isParkingActive = cursor.getInt(isParkingActiveIndex) != 0;
+
             if (cursor != null) {
                 cursor.close();
             }
 
             //0 false / 1 true
             Car car = new Car(objectId, color, model, company, userOwnerId);
+            car.setParkingIsActive(isParkingActive);
             return car;
         }
         return null;
@@ -102,6 +110,7 @@ public class CarSql {
         values.put(Constants.CAR_COMPANY, car.getCompany());
         values.put(Constants.CAR_USER_OWNER_ID, car.getUserOwnerId());
         values.put(Constants.CAR_USERS_LIST, convertListToString(car.getUsersList()));
+        values.put(Constants.CAR_IS_PARKING_ACTIVE, car.getParkingIsActive());
 
         db.insertWithOnConflict(Constants.CAR_TABLE, Constants.CAR_ID, values, SQLiteDatabase.CONFLICT_REPLACE);
     }
@@ -118,6 +127,7 @@ public class CarSql {
         values.put(Constants.CAR_COMPANY, car.getCompany());
         values.put(Constants.CAR_USER_OWNER_ID, car.getUserOwnerId());
         values.put(Constants.CAR_USERS_LIST, convertListToString(car.getUsersList()));
+        values.put(Constants.CAR_IS_PARKING_ACTIVE, car.getParkingIsActive());
 
         int update = db.update(Constants.CAR_TABLE, values, Constants.CAR_ID + " = ?", new String[]{car.getCarId()});
         if (update < 0) {
@@ -136,6 +146,7 @@ public class CarSql {
             int companyIndex = cursor.getColumnIndex(Constants.CAR_COMPANY);
             int userOwnerIndex = cursor.getColumnIndex(Constants.CAR_USER_OWNER_ID);
             int usersListIndex = cursor.getColumnIndex(Constants.CAR_USERS_LIST);
+            int isParkingActiveIndex = cursor.getColumnIndex(Constants.CAR_IS_PARKING_ACTIVE);
 
             do {
                 String id = cursor.getString(carIdIndex);
@@ -144,12 +155,14 @@ public class CarSql {
                 String userOwner = cursor.getString(userOwnerIndex);
                 String color = cursor.getString(colorIndex);
                 String usersList = cursor.getString(usersListIndex);
+                boolean isParkingActive = cursor.getInt(isParkingActiveIndex) != 0;
 
                 Car car = new Car(id, color, model, company, userOwner);
                 List<String> carUsers = convertStringToList(usersList);
                 for (String user : carUsers) {
                     car.setNewCarUser(user);
                 }
+                car.setParkingIsActive(isParkingActive);
                 carOwnedList.add(car);
             } while (cursor.moveToNext());
         }
@@ -168,6 +181,7 @@ public class CarSql {
             int companyIndex = cursor.getColumnIndex(Constants.CAR_COMPANY);
             int userOwnerIndex = cursor.getColumnIndex(Constants.CAR_USER_OWNER_ID);
             int usersListIndex = cursor.getColumnIndex(Constants.CAR_USERS_LIST);
+            int isParkingActiveIndex = cursor.getColumnIndex(Constants.CAR_IS_PARKING_ACTIVE);
 
             do {
                 String id = cursor.getString(carIdIndex);
@@ -176,12 +190,14 @@ public class CarSql {
                 String userOwner = cursor.getString(userOwnerIndex);
                 String color = cursor.getString(colorIndex);
                 String usersList = cursor.getString(usersListIndex);
+                boolean isParkingActive = cursor.getInt(isParkingActiveIndex) != 0;
 
                 Car car = new Car(id, color, model, company, userOwner);
                 List<String> carUsers = convertStringToList(usersList);
                 for (String user : carUsers) {
                     car.setNewCarUser(user);
                 }
+                car.setParkingIsActive(isParkingActive);
                 sharedCars.add(car);
             } while (cursor.moveToNext());
         }
@@ -201,6 +217,7 @@ public class CarSql {
             int companyIndex = cursor.getColumnIndex(Constants.CAR_COMPANY);
             int userOwnerIndex = cursor.getColumnIndex(Constants.CAR_USER_OWNER_ID);
             int usersListIndex = cursor.getColumnIndex(Constants.CAR_USERS_LIST);
+            int isParkingActiveIndex = cursor.getColumnIndex(Constants.CAR_IS_PARKING_ACTIVE);
 
             do {
                 String id = cursor.getString(carIdIndex);
@@ -209,16 +226,17 @@ public class CarSql {
                 String userOwner = cursor.getString(userOwnerIndex);
                 String color = cursor.getString(colorIndex);
                 String usersList = cursor.getString(usersListIndex);
+                boolean isParkingActive = cursor.getInt(isParkingActiveIndex) != 0;
 
                 Car car = new Car(id, color, model, company, userOwner);
                 List<String> carUsers = convertStringToList(usersList);
                 for (String user : carUsers) {
                     car.setNewCarUser(user);
                 }
+                car.setParkingIsActive(isParkingActive);
                 allCars.add(car);
             } while (cursor.moveToNext());
         }
-
         listener.passData(allCars);
     }
 

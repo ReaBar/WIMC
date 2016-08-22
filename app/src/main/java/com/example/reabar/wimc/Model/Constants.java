@@ -11,6 +11,7 @@ public class Constants {
     final static String CAR_COMPANY = "company";
     final static String CAR_USER_OWNER_ID = "user_owner_id";
     final static String CAR_USERS_LIST = "users_list";
+    final static String CAR_IS_PARKING_ACTIVE = "is_parking_active";
     final static String LIST_SEPARATOR = "__,__";
 
     final static String LAST_UPDATE_TABLE = "last_update";
