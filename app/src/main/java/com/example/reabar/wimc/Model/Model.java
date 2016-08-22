@@ -67,8 +67,8 @@ public class Model {
         modelFirebase.updatePassword(newPassword, listener);
     }
 
-    public List<String> getUsersList(Model.SyncListener listener){
-        return modelFirebase.getUsersList(listener);
+    public void getUsersList(Model.SyncListener listener){
+        modelFirebase.getUsersList(listener);
     }
 
     public void getOwnedCars(String uId,SyncListener listener){
@@ -81,11 +81,14 @@ public class Model {
 
     public void addCarToDB(final Car car, final SyncListener listener){
         modelFirebase.addCarToDB(car, listener);
+        modelSql.addCar(car);
+        updateCarDbTime();
     }
 
     public void updateCar(Car car,Model.SyncListener listener){
         modelFirebase.updateCar(car, listener);
         modelSql.updateCar(car);
+        updateCarDbTime();
     }
 
     public void getAllCars(final SyncListener listener){
@@ -124,11 +127,12 @@ public class Model {
                                     modelSql.addCar(car);
                                 }
                             }
+                            updateCarDbTime();
                             listener.passData(carList);
                         }
                     });
                 } else {
-                    listener.passData(modelSql.getAllCars());
+                    modelSql.getAllCars(listener);
                 }
             }
         });
@@ -137,16 +141,17 @@ public class Model {
     public void parkCar(Parking parking, SyncListener listener){
         modelFirebase.parkCar(parking, listener);
         modelSql.parkCar(parking);
+        updateParkingDbTime();
     }
 
     public void getMyUnparkedCars(String uid, SyncListener listener){
         modelFirebase.getMyUnparkedCars(uid, listener);
-        modelSql.getMyUnparkedCars();
+        modelSql.getMyUnparkedCars(listener);
     }
 
-    public List<Car> getAllMyParkedCars(SyncListener listener){
+    public void getAllMyParkedCars(SyncListener listener){
         modelFirebase.getAllMyParkedCars(listener);
-        return modelSql.getMyParkedCars();
+        modelSql.getMyParkedCars(listener);
     }
 
     public void getAllMyParkingSpots(SyncListener listener){
@@ -164,15 +169,21 @@ public class Model {
     }
 
     public void updateCarDbTime(){
-        modelFirebase.updateCarDbTime();
+        long currentTime = System.currentTimeMillis();
+        modelFirebase.updateCarDbTime(currentTime);
+        modelSql.updateCarsDbTime(currentTime);
     }
 
     public void updateParkingDbTime(){
-        modelFirebase.updateParkingDbTime();
+        long currentTime = System.currentTimeMillis();
+        modelFirebase.updateParkingDbTime(currentTime);
+        modelSql.updateParkingDbTime(currentTime);
     }
 
     public void updateUsersDbTime(){
-        modelFirebase.updateUsersDbTime();
+        long currentTime = System.currentTimeMillis();
+        modelFirebase.updateUsersDbTime(currentTime);
+        modelSql.updateUsersDbTime(currentTime);
     }
 
     //--- Listeners ---- //

@@ -217,7 +217,6 @@ public class ParkingFirebase {
                         if(car.getCarId().equals(parking.getCarId())){
                             car.setParkingIsActive(false);
                             car.updateThisCar();
-                            Model.getInstance().updateParkingDbTime();
                             return;
                         }
                     }
@@ -247,7 +246,6 @@ public class ParkingFirebase {
                         if(car.getCarId().equals(car.getCarId())){
                             car.setParkingIsActive(false);
                             car.updateThisCar();
-                            Model.getInstance().updateParkingDbTime();
                             return;
                         }
                     }

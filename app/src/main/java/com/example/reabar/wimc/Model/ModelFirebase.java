@@ -104,24 +104,24 @@ public class ModelFirebase {
 
     // ---- Last Update Functions --- //
 
-    public void updateParkingDbTime(){
-        lastUpdateFirebase.updateParkingDbTime(firebaseDatabase);
+    public void updateParkingDbTime(long currentTime){
+        lastUpdateFirebase.updateParkingDbTime(firebaseDatabase,currentTime);
     }
 
     public void getParkingDbTime(Model.SyncListener listener){
         lastUpdateFirebase.getParkingDbTime(firebaseDatabase,listener);
     }
 
-    public void updateCarDbTime(){
-        lastUpdateFirebase.updateCarDbTime(firebaseDatabase);
+    public void updateCarDbTime(long currentTime){
+        lastUpdateFirebase.updateCarDbTime(firebaseDatabase,currentTime);
     }
 
     public void getCarDbTime(Model.SyncListener listener){
         lastUpdateFirebase.getCarDbTime(firebaseDatabase,listener);
     }
 
-    public void updateUsersDbTime(){
-        lastUpdateFirebase.updateUsersDbTime(firebaseDatabase);
+    public void updateUsersDbTime(long currentTime){
+        lastUpdateFirebase.updateUsersDbTime(firebaseDatabase,currentTime);
     }
 
     public void getUsersDbTime(Model.SyncListener listener){

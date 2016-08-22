@@ -16,11 +16,10 @@ import com.google.firebase.database.ValueEventListener;
  */
 public class LastUpdateFirebase {
     private String TAG = "LastUpdateFirebase";
-    private String LAST_UPDATE_DB = "lastUpdate";
+    //private String LAST_UPDATE_DB = "lastUpdate";
 
-    public void updateParkingDbTime(FirebaseDatabase db) {
-        DatabaseReference dbRef = db.getReference(LAST_UPDATE_DB);
-        final long currentTime = System.currentTimeMillis();
+    public void updateParkingDbTime(FirebaseDatabase db,final long currentTime) {
+        DatabaseReference dbRef = db.getReference(Constants.LAST_UPDATE_TABLE);
         dbRef.child("parking").setValue(currentTime).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -34,7 +33,7 @@ public class LastUpdateFirebase {
     }
 
     public void getParkingDbTime(FirebaseDatabase db, final Model.SyncListener listener) {
-        DatabaseReference dbRef = db.getReference(LAST_UPDATE_DB);
+        DatabaseReference dbRef = db.getReference(Constants.LAST_UPDATE_TABLE);
         dbRef.child("parking").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -52,9 +51,8 @@ public class LastUpdateFirebase {
         });
     }
 
-    public void updateCarDbTime(FirebaseDatabase db) {
-        DatabaseReference dbRef = db.getReference(LAST_UPDATE_DB);
-        final long currentTime = System.currentTimeMillis();
+    public void updateCarDbTime(FirebaseDatabase db,final long currentTime) {
+        DatabaseReference dbRef = db.getReference(Constants.LAST_UPDATE_TABLE);
         dbRef.child("car").setValue(currentTime).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -68,7 +66,7 @@ public class LastUpdateFirebase {
     }
 
     public void getCarDbTime(FirebaseDatabase db, final Model.SyncListener listener) {
-        DatabaseReference dbRef = db.getReference(LAST_UPDATE_DB);
+        DatabaseReference dbRef = db.getReference(Constants.LAST_UPDATE_TABLE);
         dbRef.child("car").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -86,9 +84,8 @@ public class LastUpdateFirebase {
         });
     }
 
-    public void updateUsersDbTime(FirebaseDatabase db) {
-        DatabaseReference dbRef = db.getReference(LAST_UPDATE_DB);
-        final long currentTime = System.currentTimeMillis();
+    public void updateUsersDbTime(FirebaseDatabase db,final long currentTime) {
+        DatabaseReference dbRef = db.getReference(Constants.LAST_UPDATE_TABLE);
         dbRef.child("users").setValue(currentTime).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -102,7 +99,7 @@ public class LastUpdateFirebase {
     }
 
     public void getUsersDbTime(FirebaseDatabase db, final Model.SyncListener listener) {
-        DatabaseReference dbRef = db.getReference(LAST_UPDATE_DB);
+        DatabaseReference dbRef = db.getReference(Constants.LAST_UPDATE_TABLE);
         dbRef.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

@@ -15,13 +15,22 @@ public class ModelSql {
     private static final int VERSION = 2;
 
     MyDBHelper dbHelper;
-    private final String USERS_DB = "users";
+/*    private final String USERS_DB = "users";
     private final String CAR_DB = "car";
     private final String PARKING_DB = "parking";
-    private final String LAST_UPDATE_DB = "last_update";
+    private final String LAST_UPDATE_DB = "last_update";*/
 
     public ModelSql() {
         dbHelper = new MyDBHelper(MyApplication.getAppContext());
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        CarSql.drop(db);
+        ParkingSql.drop(db);
+        UserSql.drop(db);
+        LastUpdateSql.drop(db);
+        CarSql.create(db);
+        ParkingSql.create(db);
+        UserSql.create(db);
+        LastUpdateSql.create(db);
     }
 
     public void addUser(User user) {
@@ -29,14 +38,14 @@ public class ModelSql {
         UserSql.addUser(db, user);
     }
 
-    public List<User> getUsersList() {
+    public void getUsersList(Model.SyncListener listener) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        return UserSql.getUsersList(db);
+        UserSql.getUsersList(db,listener);
     }
 
-    public boolean isUserExistsByEmail(String email) {
+    public void isUserExistsByEmail(String email,Model.SyncListener listener) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        return UserSql.isUserExistsByEmail(db, email);
+        UserSql.isUserExistsByEmail(db, email,listener);
     }
 
     public void addCar(Car car) {
@@ -54,9 +63,9 @@ public class ModelSql {
         return CarSql.getCarById(db, id);
     }
 
-    public List<Car> getAllCars() {
+    public void getAllCars(Model.SyncListener listener) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        return CarSql.getAllCars(db);
+        CarSql.getAllCars(db,listener);
     }
 
     public String getCarLastUpdate() {
@@ -74,19 +83,19 @@ public class ModelSql {
         ParkingSql.parkCar(db, parkingLocation);
     }
 
-    public List<Car> getMyUnparkedCars() {
+    public void getMyUnparkedCars(Model.SyncListener listener) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        return ParkingSql.getMyUnparkedCars(db);
+        ParkingSql.getMyUnparkedCars(db,listener);
     }
 
-    public List<Car> getMyParkedCars(){
+    public void getMyParkedCars(Model.SyncListener listener){
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        return ParkingSql.getMyParkedCars(db);
+        ParkingSql.getMyParkedCars(db,listener);
     }
 
-    public List<Parking> getMyParkingSpots(){
+    public void getMyParkingSpots(Model.SyncListener listener){
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        return ParkingSql.getMyParkingSpots(db);
+        ParkingSql.getMyParkingSpots(db,listener);
     }
 
     public void stopParking(Parking parking){
@@ -99,16 +108,30 @@ public class ModelSql {
         ParkingSql.stopParking(db,car);
     }
 
+    public void updateUsersDbTime(long currentTime){
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        LastUpdateSql.setLastUpdate(db,Constants.USER_TABLE,currentTime);
+    }
+
+    public void updateParkingDbTime(long currentTime){
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        LastUpdateSql.setLastUpdate(db,Constants.PARKING_TABLE,currentTime);
+    }
+
+    public void updateCarsDbTime(long currentTime){
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        LastUpdateSql.setLastUpdate(db,Constants.CAR_TABLE,currentTime);
+    }
+
 
     class MyDBHelper extends SQLiteOpenHelper {
         public MyDBHelper(Context context) {
-            super(context, "database.db", null, VERSION);
+            super(context,"database.db", null, VERSION);
         }
 
         @Override
         public void onCreate(SQLiteDatabase db) {
             //create the DB schema
-            //dbHelper.getWritableDatabase();
             CarSql.create(db);
             UserSql.create(db);
             ParkingSql.create(db);

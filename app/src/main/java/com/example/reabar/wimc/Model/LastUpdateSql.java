@@ -9,34 +9,30 @@ import android.database.sqlite.SQLiteDatabase;
  */
 public class LastUpdateSql {
 
-    final static String LAST_UPDATE_TABLE = "last_update";
-    final static String LAST_UPDATE_TABLE_NAME = "table_name";
-    final static String LAST_UPDATE_TIME = "last_update_time";
-
     public static void create(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE IF NOT EXISTS " +
-                LAST_UPDATE_TABLE + " (" +
-                LAST_UPDATE_TABLE_NAME + " TEXT PRIMARY KEY," +
-                LAST_UPDATE_TIME + " TEXT);" );
+                Constants.LAST_UPDATE_TABLE + " (" +
+                Constants.LAST_UPDATE_TABLE_NAME + " TEXT PRIMARY KEY," +
+                Constants.LAST_UPDATE_TIME + " TEXT);" );
     }
 
     public static void drop(SQLiteDatabase db) {
-        db.execSQL("drop table " + LAST_UPDATE_TABLE + ";");
+        db.execSQL("DROP TABLE IF EXISTS " + Constants.LAST_UPDATE_TABLE + ";");
     }
 
     public static String getLastUpdate(SQLiteDatabase db, String tableName) {
-        Cursor cursor = db.query(LAST_UPDATE_TABLE, null, LAST_UPDATE_TABLE_NAME + " = ?",new String[]{tableName} , null, null, null);
+        Cursor cursor = db.query(Constants.LAST_UPDATE_TABLE, null, Constants.LAST_UPDATE_TABLE_NAME + " = ?",new String[]{tableName} , null, null, null);
         if (cursor.moveToFirst()) {
-            return cursor.getString(cursor.getColumnIndex(LAST_UPDATE_TIME));
+            return cursor.getString(cursor.getColumnIndex(Constants.LAST_UPDATE_TIME));
         }
         return null;
     }
 
-    public static void setLastUpdate(SQLiteDatabase db, String table) {
+    public static void setLastUpdate(SQLiteDatabase db, String table,final long currentTime) {
         ContentValues values = new ContentValues();
-        values.put(LAST_UPDATE_TABLE_NAME, table);
-        values.put(LAST_UPDATE_TIME, System.currentTimeMillis());
+        values.put(Constants.LAST_UPDATE_TABLE_NAME, table);
+        values.put(Constants.LAST_UPDATE_TIME, currentTime);
 
-        db.insertWithOnConflict(LAST_UPDATE_TABLE, LAST_UPDATE_TABLE_NAME,values, SQLiteDatabase.CONFLICT_REPLACE);
+        db.insertWithOnConflict(Constants.LAST_UPDATE_TABLE, Constants.LAST_UPDATE_TABLE_NAME,values, SQLiteDatabase.CONFLICT_REPLACE);
     }
 }

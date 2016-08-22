@@ -59,7 +59,6 @@ public class UserFirebase {
                     user.setUserId(uid);
                     dbRef.child(uid).setValue(user);
                     listener.isSuccessful(true);
-                    Model.getInstance().updateUsersDbTime();
                 }
 
                 if (!task.isSuccessful()) {
