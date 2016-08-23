@@ -139,7 +139,7 @@ public class ParkingScreenFragment extends Fragment implements LocationListener 
                         }
 
                         @Override
-                        public void PassData(Object data) {
+                        public void passData(Object data) {
 
                         }
                     });

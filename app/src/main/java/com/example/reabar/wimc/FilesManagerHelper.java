@@ -70,12 +70,12 @@ public class FilesManagerHelper {
             imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
             out.close();
 
-            //add the picture to the gallery so we dont need to manage the cache size
+            //addUser the picture to the gallery so we dont need to manage the cache size
             Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
             Uri contentUri = Uri.fromFile(imageFile);
             mediaScanIntent.setData(contentUri);
             context.sendBroadcast(mediaScanIntent);
-            Log.d("tag","add image to cache: " + imageFileName);
+            Log.d("tag","addUser image to cache: " + imageFileName);
 
         } catch (FileNotFoundException e) {
             Log.d("TAG", "Could not save image "+imageFileName);

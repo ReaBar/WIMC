@@ -8,10 +8,9 @@ import java.util.Date;
  * Created by reabar on 25.5.2016.
  */
 public class Parking {
-    private String parkingObjectId, carId, street, city, parkingLotName,parkingLotRowColor;
-    private String streetNumber, parkingLotFloor;
+    private String carId, street, city, parkingLotName,parkingLotRowColor,streetNumber, parkingLotFloor;
     private double latitude, longitude;
-    private boolean parkingIsActive;
+    private boolean isParkingActive;
     private Image parkingImage;
     private Date startParking;
 
@@ -28,12 +27,8 @@ public class Parking {
         this.latitude = parkingBuilder.latitude;
         this.longitude = parkingBuilder.longitude;
         this.parkingImage = parkingBuilder.parkingImage;
-        this.parkingIsActive = parkingBuilder.parkingIsActive;
+        this.isParkingActive = parkingBuilder.isParkingActive;
         this.startParking = parkingBuilder.startParking;
-    }
-
-    public void setParkingObjectId(String parkingObjectId) {
-        this.parkingObjectId = parkingObjectId;
     }
 
     public String getCarId() {
@@ -109,12 +104,12 @@ public class Parking {
         this.longitude = longitude;
     }
 
-    public boolean isParkingIsActive() {
-        return parkingIsActive;
+    public boolean isParkingActive() {
+        return isParkingActive;
     }
 
-    public void setParkingIsActive(boolean parkingIsActive) {
-        this.parkingIsActive = parkingIsActive;
+    public void setParkingActive(boolean parkingActive) {
+        this.isParkingActive = parkingActive;
     }
 
     public Image getParkingImage() {
@@ -130,16 +125,15 @@ public class Parking {
     public Date getStartParking() { return this.startParking; }
 
     public static class ParkingBuilder {
-        private String carId, street, city, parkingLotName,parkingLotRowColor;
-        private String streetNumber, parkingLotNumber, parkingLotFloor;
+        private String carId, street, city, parkingLotName,parkingLotRowColor,streetNumber, parkingLotFloor;
         private double latitude, longitude;
-        private boolean parkingIsActive;
+        private boolean isParkingActive;
         private Image parkingImage;
         private Date startParking;
 
         public ParkingBuilder(String carId) {
             this.carId = carId;
-            this.parkingIsActive = true;
+            this.isParkingActive = true;
         }
 
         public ParkingBuilder parkingLonitude(double longitude){
@@ -187,12 +181,16 @@ public class Parking {
             return this;
         }
 
+        public ParkingBuilder isParkingActive(boolean isParkingActive){
+            this.isParkingActive = isParkingActive;
+            return this;
+        }
+
         public ParkingBuilder startParking(Date startParking){
             this.startParking = startParking;
             return this;
         }
-
-
+        
         public Parking build() {
             return new Parking(this);
         }

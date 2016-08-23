@@ -91,7 +91,7 @@ public class ManageMyCarsScreenFragment extends Fragment {
                         }
 
                         @Override
-                        public void PassData(Object data) {
+                        public void passData(Object data) {
 
                         }
                     });
@@ -104,7 +104,7 @@ public class ManageMyCarsScreenFragment extends Fragment {
         carsList= (ListView) view.findViewById(R.id.carsListView);
         Model.getInstance().getOwnedCars(Model.getInstance().getCurrentUser().getEmail(), new Model.SyncListener() {
             @Override
-            public void PassData(Object allCars) {
+            public void passData(Object allCars) {
                 cars = (ArrayList) allCars;
                 progressBar.setVisibility(View.GONE);
                 adapter.notifyDataSetChanged();

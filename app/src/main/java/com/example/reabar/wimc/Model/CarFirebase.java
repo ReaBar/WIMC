@@ -19,19 +19,18 @@ import java.util.ArrayList;
 public class CarFirebase {
 
     private String TAG = "CarsFirebase";
-    private String CARS_DB = "cars";
+    //private String CARS_DB = "cars";
 
     public void addCarToDB(FirebaseDatabase db, Car car, final Model.SyncListener listener) {
-        DatabaseReference dbRef = db.getReference(CARS_DB);
+        DatabaseReference dbRef = db.getReference(Constants.CAR_TABLE);
         dbRef.child(car.getCarId()).setValue(car).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
                     Log.d(TAG, "Car Added!");
                     listener.isSuccessful(true);
-                    Model.getInstance().updateCarDbTime();
                 } else {
-                    Log.d(TAG, "Error to add the new car");
+                    Log.d(TAG, "Error to addUser the new car");
                     listener.failed(task.getException().getMessage());
                 }
             }
@@ -39,18 +38,16 @@ public class CarFirebase {
     }
 
     public void removeCarFromDB(FirebaseDatabase db, Car car) {
-        DatabaseReference dbRef = db.getReference(CARS_DB);
+        DatabaseReference dbRef = db.getReference(Constants.CAR_TABLE);
         dbRef.child(car.getCarId()).removeValue();
-        Model.getInstance().updateCarDbTime();
     }
 
     public void updateCar(FirebaseDatabase db, Car car, final Model.SyncListener listener) {
-        DatabaseReference dbRef = db.getReference(CARS_DB);
+        DatabaseReference dbRef = db.getReference(Constants.CAR_TABLE);
         dbRef.child(car.getCarId()).setValue(car).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
-                    Model.getInstance().updateCarDbTime();
                     listener.isSuccessful(true);
                 } else {
                     Log.d(TAG, "Error to update car");
@@ -61,7 +58,7 @@ public class CarFirebase {
     }
 
     public void getOwnedCars(FirebaseDatabase db, final String uId, final Model.SyncListener listener) {
-        DatabaseReference dbRef = db.getReference(CARS_DB);
+        DatabaseReference dbRef = db.getReference(Constants.CAR_TABLE);
         final ArrayList<Car> ownedCars = new ArrayList<>();
         dbRef.orderByChild("userOwnerId").equalTo(uId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -72,7 +69,7 @@ public class CarFirebase {
                     ownedCars.add(tempCar);
                 }
                 listener.isSuccessful(true);
-                listener.PassData(ownedCars);
+                listener.passData(ownedCars);
             }
 
             @Override
@@ -81,30 +78,10 @@ public class CarFirebase {
                 listener.failed(databaseError.getMessage());
             }
         });
-/*        dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Iterable<DataSnapshot> children = dataSnapshot.getChildren();
-                while(children.iterator().hasNext()){
-                    Car tempCar = children.iterator().next().getValue(Car.class);
-                    if(tempCar.getUserOwnerId().equals(uId.toLowerCase())){
-                        ownedCars.add(tempCar);
-                    }
-                }
-                listener.isSuccessful(true);
-                listener.PassData(ownedCars);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                listener.isSuccessful(false);
-                listener.failed(databaseError.getMessage());
-            }
-        });*/
     }
 
     public void getListOfSharedCars(FirebaseDatabase db, final String uId, final Model.SyncListener listener) {
-        DatabaseReference dbRef = db.getReference(CARS_DB);
+        DatabaseReference dbRef = db.getReference(Constants.CAR_TABLE);
         final ArrayList<Car> sharedCars = new ArrayList<>();
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -117,7 +94,7 @@ public class CarFirebase {
                     }
                 }
                 listener.isSuccessful(true);
-                listener.PassData(sharedCars);
+                listener.passData(sharedCars);
             }
 
             @Override
@@ -128,8 +105,8 @@ public class CarFirebase {
         });
     }
 
-    public void getListOfAllCarsInDB(FirebaseDatabase db, final Model.SyncListener listener) {
-        DatabaseReference dbRef = db.getReference(CARS_DB);
+    public static void getListOfAllCarsInDB(FirebaseDatabase db, final Model.SyncListener listener) {
+        DatabaseReference dbRef = db.getReference(Constants.CAR_TABLE);
         final ArrayList<Car> carsList = new ArrayList<>();
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -140,7 +117,7 @@ public class CarFirebase {
                     carsList.add(tempCar);
                 }
                 listener.isSuccessful(true);
-                listener.PassData(carsList);
+                listener.passData(carsList);
             }
 
             @Override
@@ -150,29 +127,4 @@ public class CarFirebase {
             }
         });
     }
-
-//    public void getListOfSharedCars(FirebaseDatabase db,final String uId, final Model.SyncListener listener){
-//        DatabaseReference dbRef = db.getReference(CARS_DB);
-//        final ArrayList<Car> sharedCars = new ArrayList<>();
-//        dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                Iterable<DataSnapshot> children = dataSnapshot.getChildren();
-//                while(children.iterator().hasNext()){
-//                    Car tempCar = children.iterator().next().getValue(Car.class);
-//                    if(tempCar.getUsersList().contains(uId)){
-//                        sharedCars.add(tempCar);
-//                    }
-//                }
-//                listener.isSuccessful(true);
-//                listener.PassData(sharedCars);
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//                listener.isSuccessful(false);
-//                listener.failed(databaseError.getMessage());
-//            }
-//        });
-//    }
 }

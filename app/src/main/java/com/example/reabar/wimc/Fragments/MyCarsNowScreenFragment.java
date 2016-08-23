@@ -76,7 +76,7 @@ public class MyCarsNowScreenFragment extends Fragment {
             }
 
             @Override
-            public void PassData(Object data) {
+            public void passData(Object data) {
                 parkings = (ArrayList) data;
                 progressBar.setVisibility(View.GONE);
                 adapter.notifyDataSetChanged();

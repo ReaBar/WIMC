@@ -12,28 +12,24 @@ import java.util.List;
  */
 public class UserSql {
 
-    final static String USER_TABLE = "car";
-    final static String USER_TABLE_ID = "_id";
-    final static String USER_TABLE_EMAIL = "email";
-
-
-    static public void create(SQLiteDatabase db) {
-        db.execSQL("create table " + USER_TABLE + " (" +
-                USER_TABLE_ID + " TEXT PRIMARY KEY," +
-                USER_TABLE_EMAIL + " TEXT);");
+    public static void create(SQLiteDatabase db) {
+        db.execSQL("CREATE TABLE IF NOT EXISTS " +
+                Constants.USER_TABLE + " (" +
+                Constants.USER_ID + " TEXT PRIMARY KEY," +
+                Constants.USER_EMAIL + " TEXT);");
     }
 
     public static void drop(SQLiteDatabase db) {
-        db.execSQL("drop table " + USER_TABLE + ";");
+        db.execSQL("DROP TABLE IF EXISTS " + Constants.USER_TABLE + ";");
     }
 
-    public static List<User> getAllUsers(SQLiteDatabase db) {
-        Cursor cursor = db.query(USER_TABLE, null, null , null, null, null, null);
-        List<User> users = new ArrayList<User>();
+    public static void getUsersList(SQLiteDatabase db,Model.SyncListener listener) {
+        Cursor cursor = db.query(Constants.USER_TABLE, null, null , null, null, null, null);
+        List<User> users = new ArrayList<>();
 
         if (cursor.moveToFirst()) {
-            int idIndex = cursor.getColumnIndex(USER_TABLE_ID);
-            int emailIndex = cursor.getColumnIndex(USER_TABLE_EMAIL);
+            int idIndex = cursor.getColumnIndex(Constants.USER_ID);
+            int emailIndex = cursor.getColumnIndex(Constants.USER_EMAIL);
 
 
             do {
@@ -46,46 +42,24 @@ public class UserSql {
         }
         if(cursor != null)
             cursor.close();
-        return users;
+        listener.passData(users);
     }
 
-    public static User getUserById(SQLiteDatabase db, String id) {
-        String[] params = new String[1];
-        params[0] = id;
-        Cursor cursor = db.query(USER_TABLE, null, USER_TABLE_ID, params, null, null, null);
+    public static void isUserExistsByEmail(SQLiteDatabase db, String email,Model.SyncListener listener) {
+        Cursor cursor = db.rawQuery("SELECT * FROM " + Constants.USER_TABLE + " WHERE " + Constants.USER_EMAIL + " = ?",new String[]{email});
 
         if (cursor.moveToFirst()) {
-            int idIndex = cursor.getColumnIndex(USER_TABLE_ID);
-            int emailIndex = cursor.getColumnIndex(USER_TABLE_EMAIL);
-
-            String objectId = cursor.getString(idIndex);
-            String email = cursor.getString(emailIndex);
-
-            if(cursor != null)
-                cursor.close();
-
-
-            //0 false / 1 true
-            User us = new User(objectId,email);
-            return us;
+            listener.passData(true);
         }
-        return null;
+        listener.passData(false);
     }
 
-    public static void add(SQLiteDatabase db, User us) {
+    public static void addUser(SQLiteDatabase db, User us) {
         ContentValues values = new ContentValues();
-        values.put(USER_TABLE_ID, us.getUserId());
-        values.put(USER_TABLE_EMAIL, us.getEmail());
+        values.put(Constants.USER_ID, us.getUserId());
+        values.put(Constants.USER_EMAIL, us.getEmail());
 
-
-        db.insertWithOnConflict(USER_TABLE, USER_TABLE_ID, values, SQLiteDatabase.CONFLICT_REPLACE);
-    }
-
-    public static String getLastUpdateDate(SQLiteDatabase db){
-        return LastUpdateSql.getLastUpdate(db,USER_TABLE);
-    }
-    public static void setLastUpdateDate(SQLiteDatabase db, String date){
-        LastUpdateSql.setLastUpdate(db,USER_TABLE, date);
+        db.insertWithOnConflict(Constants.USER_TABLE, Constants.USER_ID, values, SQLiteDatabase.CONFLICT_REPLACE);
     }
 }
 

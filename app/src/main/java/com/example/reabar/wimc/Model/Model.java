@@ -7,6 +7,7 @@ import com.example.reabar.wimc.FilesManagerHelper;
 import com.example.reabar.wimc.MyApplication;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,6 +31,65 @@ public class Model {
         modelFirebase = new ModelFirebase();
         modelSql = new ModelSql();
         modelCloudinary = new ModelCloudinary(MyApplication.getAppContext());
+        modelFirebase.getListOfAllCarsInDB(new SyncListener() {
+            @Override
+            public void isSuccessful(boolean success) {
+
+            }
+
+            @Override
+            public void failed(String message) {
+
+            }
+
+            @Override
+            public void passData(Object data) {
+                for (Car car:(List<Car>)data) {
+                    modelSql.addCar(car);
+                }
+                updateCarDbTime();
+            }
+        });
+
+        modelFirebase.getAllMyParkingSpots(new SyncListener() {
+            @Override
+            public void isSuccessful(boolean success) {
+
+            }
+
+            @Override
+            public void failed(String message) {
+
+            }
+
+            @Override
+            public void passData(Object data) {
+                for (Parking parking:(List<Parking>)data) {
+                    modelSql.parkCar(parking);
+                }
+                updateParkingDbTime();
+            }
+        });
+
+        modelFirebase.getUsersList(new SyncListener() {
+            @Override
+            public void isSuccessful(boolean success) {
+
+            }
+
+            @Override
+            public void failed(String message) {
+
+            }
+
+            @Override
+            public void passData(Object data) {
+                for (User user:(List<User>)data) {
+                    modelSql.addUser(user);
+                }
+                updateUsersDbTime();
+            }
+        });
     }
 
     public void setCurrentUser(User currentUser) {
@@ -38,6 +98,7 @@ public class Model {
 
     public void signupUser(final User user, final String password, final SyncListener listener){
         modelFirebase.signupUser(user, password, listener);
+        modelSql.addUser(user);
     }
 
     public void signInUser(User user, String password, final SyncListener listener){
@@ -65,32 +126,85 @@ public class Model {
         modelFirebase.updatePassword(newPassword, listener);
     }
 
-    public List<String> getUsersList(Model.SyncListener listener){
-        return modelFirebase.getUsersList(listener);
+    public void getUsersList(Model.SyncListener listener){
+        modelFirebase.getUsersList(listener);
     }
 
     public void getOwnedCars(String uId,SyncListener listener){
-        modelFirebase.getOwnedCars(uId,listener);
+        modelFirebase.getOwnedCars(uId, listener);
     }
 
     public void getListOfSharedCars(String uId, SyncListener listener){
-        modelFirebase.getListOfSharedCars(uId,listener);
+        modelFirebase.getListOfSharedCars(uId, listener);
     }
 
     public void addCarToDB(final Car car, final SyncListener listener){
         modelFirebase.addCarToDB(car, listener);
+        modelSql.addCar(car);
+        updateCarDbTime();
     }
 
     public void updateCar(Car car,Model.SyncListener listener){
-        modelFirebase.updateCar(car,listener);
+        modelFirebase.updateCar(car, listener);
+        modelSql.updateCar(car);
+        updateCarDbTime();
     }
 
-    public void getAllCars(SyncListener listener){
-        modelFirebase.getListOfAllCarsInDB(listener);
+    public void getAllCars(final SyncListener listener){
+        final String lastUpdateDate = modelSql.getCarLastUpdate();
+        final ArrayList<Car> carList= new ArrayList<>();
+        modelFirebase.getCarDbTime(new SyncListener() {
+            @Override
+            public void isSuccessful(boolean success) {
+
+            }
+
+            @Override
+            public void failed(String message) {
+
+            }
+
+            @Override
+            public void passData(Object data) {
+                if(data == null){
+                    listener.passData(carList);
+                }
+
+                else if (lastUpdateDate == null || data.toString().compareTo(lastUpdateDate) > 0) {
+                    modelFirebase.getListOfAllCarsInDB(new SyncListener() {
+                        @Override
+                        public void isSuccessful(boolean success) {
+
+                        }
+
+                        @Override
+                        public void failed(String message) {
+
+                        }
+
+                        @Override
+                        public void passData(Object data) {
+                            for (Car car : (ArrayList<Car>) data) {
+                                carList.add(car);
+                                if (modelSql.getCarById(car.getCarId()) == null) {
+                                    modelSql.addCar(car);
+                                }
+                            }
+                            updateCarDbTime();
+                            listener.passData(carList);
+                        }
+                    });
+                } else {
+                    modelSql.getAllCars(listener);
+                }
+            }
+        });
     }
 
     public void parkCar(Parking parking, SyncListener listener){
-        modelFirebase.parkCar(parking,listener);
+        modelFirebase.parkCar(parking, listener);
+        modelSql.parkCar(parking);
+        updateParkingDbTime();
     }
 
     public void getMyUnparkedCars(String uid, SyncListener listener){
@@ -107,41 +221,37 @@ public class Model {
 
     public void stopParking(Parking parking){
         modelFirebase.stopParking(parking);
+        modelSql.stopParking(parking);
     }
 
     public void stopParking(Car car){
         modelFirebase.stopParking(car);
+        modelSql.stopParking(car);
     }
 
     public void updateCarDbTime(){
-        modelFirebase.updateCarDbTime();
-    }
-
-    public void getCarDbTime(SyncListener listener){
-        modelFirebase.getCarDbTime(listener);
+        long currentTime = System.currentTimeMillis();
+        modelFirebase.updateCarDbTime(currentTime);
+        modelSql.updateCarsDbTime(currentTime);
     }
 
     public void updateParkingDbTime(){
-        modelFirebase.updateParkingDbTime();
-    }
-
-    public void getParkingDbTime(SyncListener listener){
-        modelFirebase.getParkingDbTime(listener);
+        long currentTime = System.currentTimeMillis();
+        modelFirebase.updateParkingDbTime(currentTime);
+        modelSql.updateParkingDbTime(currentTime);
     }
 
     public void updateUsersDbTime(){
-        modelFirebase.updateUsersDbTime();
-    }
-
-    public void getUsersDbTime(SyncListener listener){
-        modelFirebase.getUsersDbTime(listener);
+        long currentTime = System.currentTimeMillis();
+        modelFirebase.updateUsersDbTime(currentTime);
+        modelSql.updateUsersDbTime(currentTime);
     }
 
     //--- Listeners ---- //
     public interface SyncListener{
         void isSuccessful(boolean success);
         void failed(String message);
-        void PassData(Object data);
+        void passData(Object data);
     }
 
 
@@ -244,12 +354,12 @@ public class Model {
             imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
             out.close();
 
-            //add the picture to the gallery so we dont need to manage the cache size
+            //addUser the picture to the gallery so we dont need to manage the cache size
             Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
             Uri contentUri = Uri.fromFile(imageFile);
             mediaScanIntent.setData(contentUri);
             context.sendBroadcast(mediaScanIntent);
-            Log.d("tag","add image to cache: " + imageFileName);
+            Log.d("tag","addUser image to cache: " + imageFileName);
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
