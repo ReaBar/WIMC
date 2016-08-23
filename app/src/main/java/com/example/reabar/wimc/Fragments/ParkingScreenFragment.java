@@ -1,15 +1,19 @@
 package com.example.reabar.wimc.Fragments;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +36,8 @@ import java.util.Date;
 
 public class ParkingScreenFragment extends Fragment implements LocationListener {
 
+    private static final int REQUEST_CODE_LOCATION = 2;
+
     FragmentTransaction fragmentTransaction;
     FragmentCommunicator fragmentCommunicator;
     public String carID;
@@ -51,6 +57,7 @@ public class ParkingScreenFragment extends Fragment implements LocationListener 
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1888;
     boolean imageTaken;
     Bitmap bitmap;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -96,13 +103,22 @@ public class ParkingScreenFragment extends Fragment implements LocationListener 
             @Override
             public void onClick(View view) {
                 gps1 = new GPSTracker(getActivity());
-                if (gps1.canGetLocation()) {
-                    longtitude = gps1.getLongitude();
-                    latitude = gps1.getLatitude();
-                    gpsText.setText("Longtitude: " + longtitude + "\nLatitude: " + latitude);
+                int permissionCheck = ContextCompat.checkSelfPermission(MyApplication.getAppActivity(),
+                        Manifest.permission.ACCESS_FINE_LOCATION);
+                if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
+                    if (gps1.canGetLocation()) {
+                        longtitude = gps1.getLongitude();
+                        latitude = gps1.getLatitude();
+                        gpsText.setText("Longtitude: " + longtitude + "\nLatitude: " + latitude);
+                    } else {
+                        gps1.showSettingsAlert();
+                    }
                 } else {
-                    gps1.showSettingsAlert();
+                    ActivityCompat.requestPermissions(MyApplication.getAppActivity(),
+                            new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                            REQUEST_CODE_LOCATION);
                 }
+
             }
         });
 
@@ -189,4 +205,21 @@ public class ParkingScreenFragment extends Fragment implements LocationListener 
     public void onProviderDisabled(String s) {
 
     }
+
+    public void onRequestPermissionsResult(int requestCode,
+                                           String[] permissions,
+                                           int[] grantResults) {
+        if (requestCode == REQUEST_CODE_LOCATION) {
+            if (grantResults.length == 1
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // success!
+                longtitude = gps1.getLongitude();
+                latitude = gps1.getLatitude();
+                gpsText.setText("Longtitude: " + longtitude + "\nLatitude: " + latitude);
+            } else {
+                // Permission was denied or request was cancelled
+            }
+        }
+    }
 }
+
