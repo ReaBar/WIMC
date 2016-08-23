@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -98,7 +97,7 @@ public class ParkingScreenFragment extends Fragment implements LocationListener 
             public void onClick(View view) {
                 gps1 = new GPSTracker(getActivity());
                 if (gps1.canGetLocation()) {
-                    longtitude = gps1.getLongtitude();
+                    longtitude = gps1.getLongitude();
                     latitude = gps1.getLatitude();
                     gpsText.setText("Longtitude: " + longtitude + "\nLatitude: " + latitude);
                 } else {

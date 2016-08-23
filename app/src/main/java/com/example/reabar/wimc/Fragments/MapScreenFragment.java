@@ -58,15 +58,13 @@ public class MapScreenFragment extends Fragment implements OnMapReadyCallback {
 
                 // For dropping a marker at a point on the Map
                 LatLng parking = new LatLng(latitude,longitude);
-                googleMap.addMarker(new MarkerOptions().position(parking).title("Parking Place").snippet("Your car parking Here!"));
+                googleMap.addMarker(new MarkerOptions().position(parking).title("Parking Place").snippet("Your car parks Here!"));
 
                 // For zooming automatically to the location of the marker
                 CameraPosition cameraPosition = new CameraPosition.Builder().target(parking).zoom(17).build();
                 googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
             }
         });
-
-
 
         return view;
     }
@@ -81,13 +79,7 @@ public class MapScreenFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onDetach() {
         super.onDetach();
-
     }
-
-
-
-
-
 
     @Override
     public void onMapReady(GoogleMap googleMap) {

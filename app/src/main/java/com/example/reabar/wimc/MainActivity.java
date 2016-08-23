@@ -1,6 +1,7 @@
 package com.example.reabar.wimc;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
@@ -237,14 +238,18 @@ public class MainActivity extends AppCompatActivity
                 fragmentTransaction.addToBackStack(null).commit();
                 break;
             case "MapScreenFragment":
-                mapFragment = new MapScreenFragment();
+/*                mapFragment = new MapScreenFragment();
 //                parkingFragment.carID = (String) data[0];
                 mapFragment.latitude = (double) data[0];
                 mapFragment.longitude = (double) data[1];
                 fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.main_frag_container, mapFragment, "MapScreenFragment");
                 fragmentTransaction.addToBackStack(null).commit();
-                break;
+                break;*/
+                Uri gmmIntentUri = Uri.parse("google.navigation:q=" + data[0] + "," + data[1] +"&mode=w");
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                mapIntent.setPackage("com.google.android.apps.maps");
+                startActivity(mapIntent);
         }
 
     }

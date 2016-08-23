@@ -25,14 +25,12 @@ public class GPSTracker extends Service implements LocationListener {
     boolean enabled  = false;
     boolean getLocation = false;
     boolean network = false;
-
-    double latitude, longtitude;
+    double latitude, longitude;
 
     public GPSTracker(Context context){
         this.context = context;
         getLocation();
     }
-
 
     public Location getLocation(){
         try {
@@ -40,7 +38,6 @@ public class GPSTracker extends Service implements LocationListener {
             enabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
             network = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
             if(!enabled && !network){
-
 
             }
             else {
@@ -57,7 +54,7 @@ public class GPSTracker extends Service implements LocationListener {
                         location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
                         if (location != null) {
                             latitude = location.getLatitude();
-                            longtitude = location.getLongitude();
+                            longitude = location.getLongitude();
                         }
                     }catch (SecurityException e){ }
                 }
@@ -73,14 +70,11 @@ public class GPSTracker extends Service implements LocationListener {
 
                             if(location != null){
                                 latitude = location.getLatitude();
-                                longtitude = location.getLongitude();
+                                longitude = location.getLongitude();
                             }
                         }
                     }
                     catch (SecurityException e){ }
-
-
-
                 }
             }
         }
@@ -104,10 +98,10 @@ public class GPSTracker extends Service implements LocationListener {
         return  latitude;
     }
 
-    public double getLongtitude(){
+    public double getLongitude(){
         if(location != null)
-            longtitude = location.getLongitude();
-        return  longtitude;
+            longitude = location.getLongitude();
+        return longitude;
     }
 
     public boolean canGetLocation(){
