@@ -261,13 +261,5 @@ public class CarSql {
         }
         return Arrays.asList(str.split(Constants.LIST_SEPARATOR));
     }
-
-    public static String getLastUpdateDate(SQLiteDatabase db) {
-        return LastUpdateSql.getLastUpdate(db, Constants.CAR_TABLE);
-    }
-
-    public static void setLastUpdateDate(SQLiteDatabase db,long currentTime) {
-        LastUpdateSql.setLastUpdate(db, Constants.CAR_TABLE,currentTime);
-    }
 }
 

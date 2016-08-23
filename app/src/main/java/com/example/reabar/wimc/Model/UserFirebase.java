@@ -127,7 +127,7 @@ public class UserFirebase {
 
     public void getCurrentUser() {
         if (mAuth.getCurrentUser() != null) {
-            Model.getInstance().setCurrentUser(new User(mAuth.getCurrentUser().getEmail(), mAuth.getCurrentUser().getUid()));
+            Model.getInstance().setCurrentUser(new User(mAuth.getCurrentUser().getUid(),mAuth.getCurrentUser().getEmail()));
         }
     }
 

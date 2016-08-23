@@ -14,6 +14,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +38,9 @@ import java.util.Date;
 public class ParkingScreenFragment extends Fragment implements LocationListener {
 
     private static final int REQUEST_CODE_LOCATION = 2;
+    private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1888;
+    private static final int REQUEST_IMAGE_CAPTURE = 1;
+
 
     FragmentTransaction fragmentTransaction;
     FragmentCommunicator fragmentCommunicator;
@@ -52,9 +56,8 @@ public class ParkingScreenFragment extends Fragment implements LocationListener 
     ImageView imageView;
     Button gpsLocation;
     GPSTracker gps1;
-    double longtitude;
+    double longitude;
     double latitude;
-    private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1888;
     boolean imageTaken;
     Bitmap bitmap;
 
@@ -89,10 +92,16 @@ public class ParkingScreenFragment extends Fragment implements LocationListener 
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(intent,
-                        CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+                int permissionCheck = ContextCompat.checkSelfPermission(MyApplication.getAppActivity(),
+                        Manifest.permission.CAMERA);
+                if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
+                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
+                } else {
+                    ActivityCompat.requestPermissions(MyApplication.getAppActivity(),
+                            new String[]{Manifest.permission.CAMERA},
+                            REQUEST_IMAGE_CAPTURE);
+                }
             }
         });
 
@@ -107,9 +116,9 @@ public class ParkingScreenFragment extends Fragment implements LocationListener 
                         Manifest.permission.ACCESS_FINE_LOCATION);
                 if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
                     if (gps1.canGetLocation()) {
-                        longtitude = gps1.getLongitude();
+                        longitude = gps1.getLongitude();
                         latitude = gps1.getLatitude();
-                        gpsText.setText("Longtitude: " + longtitude + "\nLatitude: " + latitude);
+                        gpsText.setText("Longitude: " + longitude + "\nLatitude: " + latitude);
                     } else {
                         gps1.showSettingsAlert();
                     }
@@ -129,11 +138,40 @@ public class ParkingScreenFragment extends Fragment implements LocationListener 
         saveParking.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (city.getText().toString().matches("") || street.getText().toString().matches("")) {
+                //TODO add the option to save only image
+                if((longitude != 0 && latitude != 0)){
+                    Parking parking = new Parking.ParkingBuilder(carID).street(street.getText().toString()).streetNumber(number.getText().toString()).city(city.getText().toString()).parkingLotName(parkingLotName.getText().toString()).parkingLotFloor(FloorNumber.getText().toString()).parkingLotRowColor(RowColor.getText().toString()).parkingLatitude(latitude).parkingLonitude(longitude).startParking(nowDate).build();
+                    Model.getInstance().parkCar(parking, new Model.SyncListener() {
+                        @Override
+                        public void isSuccessful(boolean success) {
+                            //save image to cloudinary
+                            if (imageTaken) {
+                                //call cloudinary function
+                                ModelCloudinary cloudinary = new ModelCloudinary(getActivity());
+                                cloudinary.uploadImage(carID + "_" + nowDate, bitmap);
+                            }
+                            //go to homepage fragment
+                            Toast.makeText(MyApplication.getAppActivity(), "Parking place saved",
+                                    Toast.LENGTH_SHORT).show();
+                            fragmentCommunicator.passString("HomeScreenFragment");
+                        }
+
+                        @Override
+                        public void failed(String message) {
+
+                        }
+
+                        @Override
+                        public void passData(Object data) {
+
+                        }
+                    });
+                }
+                else if (city.getText().toString().matches("") || street.getText().toString().matches("")) {
                     Toast.makeText(MyApplication.getAppActivity(), "Must enter city and street to save parking",
                             Toast.LENGTH_SHORT).show();
                 } else {
-                    Parking parking = new Parking.ParkingBuilder(carID).street(street.getText().toString()).streetNumber(number.getText().toString()).city(city.getText().toString()).parkingLotName(parkingLotName.getText().toString()).parkingLotFloor(FloorNumber.getText().toString()).parkingLotRowColor(RowColor.getText().toString()).parkingLatitude(latitude).parkingLonitude(longtitude).startParking(nowDate).build();
+                    Parking parking = new Parking.ParkingBuilder(carID).street(street.getText().toString()).streetNumber(number.getText().toString()).city(city.getText().toString()).parkingLotName(parkingLotName.getText().toString()).parkingLotFloor(FloorNumber.getText().toString()).parkingLotRowColor(RowColor.getText().toString()).parkingLatitude(latitude).parkingLonitude(longitude).startParking(nowDate).build();
                     Model.getInstance().parkCar(parking, new Model.SyncListener() {
                         @Override
                         public void isSuccessful(boolean success) {
@@ -209,16 +247,29 @@ public class ParkingScreenFragment extends Fragment implements LocationListener 
     public void onRequestPermissionsResult(int requestCode,
                                            String[] permissions,
                                            int[] grantResults) {
-        if (requestCode == REQUEST_CODE_LOCATION) {
-            if (grantResults.length == 1
-                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // success!
-                longtitude = gps1.getLongitude();
-                latitude = gps1.getLatitude();
-                gpsText.setText("Longtitude: " + longtitude + "\nLatitude: " + latitude);
-            } else {
-                // Permission was denied or request was cancelled
-            }
+        switch (requestCode) {
+            case REQUEST_CODE_LOCATION:
+                if (grantResults.length == 1
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Log.d("TESTTESTTEST","permission granted");
+                    longitude = gps1.getLongitude();
+                    latitude = gps1.getLatitude();
+                    gpsText.setText("Longtitude: " + longitude + "\nLatitude: " + latitude);
+                } else {
+                    // Permission was denied or request was cancelled
+                }
+                break;
+
+            case REQUEST_IMAGE_CAPTURE:
+                if (grantResults.length == 1
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Log.d("TESTTESTTEST","permission granted");
+                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+                } else {
+                    // Permission was denied or request was cancelled
+                }
+                break;
         }
     }
 }

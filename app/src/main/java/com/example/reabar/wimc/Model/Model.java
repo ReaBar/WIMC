@@ -126,8 +126,55 @@ public class Model {
         modelFirebase.updatePassword(newPassword, listener);
     }
 
-    public void getUsersList(Model.SyncListener listener){
-        modelFirebase.getUsersList(listener);
+    public void getUsersList(final Model.SyncListener listener){
+        final String lastUpdateDate = modelSql.getUsersLastUpdateTime();
+        final List<User> usersList = new ArrayList<>();
+        modelFirebase.getUsersDbTime(new SyncListener() {
+            @Override
+            public void isSuccessful(boolean success) {
+
+            }
+
+            @Override
+            public void failed(String message) {
+
+            }
+
+            @Override
+            public void passData(Object data) {
+                if(data == null){
+                    listener.passData(usersList);
+                }
+
+                else if(lastUpdateDate == null || data.toString().compareTo(lastUpdateDate) > 0){
+                    modelFirebase.getUsersList(new SyncListener() {
+                        @Override
+                        public void isSuccessful(boolean success) {
+
+                        }
+
+                        @Override
+                        public void failed(String message) {
+
+                        }
+
+                        @Override
+                        public void passData(Object data) {
+                            if(data != null){
+                                for (User user: (List<User>)data) {
+                                    modelSql.addUser(user);
+                                }
+                                updateUsersDbTime();
+                                listener.passData(usersList);
+                            }
+                        }
+                    });
+                }
+                else{
+                    modelSql.getUsersList(listener);
+                }
+            }
+        });
     }
 
     public void getOwnedCars(String uId,SyncListener listener){
@@ -222,11 +269,13 @@ public class Model {
     public void stopParking(Parking parking){
         modelFirebase.stopParking(parking);
         modelSql.stopParking(parking);
+        updateParkingDbTime();
     }
 
     public void stopParking(Car car){
         modelFirebase.stopParking(car);
         modelSql.stopParking(car);
+        updateParkingDbTime();
     }
 
     public void updateCarDbTime(){

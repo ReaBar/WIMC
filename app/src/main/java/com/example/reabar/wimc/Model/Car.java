@@ -117,12 +117,19 @@ public class Car {
             @Override
             public void passData(Object data) {
                 if (data instanceof List) {
-                    if (((List<User>) data).contains(email) && !usersList.contains(email)) {
-                        usersList.add(email);
-                        Toast.makeText(MyApplication.getAppActivity(), "User added To Car!",
-                                Toast.LENGTH_SHORT).show();
-                        updateThisCar();
-
+                    if (!usersList.contains(email)) {
+                        for (User user: (List<User>)data) {
+                            if(user.getEmail().equals(email)){
+                                usersList.add(email);
+                                Toast.makeText(MyApplication.getAppActivity(), "User added To Car!",
+                                        Toast.LENGTH_SHORT).show();
+                                updateThisCar();
+                                return;
+                            }
+                            else{
+                                Toast.makeText(MyApplication.getAppContext(), "User not found or already shared with", Toast.LENGTH_SHORT).show();
+                            }
+                        }
                     } else {
                         Toast.makeText(MyApplication.getAppContext(), "User not found or already shared with", Toast.LENGTH_SHORT).show();
                     }

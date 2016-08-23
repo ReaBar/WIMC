@@ -12,7 +12,7 @@ public class User {
         this.email = email.toLowerCase();
     }
 
-    public User(String email, String userObjectId) {
+    public User(String userObjectId, String email) {
         this.email = email;
         this.userObjectId = userObjectId;
     }

@@ -43,6 +43,11 @@ public class ModelSql {
         UserSql.getUsersList(db,listener);
     }
 
+    public String getUsersLastUpdateTime(){
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        return LastUpdateSql.getLastUpdate(db,Constants.USER_TABLE);
+    }
+
     public void isUserExistsByEmail(String email,Model.SyncListener listener) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         UserSql.isUserExistsByEmail(db, email,listener);
@@ -70,7 +75,7 @@ public class ModelSql {
 
     public String getCarLastUpdate() {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        return CarSql.getLastUpdateDate(db);
+        return LastUpdateSql.getLastUpdate(db,Constants.CAR_TABLE);
     }
 
     public void updateCar(Car car) {
@@ -106,6 +111,11 @@ public class ModelSql {
     public void stopParking(Car car){
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ParkingSql.stopParking(db,car);
+    }
+
+    public String getParkingLastUpdate(){
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        return LastUpdateSql.getLastUpdate(db,Constants.PARKING_TABLE);
     }
 
     public void updateUsersDbTime(long currentTime){
