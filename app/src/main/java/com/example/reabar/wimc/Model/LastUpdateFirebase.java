@@ -38,7 +38,9 @@ public class LastUpdateFirebase {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Object time = dataSnapshot.getValue();
-                Log.d(TAG, "Last update parking time is: " + time.toString());
+                if(time != null){
+                    Log.d(TAG, "Last update parking time is: " + time.toString());
+                }
                 listener.passData(time);
 
             }
@@ -75,7 +77,6 @@ public class LastUpdateFirebase {
                     Log.d(TAG, "Last update car time is: " + time.toString());
                 }
                 listener.passData(time);
-
             }
 
             @Override
@@ -92,7 +93,7 @@ public class LastUpdateFirebase {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
-                    Log.d(TAG, "Users last update time is: " + currentTime);
+                    Log.d(TAG, "sharedUsersList last update time is: " + currentTime);
                 } else {
                     Log.d(TAG, "Error updating last update time");
                 }
@@ -106,9 +107,10 @@ public class LastUpdateFirebase {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Object time = dataSnapshot.getValue();
-                Log.d(TAG, "Last update users time is: " + time.toString());
+                if(time != null){
+                    Log.d(TAG, "Last update sharedUsersList time is: " + time.toString());
+                }
                 listener.passData(time);
-
             }
 
             @Override

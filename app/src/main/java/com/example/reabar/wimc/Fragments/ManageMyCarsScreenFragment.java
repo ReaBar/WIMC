@@ -127,7 +127,7 @@ public class ManageMyCarsScreenFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 carFragment = new CarScreenFragment();
-                carFragment.users = cars.get(position).getUsersList();
+                carFragment.sharedUsersList = cars.get(position).getUsersList();
                 carFragment.carLicense = cars.get(position).getCarId();
                 carFragment.car = cars.get(position);
                 carFragment.modelCompany = cars.get(position).getCompany() + " " + cars.get(position).getModel();

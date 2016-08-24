@@ -16,7 +16,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.reabar.wimc.Model.Car;
-import com.example.reabar.wimc.Model.Model;
 import com.example.reabar.wimc.MyApplication;
 import com.example.reabar.wimc.R;
 
@@ -24,13 +23,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CarScreenFragment extends Fragment {
-    Car car;
-    List<String> users;
-    MyUsersCarAdapter adapter;
-    ListView list;
-    String carLicense;
-    String modelCompany;
-    EditText emailSharedinput;
+    protected Car car;
+    protected List<String> sharedUsersList = new ArrayList<>();
+    protected MyUsersCarAdapter adapter;
+    protected ListView list;
+    protected String carLicense;
+    protected String modelCompany;
+    protected EditText emailSharedinput;
 
 
     @Override
@@ -44,11 +43,11 @@ public class CarScreenFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_car_screen, container, false);
 
-        if(users == null) {
-            users = new ArrayList<>();
+        if(sharedUsersList == null) {
+            sharedUsersList = new ArrayList<>();
         }
 
-        if(users.isEmpty()){
+        if(sharedUsersList.isEmpty()){
             TextView text = (TextView) view.findViewById(R.id.deleteTextView);
             text.setVisibility(View.GONE);
         }
@@ -64,7 +63,7 @@ public class CarScreenFragment extends Fragment {
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                car.removeCarUser(users.get(position));
+                car.removeCarUser(sharedUsersList.get(position));
                 adapter.notifyDataSetChanged();
                 Toast.makeText(MyApplication.getAppActivity(), "User removed successfully",
                         Toast.LENGTH_SHORT).show();
@@ -82,8 +81,11 @@ public class CarScreenFragment extends Fragment {
                             Toast.LENGTH_SHORT).show();
                 } else {
                     //addUser user to car by email
-                    car.setNewCarUser(emailSharedinput.getText().toString());
+                    final String userEmail = emailSharedinput.getText().toString();
+                    car.setNewCarUser(userEmail,true);
                     emailSharedinput.setText("");
+                    //sharedUsersList.add(userEmail);
+                    adapter.notifyDataSetChanged();
                 }
             }
         });
@@ -106,12 +108,12 @@ public class CarScreenFragment extends Fragment {
 
         @Override
         public int getCount() {
-            return users.size();
+            return sharedUsersList.size();
         }
 
         @Override
         public Object getItem(int position) {
-            return users.get(position);
+            return sharedUsersList.get(position);
         }
 
         @Override
@@ -132,7 +134,7 @@ public class CarScreenFragment extends Fragment {
             }
 
             TextView username = (TextView) convertView.findViewById(R.id.username);
-            String user = users.get(position);
+            String user = sharedUsersList.get(position);
             username.setText(user);
 
             return convertView;

@@ -28,7 +28,6 @@ public class UserFirebase {
     private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseUser user;
     private String TAG = "UserFirebase";
-    private String USERS_DB = "users";
 
     public UserFirebase() {
         mAuth = FirebaseAuth.getInstance();
@@ -55,7 +54,7 @@ public class UserFirebase {
                     Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
                     String uid = task.getResult().getUser().getUid();
                     Log.d(TAG, "result: " + uid);
-                    DatabaseReference dbRef = db.getReference(USERS_DB);
+                    DatabaseReference dbRef = db.getReference(Constants.USER_TABLE);
                     user.setUserId(uid);
                     dbRef.child(uid).setValue(user);
                     listener.isSuccessful(true);
@@ -75,7 +74,6 @@ public class UserFirebase {
                 if (task.isSuccessful()) {
                     Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
                     Model.getInstance().setCurrentUser(user);
-                    FilesHandler filesHandler = new FilesHandler();
                     listener.isSuccessful(true);
                 }
 
@@ -133,7 +131,7 @@ public class UserFirebase {
 
     public void getUsersList(FirebaseDatabase db, final Model.SyncListener listener) {
         final List<User> users = new ArrayList<>();
-        DatabaseReference dbRef = db.getReference(USERS_DB);
+        DatabaseReference dbRef = db.getReference(Constants.USER_TABLE);
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

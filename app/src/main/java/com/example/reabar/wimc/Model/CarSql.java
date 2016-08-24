@@ -56,16 +56,19 @@ public class CarSql {
                 boolean isParkingActive = cursor.getInt(isParkingActiveIndex) != 0;
 
                 List<String> usersList = convertStringToList(cursor.getString(userListIndex));
-                //0 false / 1 true
                 Car car = new Car(id, color, model, company, userOwnerId);
                 if(usersList != null){
                     for (String user : usersList) {
-                        car.setNewCarUser(user);
+                        car.setNewCarUser(user,false);
                     }
                 }
                 car.setParkingIsActive(isParkingActive);
                 cars.add(car);
             } while (cursor.moveToNext());
+
+            if (cursor != null) {
+                cursor.close();
+            }
         }
         listener.passData(cars);
     }
@@ -159,12 +162,18 @@ public class CarSql {
 
                 Car car = new Car(id, color, model, company, userOwner);
                 List<String> carUsers = convertStringToList(usersList);
-                for (String user : carUsers) {
-                    car.setNewCarUser(user);
+                if(carUsers != null){
+                    for (String user : carUsers) {
+                        car.setNewCarUser(user,false);
+                    }
                 }
                 car.setParkingIsActive(isParkingActive);
                 carOwnedList.add(car);
             } while (cursor.moveToNext());
+
+            if (cursor != null) {
+                cursor.close();
+            }
         }
 
         listener.passData(carOwnedList);
@@ -194,50 +203,21 @@ public class CarSql {
 
                 Car car = new Car(id, color, model, company, userOwner);
                 List<String> carUsers = convertStringToList(usersList);
-                for (String user : carUsers) {
-                    car.setNewCarUser(user);
+                if(carUsers != null){
+                    for (String user : carUsers) {
+                        car.setNewCarUser(user,false);
+                    }
                 }
                 car.setParkingIsActive(isParkingActive);
                 sharedCars.add(car);
             } while (cursor.moveToNext());
+
+            if (cursor != null) {
+                cursor.close();
+            }
         }
 
         listener.passData(sharedCars);
-    }
-
-    public static void getListOfAllCarsInDB(SQLiteDatabase db, Model.SyncListener listener) {
-        //Cursor cursor = db.rawQuery("SELECT * FROM " + CAR_TABLE +" WHERE type = 'table'",null);
-        Cursor cursor = db.query(Constants.CAR_TABLE, null, null, null, null, null, null);
-
-        List<Car> allCars = new ArrayList<>();
-        if (cursor.moveToFirst()) {
-            int carIdIndex = cursor.getColumnIndex(Constants.CAR_ID);
-            int colorIndex = cursor.getColumnIndex(Constants.CAR_COLOR);
-            int modelIndex = cursor.getColumnIndex(Constants.CAR_MODEL);
-            int companyIndex = cursor.getColumnIndex(Constants.CAR_COMPANY);
-            int userOwnerIndex = cursor.getColumnIndex(Constants.CAR_USER_OWNER_ID);
-            int usersListIndex = cursor.getColumnIndex(Constants.CAR_USERS_LIST);
-            int isParkingActiveIndex = cursor.getColumnIndex(Constants.CAR_IS_PARKING_ACTIVE);
-
-            do {
-                String id = cursor.getString(carIdIndex);
-                String company = cursor.getString(companyIndex);
-                String model = cursor.getString(modelIndex);
-                String userOwner = cursor.getString(userOwnerIndex);
-                String color = cursor.getString(colorIndex);
-                String usersList = cursor.getString(usersListIndex);
-                boolean isParkingActive = cursor.getInt(isParkingActiveIndex) != 0;
-
-                Car car = new Car(id, color, model, company, userOwner);
-                List<String> carUsers = convertStringToList(usersList);
-                for (String user : carUsers) {
-                    car.setNewCarUser(user);
-                }
-                car.setParkingIsActive(isParkingActive);
-                allCars.add(car);
-            } while (cursor.moveToNext());
-        }
-        listener.passData(allCars);
     }
 
     public static String convertListToString(List<String> stringList) {

@@ -87,7 +87,7 @@ public class Model {
                 for (User user:(List<User>)data) {
                     modelSql.addUser(user);
                 }
-                modelSql.updateParkingDbTime(System.currentTimeMillis());
+                modelSql.updateUsersDbTime(System.currentTimeMillis());
             }
         });
     }
@@ -143,11 +143,7 @@ public class Model {
 
             @Override
             public void passData(Object data) {
-                if(data == null){
-                    listener.passData(usersList);
-                }
-
-                else if(lastUpdateDate == null || data.toString().compareTo(lastUpdateDate) > 0){
+                if(data == null ||lastUpdateDate == null || data.toString().compareTo(lastUpdateDate) > 0){
                     modelFirebase.getUsersList(new SyncListener() {
                         @Override
                         public void isSuccessful(boolean success) {
@@ -166,10 +162,14 @@ public class Model {
                                     modelSql.addUser(user);
                                 }
                                 modelSql.updateUsersDbTime(System.currentTimeMillis());
+
                                 listener.passData(data);
                             }
                         }
                     });
+                    if(data == null){
+                        modelFirebase.updateUsersDbTime(System.currentTimeMillis());
+                    }
                 }
                 else{
                     modelSql.getUsersList(listener);
@@ -370,11 +370,7 @@ public class Model {
 
             @Override
             public void passData(Object data) {
-                if(data == null){
-                    listener.passData(unparkedCars);
-                }
-
-                else if (lastUpdateDate == null || data.toString().compareTo(lastUpdateDate) > 0) {
+                 if (data == null || lastUpdateDate == null || data.toString().compareTo(lastUpdateDate) > 0) {
                     modelFirebase.getMyUnparkedCars(uId,new SyncListener() {
                         @Override
                         public void isSuccessful(boolean success) {
@@ -433,6 +429,9 @@ public class Model {
                                     }
                                 }
                             });
+                            if(data == null){
+                                modelFirebase.updateParkingDbTime(System.currentTimeMillis());
+                            }
                             listener.passData(data);
                         }
                     });

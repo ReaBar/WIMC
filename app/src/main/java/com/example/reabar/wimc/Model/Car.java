@@ -2,7 +2,9 @@ package com.example.reabar.wimc.Model;
 
 import android.util.Log;
 import android.widget.Toast;
+
 import com.example.reabar.wimc.MyApplication;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,7 +67,7 @@ public class Car {
         this.userOwnerId = userOwnerId;
     }
 
-    public void setUsersList(ArrayList<String> users){
+    public void setUsersList(ArrayList<String> users) {
         usersList = users;
     }
 
@@ -81,11 +83,11 @@ public class Car {
         this.parkingIsActive = parkingIsActive;
     }
 
-    protected void updateThisCar(){
+    protected void updateThisCar() {
         Model.getInstance().updateCar(this, new Model.SyncListener() {
             @Override
             public void isSuccessful(boolean success) {
-                if(success){
+                if (success) {
                     Log.d(TAG, "Car updated!");
                 }
             }
@@ -102,7 +104,7 @@ public class Car {
         });
     }
 
-    public void setNewCarUser(final String email) {
+    public void setNewCarUser(final String email, final boolean newUserOrJustSQL) {
         Model.getInstance().getUsersList(new Model.SyncListener() {
             @Override
             public void isSuccessful(boolean success) {
@@ -118,33 +120,43 @@ public class Car {
             public void passData(Object data) {
                 if (data instanceof List) {
                     if (!usersList.contains(email)) {
-                        for (User user: (List<User>)data) {
-                            if(user.getEmail().equals(email)){
+                        for (User user : (List<User>) data) {
+                            if (user.getEmail().equals(email)) {
                                 usersList.add(email);
-                                Toast.makeText(MyApplication.getAppActivity(), "User added To Car!",
-                                        Toast.LENGTH_SHORT).show();
+                                if (newUserOrJustSQL) {
+                                    Toast.makeText(MyApplication.getAppActivity(), "User added To Car!",
+                                            Toast.LENGTH_SHORT).show();
+                                }
                                 updateThisCar();
                                 return;
-                            }
-                            else{
-                                Toast.makeText(MyApplication.getAppContext(), "User not found or already shared with", Toast.LENGTH_SHORT).show();
+                            } else {
+                                if (newUserOrJustSQL) {
+                                    Toast.makeText(MyApplication.getAppContext(), "User not found or already shared with", Toast.LENGTH_SHORT).show();
+                                }
+                                return;
                             }
                         }
                     } else {
-                        Toast.makeText(MyApplication.getAppContext(), "User not found or already shared with", Toast.LENGTH_SHORT).show();
+                        if (newUserOrJustSQL) {
+                            Toast.makeText(MyApplication.getAppContext(), "User not found or already shared with", Toast.LENGTH_SHORT).show();
+                        }
+                        return;
                     }
                 }
+                if (newUserOrJustSQL) {
+                    Toast.makeText(MyApplication.getAppContext(), "User not found or already shared with", Toast.LENGTH_SHORT).show();
+                }
             }
+
         });
     }
 
-    public void removeCarUser(final String uId){
-        if(usersList.contains(uId)){
+    public void removeCarUser(final String uId) {
+        if (usersList.contains(uId)) {
             usersList.remove(uId);
             updateThisCar();
         }
     }
-
 
 
 }

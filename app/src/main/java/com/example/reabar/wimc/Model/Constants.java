@@ -30,7 +30,7 @@ public class Constants {
     final static String PARKING_LONGITUDE = "longitude";
     final static String PARKING_IS_ACTIVE = "parkingIsActive";
 
-    final static String USER_TABLE = "users";
+    final static String USER_TABLE = "sharedUsersList";
     final static String USER_ID = "user_id";
     final static String USER_EMAIL = "email";
 }
