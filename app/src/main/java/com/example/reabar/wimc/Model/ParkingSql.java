@@ -27,6 +27,7 @@ public class ParkingSql {
                 Constants.PARKING_LOT_FLOOR + " TEXT," +
                 Constants.PARKING_LATITUDE + " REAL," +
                 Constants.PARKING_LONGITUDE + " REAL," +
+                Constants.PARKING_IMAGE_NAME + " TEXT," +
                 Constants.PARKING_IS_ACTIVE + " BOOLEAN);");
     }
 
@@ -42,7 +43,7 @@ public class ParkingSql {
         values.put(Constants.PARKING_LATITUDE, parkingLocation.getLatitude());
         values.put(Constants.PARKING_LONGITUDE, parkingLocation.getLongitude());
         values.put(Constants.PARKING_IS_ACTIVE, parkingLocation.isParkingActive());
-
+        values.put(Constants.PARKING_IMAGE_NAME, parkingLocation.getImageName());
         db.insertWithOnConflict(Constants.PARKING_TABLE, Constants.PARKING_CAR_ID, values, SQLiteDatabase.CONFLICT_REPLACE);
     }
 
@@ -132,6 +133,7 @@ public class ParkingSql {
             int latitudeIndex = cursor.getColumnIndex(Constants.PARKING_LATITUDE);
             int longitudeIndex = cursor.getColumnIndex(Constants.PARKING_LONGITUDE);
             int isParkingActiveIndex = cursor.getColumnIndex(Constants.PARKING_IS_ACTIVE);
+            int imageNameIndex = cursor.getColumnIndex(Constants.PARKING_IMAGE_NAME);
 
             do {
                 String id = cursor.getString(idIndex);
@@ -144,9 +146,10 @@ public class ParkingSql {
                 long latitude = cursor.getLong(latitudeIndex);
                 long longitude = cursor.getLong(longitudeIndex);
                 boolean isParkingActive = cursor.getInt(isParkingActiveIndex) != 0;
+                String imageName = cursor.getString(imageNameIndex);
 
                 Parking parking = new Parking.ParkingBuilder(id).street(street).city(city).parkingLotName(lotName).parkingLotRowColor(lotRowColor).streetNumber(streetNumber).parkingLotFloor(lotFloor).parkingLatitude(latitude)
-                        .parkingLonitude(longitude).isParkingActive(isParkingActive).build();
+                        .parkingLonitude(longitude).isParkingActive(isParkingActive).imageName(imageName).build();
                 parkingSpots.add(parking);
             } while (cursor.moveToNext());
         }

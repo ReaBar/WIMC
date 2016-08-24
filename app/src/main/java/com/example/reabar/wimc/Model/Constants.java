@@ -29,6 +29,8 @@ public class Constants {
     final static String PARKING_LATITUDE = "latitude";
     final static String PARKING_LONGITUDE = "longitude";
     final static String PARKING_IS_ACTIVE = "parkingIsActive";
+    final static String PARKING_IMAGE_NAME = "imageName";
+
 
     final static String USER_TABLE = "sharedUsersList";
     final static String USER_ID = "user_id";

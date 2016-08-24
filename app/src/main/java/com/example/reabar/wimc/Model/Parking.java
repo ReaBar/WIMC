@@ -13,6 +13,7 @@ public class Parking {
     private boolean isParkingActive;
     private Image parkingImage;
     private Date startParking;
+    private String ImageName;
 
     public Parking(){}
 
@@ -29,6 +30,7 @@ public class Parking {
         this.parkingImage = parkingBuilder.parkingImage;
         this.isParkingActive = parkingBuilder.isParkingActive;
         this.startParking = parkingBuilder.startParking;
+        this.ImageName = parkingBuilder.imageName;
     }
 
     public String getCarId() {
@@ -124,12 +126,19 @@ public class Parking {
     public void setStartParking(Date startParking) { this.startParking = startParking; }
     public Date getStartParking() { return this.startParking; }
 
+    public void setImageName(String imageName) {
+        this.ImageName = imageName;
+    }
+    public String getImageName() { return this.ImageName; }
+
+
     public static class ParkingBuilder {
         private String carId, street, city, parkingLotName,parkingLotRowColor,streetNumber, parkingLotFloor;
         private double latitude, longitude;
         private boolean isParkingActive;
         private Image parkingImage;
         private Date startParking;
+        private String imageName;
 
         public ParkingBuilder(String carId) {
             this.carId = carId;
@@ -190,7 +199,12 @@ public class Parking {
             this.startParking = startParking;
             return this;
         }
-        
+
+        public ParkingBuilder imageName(String imageName){
+            this.imageName = imageName;
+            return this;
+        }
+
         public Parking build() {
             return new Parking(this);
         }

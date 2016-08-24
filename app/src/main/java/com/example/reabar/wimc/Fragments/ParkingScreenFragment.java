@@ -27,13 +27,13 @@ import android.widget.Toast;
 import com.example.reabar.wimc.FragmentCommunicator;
 import com.example.reabar.wimc.GPSTracker;
 import com.example.reabar.wimc.Model.Model;
-import com.example.reabar.wimc.Model.ModelCloudinary;
 import com.example.reabar.wimc.Model.Parking;
 import com.example.reabar.wimc.MyApplication;
 import com.example.reabar.wimc.R;
 
 import java.io.ByteArrayOutputStream;
 import java.util.Date;
+import java.util.UUID;
 
 public class ParkingScreenFragment extends Fragment implements LocationListener {
 
@@ -92,16 +92,20 @@ public class ParkingScreenFragment extends Fragment implements LocationListener 
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int permissionCheck = ContextCompat.checkSelfPermission(MyApplication.getAppActivity(),
-                        Manifest.permission.CAMERA);
-                if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
-                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
-                } else {
-                    ActivityCompat.requestPermissions(MyApplication.getAppActivity(),
-                            new String[]{Manifest.permission.CAMERA},
-                            REQUEST_IMAGE_CAPTURE);
-                }
+
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(intent,  CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+
+//                int permissionCheck = ContextCompat.checkSelfPermission(MyApplication.getAppActivity(),
+//                        Manifest.permission.CAMERA);
+//                if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
+//                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                    startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
+//                } else {
+//                    ActivityCompat.requestPermissions(MyApplication.getAppActivity(),
+//                            new String[]{Manifest.permission.CAMERA},
+//                            REQUEST_IMAGE_CAPTURE);
+//                }
             }
         });
 
@@ -132,6 +136,8 @@ public class ParkingScreenFragment extends Fragment implements LocationListener 
         });
 
         final Date nowDate = new Date();
+        UUID uuid = UUID.randomUUID();
+        final String randomUUIDString = uuid.toString();
 
         //Save parking
         Button saveParking = (Button) view.findViewById(R.id.SaveParkingButton);
@@ -140,15 +146,21 @@ public class ParkingScreenFragment extends Fragment implements LocationListener 
             public void onClick(View view) {
                 //TODO add the option to save only image
                 if((longitude != 0 && latitude != 0)){
-                    Parking parking = new Parking.ParkingBuilder(carID).street(street.getText().toString()).streetNumber(number.getText().toString()).city(city.getText().toString()).parkingLotName(parkingLotName.getText().toString()).parkingLotFloor(FloorNumber.getText().toString()).parkingLotRowColor(RowColor.getText().toString()).parkingLatitude(latitude).parkingLonitude(longitude).startParking(nowDate).build();
+                    Parking parking = null;
+                    if(imageTaken)
+                        parking = new Parking.ParkingBuilder(carID).street(street.getText().toString()).streetNumber(number.getText().toString()).city(city.getText().toString()).parkingLotName(parkingLotName.getText().toString()).parkingLotFloor(FloorNumber.getText().toString()).parkingLotRowColor(RowColor.getText().toString()).parkingLatitude(latitude).parkingLonitude(longitude).startParking(nowDate).imageName(randomUUIDString).build();
+                    else parking = new Parking.ParkingBuilder(carID).street(street.getText().toString()).streetNumber(number.getText().toString()).city(city.getText().toString()).parkingLotName(parkingLotName.getText().toString()).parkingLotFloor(FloorNumber.getText().toString()).parkingLotRowColor(RowColor.getText().toString()).parkingLatitude(latitude).parkingLonitude(longitude).startParking(nowDate).build();
+
                     Model.getInstance().parkCar(parking, new Model.SyncListener() {
                         @Override
                         public void isSuccessful(boolean success) {
-                            //save image to cloudinary
+                            //save image to cloudinary and cache
                             if (imageTaken) {
                                 //call cloudinary function
-                                ModelCloudinary cloudinary = new ModelCloudinary(getActivity());
-                                cloudinary.uploadImage(carID + "_" + nowDate, bitmap);
+//                                ModelCloudinary cloudinary = new ModelCloudinary(getActivity());
+//                                cloudinary.uploadImage(carID, bitmap);// + "_" + nowDate
+                                Model.getInstance().saveImage(bitmap,randomUUIDString);
+
                             }
                             //go to homepage fragment
                             Toast.makeText(MyApplication.getAppActivity(), "Parking place saved",
@@ -171,15 +183,22 @@ public class ParkingScreenFragment extends Fragment implements LocationListener 
                     Toast.makeText(MyApplication.getAppActivity(), "Must enter city and street to save parking",
                             Toast.LENGTH_SHORT).show();
                 } else {
-                    Parking parking = new Parking.ParkingBuilder(carID).street(street.getText().toString()).streetNumber(number.getText().toString()).city(city.getText().toString()).parkingLotName(parkingLotName.getText().toString()).parkingLotFloor(FloorNumber.getText().toString()).parkingLotRowColor(RowColor.getText().toString()).parkingLatitude(latitude).parkingLonitude(longitude).startParking(nowDate).build();
+                    Parking parking = null;
+                    if(imageTaken)
+                        parking = new Parking.ParkingBuilder(carID).street(street.getText().toString()).streetNumber(number.getText().toString()).city(city.getText().toString()).parkingLotName(parkingLotName.getText().toString()).parkingLotFloor(FloorNumber.getText().toString()).parkingLotRowColor(RowColor.getText().toString()).parkingLatitude(latitude).parkingLonitude(longitude).startParking(nowDate).imageName(randomUUIDString).build();
+                    else parking = new Parking.ParkingBuilder(carID).street(street.getText().toString()).streetNumber(number.getText().toString()).city(city.getText().toString()).parkingLotName(parkingLotName.getText().toString()).parkingLotFloor(FloorNumber.getText().toString()).parkingLotRowColor(RowColor.getText().toString()).parkingLatitude(latitude).parkingLonitude(longitude).startParking(nowDate).build();
+
                     Model.getInstance().parkCar(parking, new Model.SyncListener() {
                         @Override
                         public void isSuccessful(boolean success) {
                             //save image to cloudinary
                             if (imageTaken) {
                                 //call cloudinary function
-                                ModelCloudinary cloudinary = new ModelCloudinary(getActivity());
-                                cloudinary.uploadImage(carID + "_" + nowDate, bitmap);
+                                //ModelCloudinary cloudinary = new ModelCloudinary(getActivity());
+                                //cloudinary.uploadImage(carID, bitmap);
+
+                                Model.getInstance().saveImage(bitmap,randomUUIDString);
+
                             }
                             //go to homepage fragment
                             Toast.makeText(MyApplication.getAppActivity(), "Parking place saved",

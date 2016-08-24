@@ -157,7 +157,7 @@ public class MyCarsNowScreenFragment extends Fragment {
             }
 
             //load image from cloudinary
-            Model.getInstance().loadImage(parking.getCarId()+"_"+parking.getStartParking(), new Model.LoadImageListener() {
+            Model.getInstance().loadImage(parking.getImageName(), new Model.LoadImageListener() {
                 @Override
                 public void onResult(Bitmap imageBmp) {
                     if(imageBmp != null){

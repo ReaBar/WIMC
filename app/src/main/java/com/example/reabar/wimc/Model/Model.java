@@ -1,12 +1,21 @@
 package com.example.reabar.wimc.Model;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Environment;
+import android.util.Log;
 
 import com.example.reabar.wimc.FilesManagerHelper;
 import com.example.reabar.wimc.MyApplication;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +37,7 @@ public class Model {
     }
 
     private Model() {
+        fileManager = new FilesManagerHelper(MyApplication.getAppContext());
         modelFirebase = new ModelFirebase();
         modelSql = new ModelSql();
         modelCloudinary = new ModelCloudinary(MyApplication.getAppContext());
@@ -665,16 +675,16 @@ public class Model {
         AsyncTask<String,String,Bitmap> task = new AsyncTask<String, String, Bitmap >() {
             @Override
             protected Bitmap doInBackground(String... params) {
-                Bitmap bmp = modelCloudinary.loadImage(imageName);
+                //Bitmap bmp = modelCloudinary.loadImage(imageName);
                 //first try to fin the image on the device
-//                Bitmap bmp = fileManager.loadImageFromFile(imageName);
-//
-//                if (bmp == null) {
-//                    bmp = modelCloudinary.loadImage(imageName);
-//                    //save the image locally for next time
-//                    if (bmp != null)
-//                        fileManager.saveImageToFile(bmp,imageName);
-//                }
+                Bitmap bmp = fileManager.loadImageFromFile(imageName);
+
+                if (bmp == null) {
+                    bmp = modelCloudinary.loadImage(imageName);
+                    //save the image locally for next time
+                    if (bmp != null)
+                        fileManager.saveImageToFile(bmp,imageName);
+                }
                 return bmp;
             }
             @Override
@@ -694,6 +704,52 @@ public class Model {
 
 
 
+
+
+    public void saveImage(final Bitmap imageBitmap, final String imageName) {
+        saveImageToFile(imageBitmap,imageName); // synchronously save image locally
+        Thread d = new Thread(new Runnable() {  // asynchronously save image to parse
+            @Override
+            public void run() {
+                modelCloudinary.uploadImage(imageName, imageBitmap);
+            }
+        });
+        d.start();
+    }
+
+
+    private void saveImageToFile(Bitmap imageBitmap, String imageFileName){
+        FileOutputStream fos;
+        OutputStream out = null;
+        try {
+            File dir = Environment.getExternalStoragePublicDirectory(
+                    Environment.DIRECTORY_PICTURES);
+            if (!dir.exists()) {
+                dir.mkdir();
+            }
+            File imageFile = new File(dir,imageFileName);
+            imageFile.createNewFile();
+
+            out = new FileOutputStream(imageFile);
+            imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+            out.close();
+
+            //add the picture to the gallery so we dont need to manage the cache size
+            Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+            Uri contentUri = Uri.fromFile(imageFile);
+            mediaScanIntent.setData(contentUri);
+            MyApplication.getAppContext().sendBroadcast(mediaScanIntent);
+            Log.d("tag", "add image to cache: " + imageFileName);
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
   /*  public void SetLocalBitmap(Bitmap image)
     {
         this.image = image;
@@ -705,16 +761,7 @@ public class Model {
 */
 
 /*
-    public void saveImage(final Bitmap imageBitmap, final String imageName) {
-        saveImageToFile(imageBitmap,imageName); // synchronously save image locally
-        Thread d = new Thread(new Runnable() {  // asynchronously save image to parse
-            @Override
-            public void run() {
-                modelCloudinary.saveImage(imageBitmap,imageName);
-            }
-        });
-        d.start();
-    }
+
 
     public interface LoadImageListener{
         public void onResult(Bitmap imageBmp);
@@ -740,36 +787,6 @@ public class Model {
         task.execute();
     }
 
-    private void saveImageToFile(Bitmap imageBitmap, String imageFileName){
-        FileOutputStream fos;
-        OutputStream out = null;
-        try {
-            //File dir = context.getExternalFilesDir(null);
-            File dir = Environment.getExternalStoragePublicDirectory(
-                    Environment.DIRECTORY_PICTURES);
-            if (!dir.exists()) {
-                dir.mkdir();
-            }
-            File imageFile = new File(dir,imageFileName);
-            imageFile.createNewFile();
-
-            out = new FileOutputStream(imageFile);
-            imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
-            out.close();
-
-            //addUser the picture to the gallery so we dont need to manage the cache size
-            Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-            Uri contentUri = Uri.fromFile(imageFile);
-            mediaScanIntent.setData(contentUri);
-            context.sendBroadcast(mediaScanIntent);
-            Log.d("tag","addUser image to cache: " + imageFileName);
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     private Bitmap loadImageFromFile(String imageFileName){
         String str = null;
