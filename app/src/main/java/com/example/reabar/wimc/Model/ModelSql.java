@@ -15,10 +15,6 @@ public class ModelSql {
     private static final int VERSION = 2;
 
     MyDBHelper dbHelper;
-/*    private final String USERS_DB = "users";
-    private final String CAR_DB = "car";
-    private final String PARKING_DB = "parking";
-    private final String LAST_UPDATE_DB = "last_update";*/
 
     public ModelSql() {
         dbHelper = new MyDBHelper(MyApplication.getAppContext());
