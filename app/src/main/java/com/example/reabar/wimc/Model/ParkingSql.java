@@ -47,7 +47,7 @@ public class ParkingSql {
     }
 
     public static void getMyUnparkedCars(SQLiteDatabase db,Model.SyncListener listener) {
-        String currentUser = "'%" + Model.getInstance().getCurrentUser().getEmail() + "%'";
+        String currentUser = "%" + Model.getInstance().getCurrentUser().getEmail() + "%";
         String userEmail = Model.getInstance().getCurrentUser().getEmail();
         Cursor cursor = db.rawQuery("SELECT * FROM " + Constants.CAR_TABLE + " WHERE " + Constants.CAR_ID + " NOT IN (SELECT " + Constants.PARKING_CAR_ID + " FROM " + Constants.PARKING_TABLE + ") AND (" + Constants.CAR_USER_OWNER_ID + " = ? OR " + Constants.CAR_USERS_LIST + " LIKE ?)" , new String[]{userEmail,currentUser});
         List<Car> cars = new ArrayList<>();
@@ -82,7 +82,7 @@ public class ParkingSql {
     }
 
     public static void getMyParkedCars(SQLiteDatabase db,Model.SyncListener listener) {
-        String currentUser = "'%" + Model.getInstance().getCurrentUser().getEmail() + "%'";
+        String currentUser = "%" + Model.getInstance().getCurrentUser().getEmail() + "%";
         String userEmail = Model.getInstance().getCurrentUser().getEmail();
         Cursor cursor = db.rawQuery("SELECT * FROM " + Constants.CAR_TABLE + " WHERE " + Constants.CAR_ID + " IN (SELECT " + Constants.PARKING_CAR_ID + " FROM " + Constants.PARKING_TABLE + ") AND (" + Constants.CAR_USER_OWNER_ID + " = ? OR " + Constants.CAR_USERS_LIST + " LIKE ?)" , new String[]{userEmail,currentUser});
         List<Car> cars = new ArrayList<>();
@@ -116,7 +116,7 @@ public class ParkingSql {
     }
 
     public static void getMyParkingSpots(SQLiteDatabase db,Model.SyncListener listener) {
-        String currentUser = "'%" + Model.getInstance().getCurrentUser().getEmail() + "%'";
+        String currentUser = "%" + Model.getInstance().getCurrentUser().getEmail() + "%";
         String userEmail = Model.getInstance().getCurrentUser().getEmail();
         Cursor cursor = db.rawQuery("SELECT * FROM " + Constants.PARKING_TABLE + " WHERE " + Constants.PARKING_CAR_ID + " IN (SELECT " + Constants.CAR_ID + " FROM " + Constants.CAR_TABLE + " WHERE " + Constants.CAR_USER_OWNER_ID + " = ? OR " + Constants.CAR_USERS_LIST + " LIKE ?)" , new String[]{userEmail,currentUser});
         List<Parking> parkingSpots = new ArrayList<>();

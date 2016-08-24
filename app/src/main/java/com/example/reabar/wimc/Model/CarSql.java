@@ -180,7 +180,8 @@ public class CarSql {
     }
 
     public static void getListOfSharedCars(SQLiteDatabase db, String uId, Model.SyncListener listener) {
-        Cursor cursor = db.rawQuery("SELECT * FROM " + Constants.CAR_TABLE + " WHERE " + Constants.CAR_USERS_LIST + " = ?", new String[]{"%" + uId + "%"});
+        String userEmail = "%" + uId + "%";
+        Cursor cursor = db.rawQuery("SELECT * FROM " + Constants.CAR_TABLE + " WHERE " + Constants.CAR_USERS_LIST + " LIKE ?", new String[]{userEmail});
 
         List<Car> sharedCars = new ArrayList<>();
         if (cursor.moveToFirst()) {
