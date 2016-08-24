@@ -64,7 +64,7 @@ public class MyCarsNowScreenFragment extends Fragment {
         parkingsList = (ListView) view.findViewById((R.id.myCarsNowList));
 
         //get the list by from function
-        Model.getInstance().getAllMyParkingSpots(new Model.SyncListener() {
+        Model.getInstance().getMyParkingSpots(new Model.SyncListener() {
             @Override
             public void isSuccessful(boolean success) {
 

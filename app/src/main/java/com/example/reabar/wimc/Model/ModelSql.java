@@ -78,6 +78,16 @@ public class ModelSql {
         return LastUpdateSql.getLastUpdate(db,Constants.CAR_TABLE);
     }
 
+    public void getOwnedCars(String uId, Model.SyncListener listener){
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        CarSql.getOwnedCars(db,uId,listener);
+    }
+
+    public void getListOfSharedCars(String uId, Model.SyncListener listener){
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        CarSql.getListOfSharedCars(db,uId,listener);
+    }
+
     public void updateCar(Car car) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         CarSql.updateCar(db, car);

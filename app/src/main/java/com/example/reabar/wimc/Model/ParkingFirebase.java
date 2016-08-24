@@ -122,7 +122,7 @@ public class ParkingFirebase {
         });
     }
 
-    public void getAllMyParkedCars(FirebaseDatabase db,final Model.SyncListener listener) {
+    public void getMyParkedCars(FirebaseDatabase db, final Model.SyncListener listener) {
         final ArrayList<Car> carsList = new ArrayList<>();
         CarFirebase.getListOfAllCarsInDB(db, new Model.SyncListener() {
             @Override
@@ -161,7 +161,7 @@ public class ParkingFirebase {
                 while (children.iterator().hasNext()) {
                     parkingSpots.add(children.iterator().next().getValue(Parking.class));
                 }
-                getAllMyParkedCars(db,new Model.SyncListener() {
+                getMyParkedCars(db,new Model.SyncListener() {
                     @Override
                     public void isSuccessful(boolean success) {
 
@@ -196,7 +196,7 @@ public class ParkingFirebase {
 
     public void stopParking(FirebaseDatabase db, final Parking parking) {
         DatabaseReference dbRef = db.getReference(Constants.PARKING_TABLE);
-        Model.getInstance().getAllMyParkedCars(new Model.SyncListener() {
+        Model.getInstance().getMyParkedCars(new Model.SyncListener() {
             @Override
             public void isSuccessful(boolean success) {
 
@@ -225,7 +225,7 @@ public class ParkingFirebase {
 
     public void stopParking(FirebaseDatabase db, final Car car) {
         DatabaseReference dbRef = db.getReference(Constants.PARKING_TABLE);
-        Model.getInstance().getAllMyParkedCars(new Model.SyncListener() {
+        Model.getInstance().getMyParkedCars(new Model.SyncListener() {
             @Override
             public void isSuccessful(boolean success) {
 

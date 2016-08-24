@@ -2,8 +2,6 @@ package com.example.reabar.wimc.Model;
 
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.List;
-
 /**
  * Created by reabar on 27.6.2016.
  */
@@ -86,11 +84,11 @@ public class ModelFirebase {
         parkingFirebase.getMyUnparkedCars(firebaseDatabase,uid,listener);
     }
 
-    public void getAllMyParkedCars(Model.SyncListener listener){
-        parkingFirebase.getAllMyParkedCars(firebaseDatabase,listener);
+    public void getMyParkedCars(Model.SyncListener listener){
+        parkingFirebase.getMyParkedCars(firebaseDatabase,listener);
     }
 
-    public void getAllMyParkingSpots(Model.SyncListener listener){
+    public void getMyParkingSpots(Model.SyncListener listener){
         parkingFirebase.getAllMyParkingSpots(firebaseDatabase,listener);
     }
 
