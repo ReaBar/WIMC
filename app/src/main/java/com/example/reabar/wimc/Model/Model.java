@@ -2,6 +2,8 @@ package com.example.reabar.wimc.Model;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.location.Address;
+import android.location.Geocoder;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
@@ -41,6 +43,7 @@ public class Model {
         modelFirebase = new ModelFirebase();
         modelSql = new ModelSql();
         modelCloudinary = new ModelCloudinary(MyApplication.getAppContext());
+        getAPIVerison();
         modelFirebase.getListOfAllCarsInDB(new SyncListener() {
             @Override
             public void isSuccessful(boolean success) {
@@ -658,6 +661,33 @@ public class Model {
         long currentTime = System.currentTimeMillis();
         modelFirebase.updateUsersDbTime(currentTime);
         modelSql.updateUsersDbTime(currentTime);
+    }
+
+    public float getAPIVerison() {
+
+        float f=1f;
+        try {
+            StringBuilder strBuild = new StringBuilder();
+            strBuild.append(android.os.Build.VERSION.RELEASE.substring(0, 2));
+            f= Float.valueOf(strBuild.toString());
+            Log.d("deviceVersion","device OS version is: " + f);
+        } catch (NumberFormatException e) {
+            Log.e("deviceVersion", "error retriving api version" + e.getMessage());
+        }
+
+        return f;
+    }
+
+    public List<Address> getLatandLong(String locationName){
+        List<Address> result = new ArrayList<>();
+        try {
+            result = new Geocoder(MyApplication.getAppContext()).getFromLocationName(locationName, 5);
+            return result;
+        } catch (IOException e) {
+            Log.e("location",e.getMessage());
+        }
+        return null;
+
     }
 
     //--- Listeners ---- //

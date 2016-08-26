@@ -29,7 +29,7 @@ public class CarScreenFragment extends Fragment {
     protected ListView list;
     protected String carLicense;
     protected String modelCompany;
-    protected EditText emailSharedinput;
+    protected EditText emailSharedInput;
 
 
     @Override
@@ -71,19 +71,19 @@ public class CarScreenFragment extends Fragment {
         });
 
 
-        emailSharedinput = (EditText) view.findViewById(R.id.emailSharedinput);
+        emailSharedInput = (EditText) view.findViewById(R.id.emailSharedinput);
         Button addUserButton = (Button) view.findViewById(R.id.addUserButton);
         addUserButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (emailSharedinput.getText().toString().matches("")) {
+                if (emailSharedInput.getText().toString().matches("")) {
                     Toast.makeText(MyApplication.getAppActivity(), "You must enter email of the shared user",
                             Toast.LENGTH_SHORT).show();
                 } else {
                     //addUser user to car by email
-                    final String userEmail = emailSharedinput.getText().toString();
+                    final String userEmail = emailSharedInput.getText().toString();
                     car.setNewCarUser(userEmail,true);
-                    emailSharedinput.setText("");
+                    emailSharedInput.setText("");
                     //sharedUsersList.add(userEmail);
                     adapter.notifyDataSetChanged();
                 }

@@ -8,7 +8,7 @@
     <string name="car_model_year">שנת ייצור הרכב</string>
     <string name="city_street_number">מספר רחוב</string>
     <string name="find_location_in_google_maps">מצא מיקום בעזרת גוגל מפות</string>
-    <string name="parking_lot">חניון:</string>
+    <string name="parking_lot">חניון</string>
     <string name="parking_lot_floor">קומת חניון</string>
     <string name="parking_lot_name">שם החניון</string>
     <string name="your_car_parks_here">המכונית שלך חונה כאן:</string>
@@ -22,9 +22,9 @@
     <string name="add_user_to_share_this_car">הוסף משתמש לשיתוף הרכב עימו</string>
     <string name="to_delete_the_user_click_on_his_row">למחוק משתמש לחץ על השורה שלו</string>
     <string name="car_license_number">מספר הרכב</string>
-    <string name="model_company">מודל וחברה של הרכב</string>
-    <string name="car_license">מספר הרכב:</string>
-    <string name="car_model">דגם הרכב:</string>
+    <string name="model_company">מודל הרכב</string>
+    <string name="car_license">מספר הרכב</string>
+    <string name="car_model">דגם הרכב</string>
     <string name="email">כתובת אימייל</string>
     <string name="my_cars">למכוניות שלי</string>
     <string name="save">שמור שינויים</string>

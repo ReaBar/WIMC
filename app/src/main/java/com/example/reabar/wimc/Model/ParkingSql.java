@@ -73,10 +73,9 @@ public class ParkingSql {
                 if(usersList != null){
                     for (String user : usersList) {
                         car.setNewCarUser(user,false);
-                        cars.add(car);
                     }
                 }
-
+                cars.add(car);
             } while (cursor.moveToNext());
         }
         listener.passData(cars);
@@ -108,9 +107,9 @@ public class ParkingSql {
                 if(usersList != null){
                     for (String user : usersList) {
                         car.setNewCarUser(user,false);
-                        cars.add(car);
                     }
                 }
+                cars.add(car);
             } while (cursor.moveToNext());
         }
         listener.passData(cars);
