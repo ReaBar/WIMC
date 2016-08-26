@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -16,6 +17,8 @@ import com.example.reabar.wimc.FragmentCommunicator;
 import com.example.reabar.wimc.Model.Model;
 import com.example.reabar.wimc.MyApplication;
 import com.example.reabar.wimc.R;
+
+import java.util.Locale;
 
 public class SettingsScreenFragment extends Fragment {
 
@@ -34,17 +37,35 @@ public class SettingsScreenFragment extends Fragment {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_settings_screen, container, false);
 
-
+        Button settingsPasswordButton = (Button) view.findViewById(R.id.settingsPasswordButton);
         TextView settings = (TextView) view.findViewById(R.id.settingsText);
-        Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(),"Alyssa_Kayla.ttf"); // create a typeface from the raw ttf
-        settings.setTypeface(typeface);
+
+        Typeface english = Typeface.createFromAsset(getActivity().getAssets(), "KOMIKAX_.ttf"); // create a typeface from the raw ttf
+        Typeface hebrew = Typeface.createFromAsset(getActivity().getAssets(), "OpenSansHebrew-Bold.ttf"); // create a typeface from the raw ttf
+        if(Locale.getDefault().getDisplayLanguage().equals("עברית"))
+        {
+            settingsPasswordButton.setTypeface(hebrew);
+            settings.setTypeface(hebrew);
+        }
+        else
+        {
+            settingsPasswordButton.setTypeface(english);
+            settings.setTypeface(english);
+        }
 
 
         settingsPasswordInput = (EditText) view.findViewById(R.id.settingsPasswordInput);
-        Button settingsPasswordButton = (Button) view.findViewById(R.id.settingsPasswordButton);
         settingsPasswordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                //hide keyboard after click
+                InputMethodManager inputManager = (InputMethodManager)
+                        getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(),
+                        InputMethodManager.HIDE_NOT_ALWAYS);
+
+
                 if(settingsPasswordInput.getText().toString().matches("")){
                     Toast.makeText(MyApplication.getAppActivity(), "You must enter the new password",
                             Toast.LENGTH_SHORT).show();

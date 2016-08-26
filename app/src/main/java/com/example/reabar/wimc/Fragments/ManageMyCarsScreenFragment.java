@@ -1,6 +1,7 @@
 package com.example.reabar.wimc.Fragments;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -26,6 +28,7 @@ import com.example.reabar.wimc.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class ManageMyCarsScreenFragment extends Fragment {
 
@@ -57,6 +60,22 @@ public class ManageMyCarsScreenFragment extends Fragment {
             cars = new ArrayList<>();
         }
 
+        Button addNewCarButton = (Button) view.findViewById(R.id.newCarButton);
+        TextView title = (TextView) view.findViewById(R.id.logoTextManageMyCars);
+        Typeface english = Typeface.createFromAsset(getActivity().getAssets(), "KOMIKAX_.ttf"); // create a typeface from the raw ttf
+        Typeface hebrew = Typeface.createFromAsset(getActivity().getAssets(), "OpenSansHebrew-Bold.ttf"); // create a typeface from the raw ttf
+        if(Locale.getDefault().getDisplayLanguage().equals("עברית"))
+        {
+            addNewCarButton.setTypeface(hebrew);
+            title.setTypeface(hebrew);
+        }
+        else
+        {
+            addNewCarButton.setTypeface(english);
+            title.setTypeface(english);
+        }
+
+
         progressBar = (ProgressBar) view.findViewById(R.id.mainProgressBar);
         progressBar.setVisibility(View.VISIBLE);
 
@@ -64,10 +83,16 @@ public class ManageMyCarsScreenFragment extends Fragment {
         carColorInput = (EditText) view.findViewById(R.id.carColorInput);
         carLicenseInput = (EditText) view.findViewById(R.id.carLicenseInput);
         carModelInput = (EditText) view.findViewById(R.id.carModelInput);
-        Button addNewCarButton = (Button) view.findViewById(R.id.newCarButton);
         addNewCarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                //hide keyboard after click
+                InputMethodManager inputManager = (InputMethodManager)
+                        getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(),
+                        InputMethodManager.HIDE_NOT_ALWAYS);
+
                 if(carCompanyInput.getText().toString().matches("") || carColorInput.getText().toString().matches("") || carLicenseInput.getText().toString().matches("") || carModelInput.getText().toString().matches("")){
                     Toast.makeText(MyApplication.getAppActivity(), "You must fill all the information about the new car",
                             Toast.LENGTH_SHORT).show();

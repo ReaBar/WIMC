@@ -1,6 +1,7 @@
 package com.example.reabar.wimc.Fragments;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -15,6 +16,8 @@ import com.example.reabar.wimc.Model.Model;
 import com.example.reabar.wimc.Model.User;
 import com.example.reabar.wimc.MyApplication;
 import com.example.reabar.wimc.R;
+
+import java.util.Locale;
 
 
 public class SignupScreenFragment extends Fragment {
@@ -38,12 +41,22 @@ public class SignupScreenFragment extends Fragment {
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_signup_screen, container, false);
+        Button signupButton = (Button) view.findViewById(R.id.registerButton);
+
+        if(Locale.getDefault().getDisplayLanguage().equals("עברית"))
+        {
+            Typeface hebrew = Typeface.createFromAsset(getActivity().getAssets(), "OpenSansHebrew-Bold.ttf"); // create a typeface from the raw ttf
+            signupButton.setTypeface(hebrew);
+        }
+
         emailInput = (EditText) view.findViewById(R.id.emailInput);
         passwordInput = (EditText) view.findViewById(R.id.passwordInput);
         repasswordInput = (EditText) view.findViewById(R.id.repasswordInput);
 
 
-        Button signupButton = (Button) view.findViewById(R.id.registerButton);
+
+
+
         signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

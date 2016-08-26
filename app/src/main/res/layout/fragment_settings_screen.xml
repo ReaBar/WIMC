@@ -34,7 +34,7 @@
             android:text="@string/settings"
             android:id="@+id/settingsText"
             android:layout_gravity="center_horizontal|top"
-            android:textSize="65sp"
+            android:textSize="45sp"
             android:textColor="#234f84"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
@@ -51,7 +51,7 @@
             android:layout_alignStart="@+id/settingsPasswordInput"
             android:background="#203455"
             android:textColor="#ffffff"
-            android:textSize="25dp"
-            android:layout_marginTop="5dp" />
+            android:textSize="22dp"
+            android:layout_marginTop="15dp" />
     </RelativeLayout>
 </FrameLayout>

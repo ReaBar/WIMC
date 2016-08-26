@@ -1,14 +1,17 @@
 package com.example.reabar.wimc.Fragments;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.reabar.wimc.FragmentCommunicator;
@@ -16,6 +19,8 @@ import com.example.reabar.wimc.Model.Model;
 import com.example.reabar.wimc.Model.User;
 import com.example.reabar.wimc.MyApplication;
 import com.example.reabar.wimc.R;
+
+import java.util.Locale;
 
 
 public class LoginScreenFragment extends Fragment {
@@ -38,12 +43,41 @@ public class LoginScreenFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_login_screen, container, false);
 
+
+        Button loginButton = (Button) view.findViewById(R.id.loginButton);
+        Button signupButton = (Button) view.findViewById(R.id.signUpButton);
+        Button forgotPasswordButton = (Button) view.findViewById(R.id.resetPasswordButton);
+
+        TextView loginLogo = (TextView) view.findViewById(R.id.logoTextLogin);
+        Typeface english = Typeface.createFromAsset(getActivity().getAssets(), "KOMIKAX_.ttf"); // create a typeface from the raw ttf
+        Typeface hebrew = Typeface.createFromAsset(getActivity().getAssets(), "OpenSansHebrew-Bold.ttf"); // create a typeface from the raw ttf
+        loginLogo.setTypeface(english);
+
+        if(Locale.getDefault().getDisplayLanguage().equals("עברית"))
+        {
+            loginButton.setTypeface(hebrew);
+            signupButton.setTypeface(hebrew);
+            forgotPasswordButton.setTypeface(hebrew);
+        }
+
+
         emailInput = (EditText) view.findViewById(R.id.emailInput);
         passwordInput = (EditText) view.findViewById(R.id.passwordInput);
-        Button loginButton = (Button) view.findViewById(R.id.loginButton);
+
+
+
+
         loginButton.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
+                //hide keyboard after click
+                InputMethodManager inputManager = (InputMethodManager)
+                        getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(),
+                        InputMethodManager.HIDE_NOT_ALWAYS);
+
+
                 if(emailInput.getText().toString().matches("") || passwordInput.getText().toString().matches("")){
                     Toast.makeText(MyApplication.getAppActivity(), "You must enter email and password",
                             Toast.LENGTH_SHORT).show();
@@ -75,7 +109,6 @@ public class LoginScreenFragment extends Fragment {
             }
         });
 
-        Button signupButton = (Button) view.findViewById(R.id.signUpButton);
         signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,7 +116,6 @@ public class LoginScreenFragment extends Fragment {
             }
         });
 
-        Button forgotPasswordButton = (Button) view.findViewById(R.id.resetPasswordButton);
         forgotPasswordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

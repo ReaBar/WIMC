@@ -1,6 +1,7 @@
 package com.example.reabar.wimc.Fragments;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -21,6 +22,7 @@ import com.example.reabar.wimc.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class MySharedCarsScreenFragment extends Fragment {
 
@@ -40,6 +42,23 @@ public class MySharedCarsScreenFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_my_shared_cars_screen, container, false);
+
+        TextView title = (TextView) view.findViewById(R.id.logoText);
+        TextView text = (TextView) view.findViewById(R.id.textTextView);
+        Typeface english = Typeface.createFromAsset(getActivity().getAssets(), "KOMIKAX_.ttf"); // create a typeface from the raw ttf
+        Typeface hebrew = Typeface.createFromAsset(getActivity().getAssets(), "OpenSansHebrew-Bold.ttf"); // create a typeface from the raw ttf
+
+        if(Locale.getDefault().getDisplayLanguage().equals("עברית"))
+        {
+            title.setTypeface(hebrew);
+            text.setTypeface(hebrew);
+        }
+        else
+        {
+            title.setTypeface(english);
+            text.setTypeface(english);
+        }
+
 
         if(cars == null) {
             cars = new ArrayList<>();

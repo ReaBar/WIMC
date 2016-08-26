@@ -17,13 +17,23 @@ xmlns:tools="http://schemas.android.com/tools" >
 
 
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="85dp"
+        android:id="@+id/homePageImage"
+        android:src="@drawable/parking3"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="25dp" />
+
+
+
     <TextView
-        android:layout_width="283dp"
+        android:layout_width="304dp"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/want_to_park_your_car_please_choose_the_car_below"
         android:id="@+id/helloTextView"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="25dp"
         android:layout_marginBottom="25dp"
         android:layout_below="@+id/cars_list_row_car_model_company"
         android:layout_centerHorizontal="true"
@@ -31,7 +41,7 @@ xmlns:tools="http://schemas.android.com/tools" >
         android:layout_gravity="center_horizontal"
         android:background="#00ffffff"
         android:textColor="#ffffff"
-        android:textSize="35dp" />
+        android:textSize="28dp" />
 
     <ProgressBar
         android:layout_width="fill_parent"

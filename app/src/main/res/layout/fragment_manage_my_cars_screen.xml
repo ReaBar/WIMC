@@ -17,7 +17,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="65dp"
         android:imeOptions="actionDone"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:textSize="21dp" />
 
     <EditText
         android:layout_width="300dp"
@@ -30,7 +31,8 @@
         android:layout_above="@+id/newCarButton"
         android:layout_alignStart="@+id/carModelInput"
         android:imeOptions="actionDone"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:textSize="21dp" />
 
     <EditText
         android:layout_width="300dp"
@@ -43,7 +45,8 @@
         android:layout_below="@+id/carLicenseInput"
         android:layout_alignStart="@+id/carLicenseInput"
         android:imeOptions="actionDone"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:textSize="21dp" />
 
     <EditText
         android:layout_width="300dp"
@@ -56,17 +59,23 @@
         android:layout_above="@+id/carCompanyInput"
         android:layout_alignStart="@+id/carColorInput"
         android:imeOptions="actionDone"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:textSize="21dp" />
 
     <Button
-        android:layout_width="215dp"
-        android:layout_height="wrap_content"
+        android:layout_width="274dp"
+        android:layout_height="70dp"
         android:text="@string/add_new_car"
         android:id="@+id/newCarButton"
         android:layout_gravity="center_horizontal|top"
         android:layout_centerVertical="true"
         android:layout_alignStart="@+id/carCompanyInput"
-        android:layout_alignEnd="@+id/carCompanyInput" />
+        android:layout_alignEnd="@+id/carCompanyInput"
+        android:textStyle="bold"
+        android:textSize="23dp"
+        android:background="#ffaa00"
+        android:textColor="#ffffff"
+        android:layout_marginTop="10dp" />
 
 
     <TextView
@@ -74,9 +83,9 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/manage_your_cars"
-        android:id="@+id/logoText"
+        android:id="@+id/logoTextManageMyCars"
         android:layout_gravity="center_horizontal|top"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:textSize="25sp"
         android:textStyle="bold"
         android:textColor="#234f84"
@@ -89,16 +98,15 @@
         android:id="@+id/mainProgressBar"
         style="@android:style/Widget.Holo.ProgressBar.Large"
         android:indeterminate="true"
-        android:background="#fafafa"
         android:layout_marginTop="25dp"
         android:indeterminateBehavior="cycle" />
 
     <ListView
-        android:layout_width="wrap_content"
+        android:layout_width="279dp"
         android:layout_height="356dp"
         android:id="@+id/carsListView"
         android:layout_below="@+id/newCarButton"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="0dp" />
+        android:layout_gravity="center_horizontal" />
 
 </LinearLayout>

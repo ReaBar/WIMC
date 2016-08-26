@@ -18,22 +18,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/shared_cars"
+        android:text="@string/my_shared_cars"
         android:id="@+id/logoText"
         android:layout_gravity="center_horizontal|top"
         android:layout_marginTop="55dp"
-        android:textSize="30dp"
+        android:textSize="28dp"
         android:textStyle="bold"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:textColor="#8f502e" />
+        android:textColor="#cc5617" />
 
     <TextView
-        android:layout_width="288dp"
+        android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/you_are_not_the_owner_of_these_cars_but_you_can_park_them"
-        android:id="@+id/deleteTextView"
+        android:id="@+id/textTextView"
         android:layout_marginTop="25dp"
         android:layout_marginBottom="5dp"
         android:layout_below="@+id/cars_list_row_car_model_company"

@@ -26,12 +26,12 @@
     <string name="manage_shared_cars">Manage Shared Cars</string>
     <string name="logout">Logout</string>
     <string name="save_and_share_your_parking_spot">Save and Share your parking spot</string>
-    <string name="car_model">Car Model:</string>
-    <string name="car_license">Car License:</string>
+    <string name="car_model">Car Model</string>
+    <string name="car_license">Car License</string>
     <string name="add_user_to_share_this_car">Add user To share this car</string>
     <string name="to_delete_the_user_click_on_his_row">To delete the user, click on his row</string>
     <string name="car_license_number">Car License Number</string>
-    <string name="model_company">Model</string>
+    <string name="model_company">Car Manufacturer</string>
     <string name="email">Email</string>
     <string name="my_cars">My Cars</string>
     <string name="save">Save</string>
@@ -50,12 +50,12 @@
     <string name="longitude_and_latitude">Longitude and Latitude</string>
     <string name="get_gps_location">Get GPS Location</string>
     <string name="save_parking">Save Parking</string>
-    <string name="shared_cars">Shared Cars</string>
+    <string name="my_shared_cars">My Shared Cars</string>
     <string name="you_are_not_the_owner_of_these_cars_but_you_can_park_them">You are not the owner of these cars, but you can park them!</string>
     <string name="stop_parking">Stop Parking!</string>
     <string name="color">Color</string>
     <string name="add_new_car">Add New Car</string>
     <string name="manage_your_cars">Manage your cars</string>
-    <string name="want_to_park_your_car_please_choose_the_car_below">Want to park your car? please choose the car below!</string>
+    <string name="want_to_park_your_car_please_choose_the_car_below">Want to park your car? choose the car below!</string>
     <string name="save_location_for_car">Save location for car</string>
 </resources>

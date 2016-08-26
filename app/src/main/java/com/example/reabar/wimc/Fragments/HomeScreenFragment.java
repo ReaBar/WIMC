@@ -22,6 +22,7 @@ import com.example.reabar.wimc.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class HomeScreenFragment extends Fragment {
 
@@ -50,9 +51,17 @@ public class HomeScreenFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home_screen, container, false);
 
         TextView hello = (TextView) view.findViewById(R.id.helloTextView);
-        Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(),"Alyssa_Kayla.ttf"); // create a typeface from the raw ttf
-        hello.setTypeface(typeface);
-
+        Typeface english = Typeface.createFromAsset(getActivity().getAssets(), "KOMIKAX_.ttf"); // create a typeface from the raw ttf
+        Typeface hebrew = Typeface.createFromAsset(getActivity().getAssets(), "OpenSansHebrew-Bold.ttf"); // create a typeface from the raw ttf
+        if(Locale.getDefault().getDisplayLanguage().equals("עברית"))
+        {
+            hello.setTypeface(hebrew);
+        }
+        else
+        {
+            hello.setTypeface(english);
+            hello.setTextSize(26);
+        }
 
         progressBar = (ProgressBar) view.findViewById(R.id.homepageProgressBar);
         progressBar.setVisibility(View.VISIBLE);

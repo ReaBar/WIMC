@@ -1,12 +1,14 @@
 package com.example.reabar.wimc.Fragments;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -21,6 +23,7 @@ import com.example.reabar.wimc.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class CarScreenFragment extends Fragment {
     protected Car car;
@@ -43,12 +46,27 @@ public class CarScreenFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_car_screen, container, false);
 
+        TextView text = (TextView) view.findViewById(R.id.deleteTextView);
+        Button addUserButton = (Button) view.findViewById(R.id.addUserButton);
+
+        Typeface english = Typeface.createFromAsset(getActivity().getAssets(), "KOMIKAX_.ttf"); // create a typeface from the raw ttf
+        Typeface hebrew = Typeface.createFromAsset(getActivity().getAssets(), "OpenSansHebrew-Bold.ttf"); // create a typeface from the raw ttf
+        if(Locale.getDefault().getDisplayLanguage().equals("עברית"))
+        {
+            addUserButton.setTypeface(hebrew);
+            text.setTypeface(hebrew);
+        }
+        else
+        {
+            addUserButton.setTypeface(english);
+            text.setTypeface(english);
+        }
+
         if(sharedUsersList == null) {
             sharedUsersList = new ArrayList<>();
         }
 
         if(sharedUsersList.isEmpty()){
-            TextView text = (TextView) view.findViewById(R.id.deleteTextView);
             text.setVisibility(View.GONE);
         }
 
@@ -72,20 +90,27 @@ public class CarScreenFragment extends Fragment {
 
 
         emailSharedInput = (EditText) view.findViewById(R.id.emailSharedinput);
-        Button addUserButton = (Button) view.findViewById(R.id.addUserButton);
         addUserButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                //hide keyboard after click
+                InputMethodManager inputManager = (InputMethodManager)
+                        getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(),
+                        InputMethodManager.HIDE_NOT_ALWAYS);
+
                 if (emailSharedInput.getText().toString().matches("")) {
                     Toast.makeText(MyApplication.getAppActivity(), "You must enter email of the shared user",
                             Toast.LENGTH_SHORT).show();
                 } else {
                     //addUser user to car by email
                     final String userEmail = emailSharedInput.getText().toString();
-                    car.setNewCarUser(userEmail,true);
+                    car.setNewCarUser(userEmail, true);
                     emailSharedInput.setText("");
-                    //sharedUsersList.add(userEmail);
+                    sharedUsersList.add(userEmail);
                     adapter.notifyDataSetChanged();
+
                 }
             }
         });

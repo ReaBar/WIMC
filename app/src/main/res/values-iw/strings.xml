@@ -20,9 +20,9 @@
     <string name="where_are_my_cars_now">היכן המכוניות שלי כעת?</string>
     <string name="save_and_share_your_parking_spot">שמור ונהל את מיקום חניות הרכבים שלך</string>
     <string name="add_user_to_share_this_car">הוסף משתמש לשיתוף הרכב עימו</string>
-    <string name="to_delete_the_user_click_on_his_row">למחוק משתמש לחץ על השורה שלו</string>
+    <string name="to_delete_the_user_click_on_his_row">לחץ על המשתמש על מנת למחוק אותו מהרכב</string>
     <string name="car_license_number">מספר הרכב</string>
-    <string name="model_company">מודל הרכב</string>
+    <string name="model_company">יצרן הרכב</string>
     <string name="car_license">מספר הרכב</string>
     <string name="car_model">דגם הרכב</string>
     <string name="email">כתובת אימייל</string>
@@ -43,7 +43,7 @@
     <string name="longitude_and_latitude">נקודות אורך וגובה</string>
     <string name="get_gps_location">מצא מיקום ג׳יפיאס</string>
     <string name="save_parking">שמור חניה</string>
-    <string name="shared_cars">מכוניות משותפות</string>
+    <string name="my_shared_cars">הרכבים המשותפים שלך</string>
     <string name="you_are_not_the_owner_of_these_cars_but_you_can_park_them">אינך הבעלים של מכוניות אלו, אך אתה יכול להחנות אותן</string>
     <string name="stop_parking">סיים חניה</string>
     <string name="color">צבע הרכב</string>
