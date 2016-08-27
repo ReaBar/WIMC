@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.example.reabar.wimc.FragmentCommunicator;
 import com.example.reabar.wimc.Model.Car;
+import com.example.reabar.wimc.Model.Model;
 import com.example.reabar.wimc.MyApplication;
 import com.example.reabar.wimc.R;
 
@@ -112,7 +113,9 @@ public class CarScreenFragment extends Fragment {
                 } else {
                     //addUser user to car by email
                     final String userEmail = emailSharedInput.getText().toString();
-                    car.setNewCarUser(userEmail, true);
+                    //car.setCarUser(userEmail, true);
+                    //car.setNewCarUser(userEmail);
+                    Model.getInstance().setCarUser(car,userEmail);
                     emailSharedInput.setText("");
                     adapter.notifyDataSetChanged();
                     try {

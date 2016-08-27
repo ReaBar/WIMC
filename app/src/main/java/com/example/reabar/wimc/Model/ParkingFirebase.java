@@ -46,7 +46,7 @@ public class ParkingFirebase {
                                 for (Car car : (ArrayList<Car>) data) {
                                     if (car.getCarId().equals(parkingLocation.getCarId())) {
                                         car.setParkingIsActive(true);
-                                        car.updateThisCar();
+                                        //car.updateThisCar();
                                         Model.getInstance().updateParkingDbTime();
                                     }
                                 }
@@ -213,7 +213,7 @@ public class ParkingFirebase {
                     for (Car car : (ArrayList<Car>) data) {
                         if (car.getCarId().equals(parking.getCarId())) {
                             car.setParkingIsActive(false);
-                            car.updateThisCar();
+                            //car.updateThisCar();
                             return;
                         }
                     }
@@ -242,7 +242,7 @@ public class ParkingFirebase {
                     for (Car car : (ArrayList<Car>) data) {
                         if (car.getCarId().equals(car.getCarId())) {
                             car.setParkingIsActive(false);
-                            car.updateThisCar();
+                            //car.updateThisCar();
                             return;
                         }
                     }

@@ -39,6 +39,11 @@ public class ModelSql {
         UserSql.getUsersList(db,listener);
     }
 
+    public List<User> getUsersList() {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        return UserSql.getUsersList(db);
+    }
+
     public String getUsersLastUpdateTime(){
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         return LastUpdateSql.getLastUpdate(db,Constants.USER_TABLE);

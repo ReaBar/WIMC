@@ -45,6 +45,28 @@ public class UserSql {
         listener.passData(users);
     }
 
+    public static List<User> getUsersList(SQLiteDatabase db) {
+        Cursor cursor = db.query(Constants.USER_TABLE, null, null, null, null, null, null);
+        List<User> users = new ArrayList<>();
+
+        if (cursor.moveToFirst()) {
+            int idIndex = cursor.getColumnIndex(Constants.USER_ID);
+            int emailIndex = cursor.getColumnIndex(Constants.USER_EMAIL);
+
+
+            do {
+                String id = cursor.getString(idIndex);
+                String email = cursor.getString(emailIndex);
+
+                User us = new User(id, email);
+                users.add(us);
+            } while (cursor.moveToNext());
+        }
+        if (cursor != null)
+            cursor.close();
+        return users;
+    }
+
     public static void isUserExistsByEmail(SQLiteDatabase db, String email, Model.SyncListener listener) {
         Cursor cursor = db.rawQuery("SELECT * FROM " + Constants.USER_TABLE + " WHERE " + Constants.USER_EMAIL + " = ?", new String[]{email});
 

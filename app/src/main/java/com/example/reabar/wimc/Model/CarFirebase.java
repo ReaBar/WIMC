@@ -56,6 +56,19 @@ public class CarFirebase {
         });
     }
 
+    public void updateCar(FirebaseDatabase db, Car car){
+        DatabaseReference dbRef = db.getReference(Constants.CAR_TABLE);
+        dbRef.child(car.getCarId()).setValue(car).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                } else {
+                    Log.d(TAG, "Error to update car");
+                }
+            }
+        });
+    }
+
     public void getOwnedCars(FirebaseDatabase db, final String uId, final Model.SyncListener listener) {
         DatabaseReference dbRef = db.getReference(Constants.CAR_TABLE);
         final ArrayList<Car> ownedCars = new ArrayList<>();

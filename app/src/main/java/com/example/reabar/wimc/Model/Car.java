@@ -1,13 +1,9 @@
 package com.example.reabar.wimc.Model;
 
-import android.util.Log;
-import android.widget.Toast;
-
 import com.example.reabar.wimc.MyApplication;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Created by reabar on 25.5.2016.
@@ -17,8 +13,6 @@ public class Car {
     private List<String> usersList;
     private Boolean parkingIsActive;
     private String TAG = "CarClass";
-    private final ReentrantLock lock = new ReentrantLock();
-
 
     public Car() {
         usersList = new ArrayList<>();
@@ -70,7 +64,7 @@ public class Car {
         this.userOwnerId = userOwnerId;
     }
 
-    public void setUsersList(ArrayList<String> users) {
+    public void setUsersList(List<String> users) {
         usersList = users;
     }
 
@@ -86,7 +80,7 @@ public class Car {
         this.parkingIsActive = parkingIsActive;
     }
 
-    protected void updateThisCar() {
+/*    protected void updateThisCar() {
         Model.getInstance().updateCar(this, new Model.SyncListener() {
             @Override
             public void isSuccessful(boolean success) {
@@ -105,58 +99,60 @@ public class Car {
 
             }
         });
-    }
+    }*/
 
-    public void setNewCarUser(final String email, final boolean newUserOrJustSQL) {
-        lock.lock();
-        try {
-            Model.getInstance().getUsersList(new Model.SyncListener() {
-                @Override
-                public void isSuccessful(boolean success) {
-
-                }
-
-                @Override
-                public void failed(String message) {
-
-                }
-
-                @Override
-                public void passData(Object data) {
-                    if (data instanceof List) {
-                        if (!usersList.contains(email) && !email.equals(Model.getInstance().getCurrentUser().getEmail())) {
-                            for (User user : (List<User>) data) {
-                                if (user.getEmail().equals(email)) {
-                                    usersList.add(email);
-                                    if (newUserOrJustSQL) {
-                                        Toast.makeText(MyApplication.getAppActivity(), "User added To Car!",
-                                                Toast.LENGTH_SHORT).show();
-                                    }
-                                    updateThisCar();
-                                    return;
-                                }
-                            }
-                        } else {
-                            if (newUserOrJustSQL) {
-                                Toast.makeText(MyApplication.getAppContext(), "User not found or already shared with", Toast.LENGTH_SHORT).show();
-                            }
-                            return;
-                        }
-                    }
-                    if (newUserOrJustSQL) {
-                        Toast.makeText(MyApplication.getAppContext(), "User not found or already shared with", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
-        } finally {
-            lock.unlock();
+    public void setNewCarUser(String email){
+        if(!usersList.contains(email)){
+            usersList.add(email);
         }
     }
+
+/*    public void setCarUser(final String email, final boolean newUserOrJustSQL) {
+        Model.getInstance().getUsersList(new Model.SyncListener() {
+            @Override
+            public void isSuccessful(boolean success) {
+
+            }
+
+            @Override
+            public void failed(String message) {
+
+            }
+
+            @Override
+            public void passData(Object data) {
+                if (data instanceof List) {
+                    if (!usersList.contains(email) && !email.equals(Model.getInstance().getCurrentUser().getEmail())) {
+                        for (User user : (List<User>) data) {
+                            if (user.getEmail().equals(email)) {
+                                usersList.add(email);
+                                if (newUserOrJustSQL) {
+                                    Toast.makeText(MyApplication.getAppActivity(), "User added To Car!",
+                                            Toast.LENGTH_SHORT).show();
+                                }
+                                updateThisCar();
+                                return;
+                            }
+                        }
+                    } else {
+                        if (newUserOrJustSQL) {
+                            Toast.makeText(MyApplication.getAppContext(), "User not found or already shared with", Toast.LENGTH_SHORT).show();
+                        }
+                        return;
+                    }
+                }
+                if (newUserOrJustSQL) {
+                    Toast.makeText(MyApplication.getAppContext(), "User not found or already shared with", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }*/
 
     public void removeCarUser(final String uId) {
         if (usersList.contains(uId)) {
             usersList.remove(uId);
-            updateThisCar();
+            //updateThisCar();
+            Model.getInstance().updateCar(this);
         }
     }
 }

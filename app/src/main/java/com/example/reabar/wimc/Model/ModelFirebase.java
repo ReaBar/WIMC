@@ -59,6 +59,10 @@ public class ModelFirebase {
         carFirebase.updateCar(firebaseDatabase, car, listener);
     }
 
+    public void updateCar(Car car) {
+        carFirebase.updateCar(firebaseDatabase, car);
+    }
+
     public void getUsersList(Model.SyncListener listener) {
         userFirebase.getUsersList(firebaseDatabase, listener);
     }

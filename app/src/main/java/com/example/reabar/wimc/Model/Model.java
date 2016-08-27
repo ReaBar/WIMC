@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.reabar.wimc.FilesManagerHelper;
 import com.example.reabar.wimc.MyApplication;
@@ -45,8 +46,8 @@ public class Model {
         modelCloudinary = new ModelCloudinary(MyApplication.getAppContext());
         getAPIVersion();
         User tempUser = currentUser;
-        if(tempUser != null){
-            modelFirebase.getOwnedCars(currentUser.getEmail(),new SyncListener() {
+        if (tempUser != null) {
+            modelFirebase.getOwnedCars(currentUser.getEmail(), new SyncListener() {
                 @Override
                 public void isSuccessful(boolean success) {
 
@@ -65,8 +66,7 @@ public class Model {
                     modelSql.updateCarsDbTime(System.currentTimeMillis());
                 }
             });
-        }
-        else{
+        } else {
             modelFirebase.getListOfAllCarsInDB(new SyncListener() {
                 @Override
                 public void isSuccessful(boolean success) {
@@ -87,7 +87,6 @@ public class Model {
                 }
             });
         }
-
 
         modelFirebase.getMyParkingSpots(new SyncListener() {
             @Override
@@ -323,7 +322,46 @@ public class Model {
         updateCarDbTime();
     }
 
-    public void updateCar(Car car, Model.SyncListener listener) {
+    public void setCarUser(Car car, String userEmail) {
+        //new
+        List<User> allUsers = modelSql.getUsersList();
+        for (User user : allUsers) {
+            if (user.getEmail().equals(userEmail) && !car.getUsersList().contains(userEmail)) {
+                car.setNewCarUser(userEmail);
+                Toast.makeText(MyApplication.getAppActivity(), "User added To Car!",
+                        Toast.LENGTH_SHORT).show();
+                updateCar(car);
+                return;
+            }
+        }
+        Toast.makeText(MyApplication.getAppContext(), "User not found or already shared with", Toast.LENGTH_SHORT).show();
+    }
+
+    public void setCarUsersList(Car car,List<String> usersList) {
+        //new
+        List<User> allUsers = modelSql.getUsersList();
+        List<String> userEmails = new ArrayList<>();
+        for (User user : allUsers) {
+            userEmails.add(user.getEmail());
+        }
+        for (String carUser:usersList) {
+            if(!userEmails.contains(carUser)){
+                usersList.remove(carUser);
+            }
+        }
+        car.setUsersList(usersList);
+        updateCar(car);
+    }
+
+
+    public void updateCar(final Car car) {
+        //new
+        modelSql.updateCar(car);
+        modelFirebase.updateCar(car);
+        updateCarDbTime();
+    }
+
+    public void updateCar(final Car car, Model.SyncListener listener) {
         modelSql.updateCar(car);
         modelFirebase.updateCar(car, listener);
         updateCarDbTime();

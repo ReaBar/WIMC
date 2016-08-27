@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -59,12 +60,15 @@ public class CarSql {
 
                 List<String> usersList = convertStringToList(cursor.getString(userListIndex));
                 Car car = new Car(id, color, model, company, userOwnerId);
-                if (usersList != null) {
-                    for (String user : usersList) {
-                        car.setNewCarUser(user, false);
-                    }
-                }
                 car.setParkingIsActive(isParkingActive);
+
+                if (usersList != null) {
+                    Model.getInstance().setCarUsersList(car,usersList);
+/*                    for (String user : usersList) {
+                        //car.setCarUser(user, false);
+                        car.setNewCarUser(user);
+                    }*/
+                }
                 cars.add(car);
             } while (cursor.moveToNext());
 
@@ -84,6 +88,7 @@ public class CarSql {
             int modelIndex = cursor.getColumnIndex(Constants.CAR_MODEL);
             int companyIndex = cursor.getColumnIndex(Constants.CAR_COMPANY);
             int userOwnerIdIndex = cursor.getColumnIndex(Constants.CAR_USER_OWNER_ID);
+            int usersListIndex = cursor.getColumnIndex(Constants.CAR_USERS_LIST);
             int isParkingActiveIndex = cursor.getColumnIndex(Constants.CAR_IS_PARKING_ACTIVE);
 
             String objectId = cursor.getString(idIndex);
@@ -91,6 +96,7 @@ public class CarSql {
             String model = cursor.getString(modelIndex);
             String company = cursor.getString(companyIndex);
             String userOwnerId = cursor.getString(userOwnerIdIndex);
+            String usersList = cursor.getString(usersListIndex);
             boolean isParkingActive = cursor.getInt(isParkingActiveIndex) != 0;
 
             if (cursor != null) {
@@ -99,7 +105,15 @@ public class CarSql {
 
             //0 false / 1 true
             Car car = new Car(objectId, color, model, company, userOwnerId);
+            List<String> carUsers = convertStringToList(usersList);
             car.setParkingIsActive(isParkingActive);
+            if (carUsers != null) {
+                Model.getInstance().setCarUsersList(car,carUsers);
+                    /*for (String user : carUsers) {
+                        //car.setCarUser(user, false);
+                        //car.setCarUser(user);
+                    }*/
+            }
             return car;
         }
         return null;
@@ -162,12 +176,14 @@ public class CarSql {
 
                 Car car = new Car(id, color, model, company, userOwner);
                 List<String> carUsers = convertStringToList(usersList);
-                if (carUsers != null) {
-                    for (String user : carUsers) {
-                        car.setNewCarUser(user, false);
-                    }
-                }
                 car.setParkingIsActive(isParkingActive);
+                if (carUsers != null) {
+                    Model.getInstance().setCarUsersList(car,carUsers);
+                    /*for (String user : carUsers) {
+                        //car.setCarUser(user, false);
+                        //car.setCarUser(user);
+                    }*/
+                }
                 carOwnedList.add(car);
             } while (cursor.moveToNext());
 
@@ -203,13 +219,15 @@ public class CarSql {
                 boolean isParkingActive = cursor.getInt(isParkingActiveIndex) != 0;
 
                 Car car = new Car(id, color, model, company, userOwner);
+                car.setParkingIsActive(isParkingActive);
                 List<String> carUsers = convertStringToList(usersList);
                 if (carUsers != null) {
-                    for (String user : carUsers) {
-                        car.setNewCarUser(user, false);
-                    }
+                    Model.getInstance().setCarUsersList(car,carUsers);
+/*                    for (String user : carUsers) {
+                        //car.setCarUser(user, false);
+                        car.setNewCarUser(user);
+                    }*/
                 }
-                car.setParkingIsActive(isParkingActive);
                 sharedCars.add(car);
             } while (cursor.moveToNext());
 
@@ -222,6 +240,9 @@ public class CarSql {
     }
 
     public static String convertListToString(List<String> stringList) {
+        if(stringList.size() == 0){
+            return null;
+        }
         List<String> al = stringList;
         Set<String> hs = new HashSet<>();
         hs.addAll(al);
@@ -243,9 +264,9 @@ public class CarSql {
 
     public static List<String> convertStringToList(String str) {
         if (str == null) {
-            return null;
+            return new ArrayList<>();
         }
-        return Arrays.asList(str.split(Constants.LIST_SEPARATOR));
+        return new LinkedList<>(Arrays.asList(str.split(Constants.LIST_SEPARATOR)));
     }
 }
 
