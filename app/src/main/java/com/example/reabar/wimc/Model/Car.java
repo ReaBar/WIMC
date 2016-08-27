@@ -7,15 +7,18 @@ import com.example.reabar.wimc.MyApplication;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Created by reabar on 25.5.2016.
  */
 public class Car {
     private String carId, color, model, company, userOwnerId;
-    private ArrayList<String> usersList;
+    private List<String> usersList;
     private Boolean parkingIsActive;
     private String TAG = "CarClass";
+    private final ReentrantLock lock = new ReentrantLock();
+
 
     public Car() {
         usersList = new ArrayList<>();
@@ -105,51 +108,51 @@ public class Car {
     }
 
     public void setNewCarUser(final String email, final boolean newUserOrJustSQL) {
-        Model.getInstance().getUsersList(new Model.SyncListener() {
-            @Override
-            public void isSuccessful(boolean success) {
+        lock.lock();
+        try {
+            Model.getInstance().getUsersList(new Model.SyncListener() {
+                @Override
+                public void isSuccessful(boolean success) {
 
-            }
+                }
 
-            @Override
-            public void failed(String message) {
+                @Override
+                public void failed(String message) {
 
-            }
+                }
 
-            @Override
-            public void passData(Object data) {
-                if (data instanceof List) {
-                    if (!usersList.contains(email)) {
-                        for (User user : (List<User>) data) {
-                            if (user.getEmail().equals(email)) {
-                                usersList.add(email);
-                                if (newUserOrJustSQL) {
-                                    Toast.makeText(MyApplication.getAppActivity(), "User added To Car!",
-                                            Toast.LENGTH_SHORT).show();
+                @Override
+                public void passData(Object data) {
+                    if (data instanceof List) {
+                        if (!usersList.contains(email)) {
+                            for (User user : (List<User>) data) {
+                                if (user.getEmail().equals(email)) {
+                                    usersList.add(email);
+                                    if (newUserOrJustSQL) {
+                                        Toast.makeText(MyApplication.getAppActivity(), "User added To Car!",
+                                                Toast.LENGTH_SHORT).show();
+                                    }
+                                    updateThisCar();
+                                    return;
                                 }
-                                updateThisCar();
-                                return;
-                            } else {
-                                if (newUserOrJustSQL) {
-                                    Toast.makeText(MyApplication.getAppContext(), "User not found or already shared with", Toast.LENGTH_SHORT).show();
-                                }
-                                return;
                             }
+                        } else {
+                            if (newUserOrJustSQL) {
+                                Toast.makeText(MyApplication.getAppContext(), "User not found or already shared with", Toast.LENGTH_SHORT).show();
+                            }
+                            return;
                         }
-                    } else {
-                        if (newUserOrJustSQL) {
-                            Toast.makeText(MyApplication.getAppContext(), "User not found or already shared with", Toast.LENGTH_SHORT).show();
-                        }
-                        return;
+                    }
+                    if (newUserOrJustSQL) {
+                        Toast.makeText(MyApplication.getAppContext(), "User not found or already shared with", Toast.LENGTH_SHORT).show();
                     }
                 }
-                if (newUserOrJustSQL) {
-                    Toast.makeText(MyApplication.getAppContext(), "User not found or already shared with", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-        });
+            });
+        } finally {
+            lock.unlock();
+        }
     }
+
 
     public void removeCarUser(final String uId) {
         if (usersList.contains(uId)) {

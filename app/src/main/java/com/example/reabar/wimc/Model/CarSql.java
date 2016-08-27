@@ -9,7 +9,9 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by admin on 8/6/16.
@@ -74,9 +76,7 @@ public class CarSql {
     }
 
     public static Car getCarById(SQLiteDatabase db, String id) {
-        String[] params = new String[1];
-        params[0] = id;
-        Cursor cursor = db.query(Constants.CAR_TABLE, null, Constants.CAR_ID + " = ?", params, null, null, null);
+        Cursor cursor = db.query(Constants.CAR_TABLE, null, Constants.CAR_ID + " = ?", new String[]{id}, null, null, null);
 
         if (cursor.moveToFirst()) {
             int idIndex = cursor.getColumnIndex(Constants.CAR_ID);
@@ -222,6 +222,11 @@ public class CarSql {
     }
 
     public static String convertListToString(List<String> stringList) {
+        List<String> al = stringList;
+        Set<String> hs = new HashSet<>();
+        hs.addAll(al);
+        al.clear();
+        al.addAll(hs);
         StringBuffer stringBuffer = new StringBuffer();
         for (String str : stringList) {
             stringBuffer.append(str).append(Constants.LIST_SEPARATOR);

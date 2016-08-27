@@ -117,10 +117,12 @@ public class Model {
 
     public void signInUser(User user, String password, final SyncListener listener){
         modelFirebase.signInUser(user, password, listener);
+        currentUser = user;
     }
 
     public void logoutUser(){
         modelFirebase.logoutUser();
+        currentUser = null;
     }
 
     public User getCurrentUser(){
@@ -306,8 +308,8 @@ public class Model {
     }
 
     public void updateCar(Car car,Model.SyncListener listener){
-        modelFirebase.updateCar(car, listener);
         modelSql.updateCar(car);
+        modelFirebase.updateCar(car, listener);
         updateCarDbTime();
     }
 
@@ -359,6 +361,10 @@ public class Model {
                 }
             }
         });
+    }
+
+    public Car getCarById(String carId){
+        return modelSql.getCarById(carId);
     }
 
     public void parkCar(Parking parking, SyncListener listener){

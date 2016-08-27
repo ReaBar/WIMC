@@ -15,7 +15,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -97,11 +96,9 @@ public class ParkingScreenFragment extends Fragment implements LocationListener 
 
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
-                if(Model.getInstance().getAPIVersion() < 6.0){
+                if (Model.getInstance().getAPIVersion() < 6.0) {
                     startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
-                }
-
-                else if(Model.getInstance().getAPIVersion() >= 6.0){
+                } else if (Model.getInstance().getAPIVersion() >= 6.0) {
                     int permissionCheck = ContextCompat.checkSelfPermission(MyApplication.getAppActivity(),
                             Manifest.permission.CAMERA);
                     if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
@@ -160,15 +157,10 @@ public class ParkingScreenFragment extends Fragment implements LocationListener 
                     Model.getInstance().parkCar(parking, new Model.SyncListener() {
                         @Override
                         public void isSuccessful(boolean success) {
-                            //save image to cloudinary and cache
                             if (imageTaken) {
-                                //call cloudinary function
-//                                ModelCloudinary cloudinary = new ModelCloudinary(getActivity());
-//                                cloudinary.uploadImage(carID, bitmap);// + "_" + nowDate
                                 Model.getInstance().saveImage(bitmap, randomUUIDString);
 
                             }
-                            //go to homepage fragment
                             Toast.makeText(MyApplication.getAppActivity(), "Parking place saved",
                                     Toast.LENGTH_SHORT).show();
                             fragmentCommunicator.passString("HomeScreenFragment");
@@ -192,14 +184,13 @@ public class ParkingScreenFragment extends Fragment implements LocationListener 
                     if (imageTaken)
                         parking = new Parking.ParkingBuilder(carID).street(street.getText().toString()).streetNumber(number.getText().toString()).city(city.getText().toString()).parkingLotName(parkingLotName.getText().toString()).parkingLotFloor(FloorNumber.getText().toString()).parkingLotRowColor(RowColor.getText().toString()).parkingLatitude(latitude).parkingLonitude(longitude).startParking(nowDate).imageName(randomUUIDString).build();
                     else {
-                        if(latitude == 0 && longitude == 0)
-                        {
+                        if (latitude == 0 && longitude == 0) {
                             String streetName = street.getText().toString();
                             String streetNumber = number.getText().toString();
                             String cityName = city.getText().toString();
                             String country = "Israel";
                             List<Address> latAndLong = Model.getInstance().getLatandLong(streetNumber + " " + streetName + ", " + cityName + ", " + country);
-                            if(latAndLong != null){
+                            if (latAndLong != null) {
                                 Address address = latAndLong.get(0);
                                 latitude = address.getLatitude();
                                 longitude = address.getLongitude();
@@ -211,16 +202,9 @@ public class ParkingScreenFragment extends Fragment implements LocationListener 
                     Model.getInstance().parkCar(parking, new Model.SyncListener() {
                         @Override
                         public void isSuccessful(boolean success) {
-                            //save image to cloudinary
                             if (imageTaken) {
-                                //call cloudinary function
-                                //ModelCloudinary cloudinary = new ModelCloudinary(getActivity());
-                                //cloudinary.uploadImage(carID, bitmap);
-
                                 Model.getInstance().saveImage(bitmap, randomUUIDString);
-
                             }
-                            //go to homepage fragment
                             Toast.makeText(MyApplication.getAppActivity(), "Parking place saved",
                                     Toast.LENGTH_SHORT).show();
                             fragmentCommunicator.passString("HomeScreenFragment");
@@ -290,7 +274,6 @@ public class ParkingScreenFragment extends Fragment implements LocationListener 
             case REQUEST_CODE_LOCATION:
                 if (grantResults.length == 1
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Log.d("TESTTESTTEST", "permission granted");
                     longitude = gps1.getLongitude();
                     latitude = gps1.getLatitude();
                     gpsText.setText("Longtitude: " + longitude + "\nLatitude: " + latitude);
@@ -302,7 +285,6 @@ public class ParkingScreenFragment extends Fragment implements LocationListener 
             case REQUEST_IMAGE_CAPTURE:
                 if (grantResults.length == 1
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Log.d("TESTTESTTEST", "permission granted");
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
                 } else {
