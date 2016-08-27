@@ -110,7 +110,6 @@ public class CarScreenFragment extends Fragment {
                     emailSharedInput.setText("");
                     sharedUsersList.add(userEmail);
                     adapter.notifyDataSetChanged();
-
                 }
             }
         });

@@ -65,16 +65,6 @@ public class MainActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-
-        if(Model.getInstance().getCurrentUser() != null){
-            String userName = Model.getInstance().getCurrentUser().getEmail();
-            View header=navigationView.getHeaderView(0);
-            TextView userNameHeader = (TextView)header.findViewById(R.id.nav_drawer_header_user_name);
-            userNameHeader.setText(userName);
-        }
-
         Model.getInstance().getAllCars(new Model.SyncListener() {
             @Override
             public void isSuccessful(boolean success) {
@@ -157,6 +147,15 @@ public class MainActivity extends AppCompatActivity
 
     public void setDrawerState(boolean isEnabled) {
         if (isEnabled) {
+            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+            navigationView.setNavigationItemSelectedListener(this);
+
+            if(Model.getInstance().getCurrentUser() != null){
+                String userName = Model.getInstance().getCurrentUser().getEmail();
+                View header=navigationView.getHeaderView(0);
+                TextView userNameHeader = (TextView)header.findViewById(R.id.nav_drawer_header_user_name);
+                userNameHeader.setText(userName);
+            }
             drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
             toggle.setDrawerIndicatorEnabled(true);
             toggle.syncState();
@@ -253,14 +252,10 @@ public class MainActivity extends AppCompatActivity
                 mapIntent.setPackage("com.google.android.apps.maps");
                 startActivity(mapIntent);
         }
-
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
     }
-
-
 }

@@ -117,10 +117,12 @@ public class Model {
 
     public void signInUser(User user, String password, final SyncListener listener){
         modelFirebase.signInUser(user, password, listener);
+        currentUser = user;
     }
 
     public void logoutUser(){
         modelFirebase.logoutUser();
+        currentUser = null;
     }
 
     public User getCurrentUser(){
