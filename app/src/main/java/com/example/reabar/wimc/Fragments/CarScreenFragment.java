@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.reabar.wimc.FragmentCommunicator;
 import com.example.reabar.wimc.Model.Car;
 import com.example.reabar.wimc.MyApplication;
 import com.example.reabar.wimc.R;
@@ -33,11 +35,13 @@ public class CarScreenFragment extends Fragment {
     protected String carLicense;
     protected String modelCompany;
     protected EditText emailSharedInput;
+    FragmentCommunicator fragmentCommunicator;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        fragmentCommunicator = (FragmentCommunicator) getActivity();
         sharedUsersList = car.getUsersList();
         carLicense = car.getCarId();
         modelCompany = car.getCompany() + " " + car.getModel();
@@ -111,8 +115,15 @@ public class CarScreenFragment extends Fragment {
                     final String userEmail = emailSharedInput.getText().toString();
                     car.setNewCarUser(userEmail, true);
                     emailSharedInput.setText("");
-                    sharedUsersList.add(userEmail);
                     adapter.notifyDataSetChanged();
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    //sharedUsersList.add(userEmail);
+                    Object[] data = new Object[]{car};
+                    fragmentCommunicator.passData(data,"CarScreenFragment");
                 }
             }
         });
