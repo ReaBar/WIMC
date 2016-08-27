@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.reabar.wimc.Fragments.CarScreenFragment;
 import com.example.reabar.wimc.Fragments.HomeScreenFragment;
 import com.example.reabar.wimc.Fragments.LoginScreenFragment;
 import com.example.reabar.wimc.Fragments.ManageMyCarsScreenFragment;
@@ -26,6 +27,7 @@ import com.example.reabar.wimc.Fragments.MySharedCarsScreenFragment;
 import com.example.reabar.wimc.Fragments.ParkingScreenFragment;
 import com.example.reabar.wimc.Fragments.SettingsScreenFragment;
 import com.example.reabar.wimc.Fragments.SignupScreenFragment;
+import com.example.reabar.wimc.Model.Car;
 import com.example.reabar.wimc.Model.Model;
 
 import java.util.Locale;
@@ -49,6 +51,7 @@ public class MainActivity extends AppCompatActivity
     MySharedCarsScreenFragment mySharedCarsFragment;
     ParkingScreenFragment parkingFragment;
     MyCarsNowScreenFragment MyCarNowFragment;
+    CarScreenFragment carScreenFragment;
     MapScreenFragment mapFragment;
 
     @Override
@@ -251,6 +254,14 @@ public class MainActivity extends AppCompatActivity
                 Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
                 mapIntent.setPackage("com.google.android.apps.maps");
                 startActivity(mapIntent);
+                break;
+            case "CarScreenFragment":
+                carScreenFragment = new CarScreenFragment();
+                carScreenFragment.car = (Car)data[0];
+                fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.main_frag_container, carScreenFragment, "CarScreenFragment");
+                fragmentTransaction.addToBackStack(null).commit();
+                break;
         }
     }
 

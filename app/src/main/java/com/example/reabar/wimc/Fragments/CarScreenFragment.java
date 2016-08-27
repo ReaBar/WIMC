@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class CarScreenFragment extends Fragment {
-    protected Car car;
+    public Car car;
     protected List<String> sharedUsersList = new ArrayList<>();
     protected MyUsersCarAdapter adapter;
     protected ListView list;
@@ -38,6 +38,9 @@ public class CarScreenFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        sharedUsersList = car.getUsersList();
+        carLicense = car.getCarId();
+        modelCompany = car.getCompany() + " " + car.getModel();
     }
 
     @Override

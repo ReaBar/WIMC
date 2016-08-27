@@ -151,14 +151,17 @@ public class ManageMyCarsScreenFragment extends Fragment {
         carsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                carFragment = new CarScreenFragment();
+
+                Object[] data = new Object[]{cars.get(position)};
+                fragmentCommunicator.passData(data,"CarScreenFragment");
+/*                carFragment = new CarScreenFragment();
                 carFragment.sharedUsersList = cars.get(position).getUsersList();
                 carFragment.carLicense = cars.get(position).getCarId();
                 carFragment.car = cars.get(position);
                 carFragment.modelCompany = cars.get(position).getCompany() + " " + cars.get(position).getModel();
                 fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.main_frag_container, carFragment, "CarScreenFragment");
-                fragmentTransaction.addToBackStack(null).commit();
+                fragmentTransaction.addToBackStack(null).commit();*/
             }
         });
 

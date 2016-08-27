@@ -87,23 +87,18 @@ public class MyCarsNowScreenFragment extends Fragment {
         adapter = new MyCarsNowAdapter();
         parkingsList.setAdapter(adapter);
 
-
         return view;
     }
-
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-
     }
-
 
     public class MyCarsNowAdapter extends BaseAdapter {
 
@@ -128,9 +123,6 @@ public class MyCarsNowScreenFragment extends Fragment {
             if(convertView == null){
                 LayoutInflater layoutInflater = getActivity().getLayoutInflater();
                 convertView= layoutInflater.inflate(R.layout.fragment_my_cars_now_row,null);
-            }
-            else{
-                Log.d("TAG", "use convert view:" + position);
             }
 
             Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(),"Alyssa_Kayla.ttf"); // create a typeface from the raw ttf
