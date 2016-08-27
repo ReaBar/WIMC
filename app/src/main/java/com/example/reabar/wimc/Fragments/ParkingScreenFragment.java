@@ -101,7 +101,7 @@ public class ParkingScreenFragment extends Fragment implements LocationListener 
                     startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
                 }
 
-                else if(Model.getInstance().getAPIVersion() >= 6){
+                else if(Model.getInstance().getAPIVersion() >= 6.0){
                     int permissionCheck = ContextCompat.checkSelfPermission(MyApplication.getAppActivity(),
                             Manifest.permission.CAMERA);
                     if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
@@ -246,7 +246,7 @@ public class ParkingScreenFragment extends Fragment implements LocationListener 
     //for camera functionality
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
+        if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE || requestCode == REQUEST_IMAGE_CAPTURE) {
             if (resultCode == Activity.RESULT_OK) {
                 Bitmap bmp = (Bitmap) data.getExtras().get("data");
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
