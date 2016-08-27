@@ -50,9 +50,10 @@ public class MyCarsNowScreenFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_my_cars_now, container, false);
+        final View view = inflater.inflate(R.layout.fragment_my_cars_now, container, false);
         fragmentCommunicator = (FragmentCommunicator) getActivity();
-
+        final TextView carListEmpty = (TextView) view.findViewById(R.id.carListEmpty);
+        carListEmpty.setVisibility(View.GONE);
 
         cloudinary = new ModelCloudinary(getActivity());
 
@@ -81,6 +82,9 @@ public class MyCarsNowScreenFragment extends Fragment {
                 parkings = (ArrayList) data;
                 progressBar.setVisibility(View.GONE);
                 adapter.notifyDataSetChanged();
+                if(parkings.size() == 0){
+                    carListEmpty.setVisibility(View.VISIBLE);
+                }
             }
         });
 

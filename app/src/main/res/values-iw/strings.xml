@@ -51,4 +51,5 @@
     <string name="manage_your_cars">נהל את רכביך</string>
     <string name="want_to_park_your_car_please_choose_the_car_below">רוצה להחנות את רכבך? בחר רכב מהרשימה</string>
     <string name="save_location_for_car">שמור חניה לרכב מס׳ </string>
+    <string name="car_list_empty">אין לך רכבים חונים כרגע</string>
 </resources>

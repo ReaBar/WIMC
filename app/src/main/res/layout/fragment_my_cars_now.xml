@@ -3,7 +3,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Fragments.MyCarsNowScreenFragment">
+    tools:context=".Fragments.MyCarsNowScreenFragment"
+    android:layout_marginTop="52dp" >
+
+    <LinearLayout
+        android:id="@+id/LinearLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/bg2"
+        android:weightSum="1" >
+
 
     <ProgressBar
         android:layout_width="fill_parent"
@@ -11,14 +21,34 @@
         android:id="@+id/myCarsNow_ProgressBar"
         style="@android:style/Widget.Holo.ProgressBar.Large"
         android:indeterminate="true"
-        android:background="#05fafafa"
+        android:background="#00fafafa"
         android:layout_marginTop="75dp"
         android:indeterminateBehavior="cycle" />
 
-    <ListView
+        <TextView
+            android:layout_width="304dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/car_list_empty"
+            android:id="@+id/carListEmpty"
+            android:layout_marginTop="25dp"
+            android:layout_marginBottom="25dp"
+            android:layout_below="@+id/cars_list_row_car_model_company"
+            android:layout_centerHorizontal="true"
+            android:textAlignment="center"
+            android:layout_gravity="center_horizontal"
+            android:background="#00ffffff"
+            android:textColor="#ffffff"
+            android:textSize="28dp" />
+
+
+
+        <ListView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:id="@+id/myCarsNowList"
         android:layout_gravity="center_horizontal|top"
-        android:layout_marginTop="@dimen/design_fab_size_normal" />
+        android:layout_marginTop="@dimen/design_fab_size_normal"  />
+
+        </LinearLayout>
 </LinearLayout>

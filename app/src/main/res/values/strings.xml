@@ -58,4 +58,5 @@
     <string name="manage_your_cars">Manage your cars</string>
     <string name="want_to_park_your_car_please_choose_the_car_below">Want to park your car? choose the car below!</string>
     <string name="save_location_for_car">Save location for car</string>
+    <string name="car_list_empty">No parking cars right now</string>
 </resources>
