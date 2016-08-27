@@ -25,8 +25,8 @@ public class ParkingSql {
                 Constants.PARKING_LOT_ROW_COLOR + " TEXT," +
                 Constants.PARKING_STREET_NUMBER + " TEXT," +
                 Constants.PARKING_LOT_FLOOR + " TEXT," +
-                Constants.PARKING_LATITUDE + " REAL," +
-                Constants.PARKING_LONGITUDE + " REAL," +
+                Constants.PARKING_LATITUDE + " TEXT," +
+                Constants.PARKING_LONGITUDE + " TEXT," +
                 Constants.PARKING_IMAGE_NAME + " TEXT," +
                 Constants.PARKING_IS_ACTIVE + " BOOLEAN);");
     }
@@ -142,13 +142,13 @@ public class ParkingSql {
                 String lotRowColor = cursor.getString(lotRowColorIndex);
                 String streetNumber = cursor.getString(streetNumberIndex);
                 String lotFloor = cursor.getString(lotFloorIndex);
-                long latitude = cursor.getLong(latitudeIndex);
-                long longitude = cursor.getLong(longitudeIndex);
+                String latitude = cursor.getString(latitudeIndex);
+                String longitude = cursor.getString(longitudeIndex);
                 boolean isParkingActive = cursor.getInt(isParkingActiveIndex) != 0;
                 String imageName = cursor.getString(imageNameIndex);
 
-                Parking parking = new Parking.ParkingBuilder(id).street(street).city(city).parkingLotName(lotName).parkingLotRowColor(lotRowColor).streetNumber(streetNumber).parkingLotFloor(lotFloor).parkingLatitude(latitude)
-                        .parkingLonitude(longitude).isParkingActive(isParkingActive).imageName(imageName).build();
+                Parking parking = new Parking.ParkingBuilder(id).street(street).city(city).parkingLotName(lotName).parkingLotRowColor(lotRowColor).streetNumber(streetNumber).parkingLotFloor(lotFloor).parkingLatitude(Double.parseDouble(latitude))
+                        .parkingLonitude(Double.parseDouble(longitude)).isParkingActive(isParkingActive).imageName(imageName).build();
                 parkingSpots.add(parking);
             } while (cursor.moveToNext());
         }
