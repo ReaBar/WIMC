@@ -33,6 +33,11 @@ public class FilesManagerHelper {
         String str = null;
         Bitmap bitmap = null;
         try {
+
+            if(imageFileName == null){
+                return null;
+            }
+
             File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
             File imageFile = new File(dir,imageFileName);
 
