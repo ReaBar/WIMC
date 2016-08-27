@@ -139,7 +139,6 @@ public class MyCarsNowScreenFragment extends Fragment {
             ImageButton gpsLink = (ImageButton) convertView.findViewById(R.id.googleMapsLocation);
             Button stopParkingButton = (Button) convertView.findViewById(R.id.stopParkingButton);
 
-
             final Parking parking = parkings.get(position);
 
             if(Locale.getDefault().getDisplayLanguage().equals("עברית")) {
@@ -185,6 +184,7 @@ public class MyCarsNowScreenFragment extends Fragment {
 
                 }
             });
+
             return convertView;
         }
     }
