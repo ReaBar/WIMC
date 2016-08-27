@@ -11,7 +11,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,8 +29,6 @@ import com.example.reabar.wimc.Fragments.SettingsScreenFragment;
 import com.example.reabar.wimc.Fragments.SignupScreenFragment;
 import com.example.reabar.wimc.Model.Car;
 import com.example.reabar.wimc.Model.Model;
-
-import java.util.Locale;
 
 
 public class MainActivity extends AppCompatActivity
@@ -262,6 +259,13 @@ public class MainActivity extends AppCompatActivity
                 carScreenFragment.car = (Car)data[0];
                 fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.main_frag_container, carScreenFragment, "CarScreenFragment");
+                fragmentTransaction.addToBackStack(null).commit();
+                break;
+            case "ParkingPhotoScreenFragment":
+                parkingPhotoFragment = new ParkingPhotoFragment();
+                parkingPhotoFragment.photoName = (String)data[0];
+                fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.main_frag_container, parkingPhotoFragment, "ParkingPhotoScreenFragment");
                 fragmentTransaction.addToBackStack(null).commit();
                 break;
         }

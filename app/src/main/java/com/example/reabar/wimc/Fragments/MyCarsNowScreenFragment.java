@@ -3,7 +3,6 @@ package com.example.reabar.wimc.Fragments;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -123,13 +122,9 @@ public class MyCarsNowScreenFragment extends Fragment {
 
             if (convertView == null) {
                 LayoutInflater layoutInflater = getActivity().getLayoutInflater();
-<<<<<<< HEAD
                 convertView = layoutInflater.inflate(R.layout.fragment_my_cars_now_row, null);
             } else {
                 Log.d("TAG", "use convert view:" + position);
-=======
-                convertView= layoutInflater.inflate(R.layout.fragment_my_cars_now_row,null);
->>>>>>> 3bb6f4335539ea0b26d13b9ea5dcccc645a0194a
             }
 
             Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(), "Alyssa_Kayla.ttf"); // create a typeface from the raw ttf
@@ -192,16 +187,15 @@ public class MyCarsNowScreenFragment extends Fragment {
                 }
             });
 
-          /*  parkingPhoto.setOnClickListener(new View.OnClickListener()
+            parkingPhoto.setOnClickListener(new View.OnClickListener()
             {
-
                 @Override
                 public void onClick(View v) {
                     Object[] data=new Object[1];
-                    data[0]=parkingPhoto.toString();
-                    fragmentCommunicator.passData(data,"ParkingPhotoFragment");
+                    data[0]=parking.getImageName();
+                    fragmentCommunicator.passData(data,"ParkingPhotoScreenFragment");
                 }
-            });*/
+            });
 
 
 
