@@ -28,6 +28,7 @@ import com.example.reabar.wimc.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 
 public class MyCarsNowScreenFragment extends Fragment {
@@ -148,7 +149,13 @@ public class MyCarsNowScreenFragment extends Fragment {
 
 
             final Parking parking = parkings.get(position);
-            myParkingCarDetails.setText(myParkingCarDetails.getText().toString() + parking.getCarId());
+
+            if(Locale.getDefault().getDisplayLanguage().equals("עברית")) {
+                myParkingCarDetails.setText("רכב מספר " + parking.getCarId());
+            }
+            else {
+                myParkingCarDetails.setText(myParkingCarDetails.getText().toString() + parking.getCarId());
+            }
             myParkingCarCityStreetNumber.setText(parking.getStreet() + " " + parking.getStreetNumber() + "  " + parking.getCity());
             if(parking.getParkingLotName() != null || parking.getParkingLotName() != ""){
                 parkingLotDetails.setText("");
