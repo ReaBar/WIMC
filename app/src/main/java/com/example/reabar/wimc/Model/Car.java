@@ -124,7 +124,7 @@ public class Car {
                 @Override
                 public void passData(Object data) {
                     if (data instanceof List) {
-                        if (!usersList.contains(email)) {
+                        if (!usersList.contains(email) && !email.equals(Model.getInstance().getCurrentUser().getEmail())) {
                             for (User user : (List<User>) data) {
                                 if (user.getEmail().equals(email)) {
                                     usersList.add(email);
@@ -153,13 +153,10 @@ public class Car {
         }
     }
 
-
     public void removeCarUser(final String uId) {
         if (usersList.contains(uId)) {
             usersList.remove(uId);
             updateThisCar();
         }
     }
-
-
 }

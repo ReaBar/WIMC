@@ -36,13 +36,11 @@ public class LoginScreenFragment extends Fragment {
         fragmentCommunicator.passString("cancelDrawer");
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_login_screen, container, false);
-
 
         Button loginButton = (Button) view.findViewById(R.id.loginButton);
         Button signupButton = (Button) view.findViewById(R.id.signUpButton);
@@ -53,19 +51,13 @@ public class LoginScreenFragment extends Fragment {
         Typeface hebrew = Typeface.createFromAsset(getActivity().getAssets(), "OpenSansHebrew-Bold.ttf"); // create a typeface from the raw ttf
         loginLogo.setTypeface(english);
 
-        if(Locale.getDefault().getDisplayLanguage().equals("עברית"))
-        {
+        if (Locale.getDefault().getDisplayLanguage().equals("עברית")) {
             loginButton.setTypeface(hebrew);
             signupButton.setTypeface(hebrew);
             forgotPasswordButton.setTypeface(hebrew);
         }
-
-
         emailInput = (EditText) view.findViewById(R.id.emailInput);
         passwordInput = (EditText) view.findViewById(R.id.passwordInput);
-
-
-
 
         loginButton.setOnClickListener(new View.OnClickListener() {
 
@@ -78,17 +70,16 @@ public class LoginScreenFragment extends Fragment {
                         InputMethodManager.HIDE_NOT_ALWAYS);
 
 
-                if(emailInput.getText().toString().matches("") || passwordInput.getText().toString().matches("")){
+                if (emailInput.getText().toString().matches("") || passwordInput.getText().toString().matches("")) {
                     Toast.makeText(MyApplication.getAppActivity(), "You must enter email and password",
                             Toast.LENGTH_SHORT).show();
-                }
-                else {
+                } else {
                     User loginUser = new User(emailInput.getText().toString());
-                    Model.getInstance().signInUser(loginUser, passwordInput.getText().toString(), new Model.SyncListener(){
+                    Model.getInstance().signInUser(loginUser, passwordInput.getText().toString(), new Model.SyncListener() {
                         @Override
                         public void isSuccessful(boolean success) {
                             User tempUser = Model.getInstance().getCurrentUser();
-                            if(success){
+                            if (success) {
                                 Log.d("LoginFragment", "logged in as: " + tempUser.getEmail());
                                 fragmentCommunicator.passString("HomeScreenFragment");
                             }
@@ -146,7 +137,7 @@ public class LoginScreenFragment extends Fragment {
                 }
             }
         });
-         return view;
+        return view;
     }
 
 
@@ -161,5 +152,4 @@ public class LoginScreenFragment extends Fragment {
         super.onDetach();
 
     }
-
 }

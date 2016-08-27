@@ -147,8 +147,7 @@ public class ParkingScreenFragment extends Fragment implements LocationListener 
             @Override
             public void onClick(View view) {
                 //save only image
-                if(imageTaken && (city.getText().toString().matches("") || street.getText().toString().matches("")) &&(parkingLotName.getText().toString().matches("")))
-                {
+                if (imageTaken && (city.getText().toString().matches("") || street.getText().toString().matches("")) && (parkingLotName.getText().toString().matches(""))) {
                     Parking parking = new Parking.ParkingBuilder(carID).street(street.getText().toString()).streetNumber(number.getText().toString()).city(city.getText().toString()).parkingLotName(parkingLotName.getText().toString()).parkingLotFloor(FloorNumber.getText().toString()).parkingLotRowColor(RowColor.getText().toString()).parkingLatitude(latitude).parkingLonitude(longitude).startParking(nowDate).imageName(randomUUIDString).build();
                     Model.getInstance().parkCar(parking, new Model.SyncListener() {
                         @Override
@@ -174,8 +173,7 @@ public class ParkingScreenFragment extends Fragment implements LocationListener 
                     });
                 }
                 //save only location
-                else if(!imageTaken && (longitude != 0 && latitude != 0) && (city.getText().toString().matches("") || street.getText().toString().matches("")) &&(parkingLotName.getText().toString().matches("")))
-                {
+                else if (!imageTaken && (longitude != 0 && latitude != 0) && (city.getText().toString().matches("") || street.getText().toString().matches("")) && (parkingLotName.getText().toString().matches(""))) {
                     Parking parking = new Parking.ParkingBuilder(carID).street(street.getText().toString()).streetNumber(number.getText().toString()).city(city.getText().toString()).parkingLotName(parkingLotName.getText().toString()).parkingLotFloor(FloorNumber.getText().toString()).parkingLotRowColor(RowColor.getText().toString()).parkingLatitude(latitude).parkingLonitude(longitude).startParking(nowDate).build();
                     Model.getInstance().parkCar(parking, new Model.SyncListener() {
                         @Override
@@ -200,8 +198,7 @@ public class ParkingScreenFragment extends Fragment implements LocationListener 
                         }
                     });
 
-                }
-                else if ((longitude != 0 && latitude != 0)) {
+                } else if ((longitude != 0 && latitude != 0)) {
                     Parking parking = null;
                     if (imageTaken)
                         parking = new Parking.ParkingBuilder(carID).street(street.getText().toString()).streetNumber(number.getText().toString()).city(city.getText().toString()).parkingLotName(parkingLotName.getText().toString()).parkingLotFloor(FloorNumber.getText().toString()).parkingLotRowColor(RowColor.getText().toString()).parkingLatitude(latitude).parkingLonitude(longitude).startParking(nowDate).imageName(randomUUIDString).build();
@@ -250,9 +247,6 @@ public class ParkingScreenFragment extends Fragment implements LocationListener 
                         parking = new Parking.ParkingBuilder(carID).street(street.getText().toString()).streetNumber(number.getText().toString()).city(city.getText().toString()).parkingLotName(parkingLotName.getText().toString()).parkingLotFloor(FloorNumber.getText().toString()).parkingLotRowColor(RowColor.getText().toString()).parkingLatitude(latitude).parkingLonitude(longitude).startParking(nowDate).build();
                     }
 
-
-
-
                     Model.getInstance().parkCar(parking, new Model.SyncListener() {
                         @Override
                         public void isSuccessful(boolean success) {
@@ -280,7 +274,6 @@ public class ParkingScreenFragment extends Fragment implements LocationListener 
         return view;
     }
 
-
     //for camera functionality
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -299,7 +292,6 @@ public class ParkingScreenFragment extends Fragment implements LocationListener 
             }
         }
     }
-
 
     @Override
     public void onLocationChanged(Location location) {

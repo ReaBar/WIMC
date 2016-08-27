@@ -35,24 +35,20 @@ public class SettingsScreenFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_settings_screen, container, false);
+        View view = inflater.inflate(R.layout.fragment_settings_screen, container, false);
 
         Button settingsPasswordButton = (Button) view.findViewById(R.id.settingsPasswordButton);
         TextView settings = (TextView) view.findViewById(R.id.settingsText);
 
         Typeface english = Typeface.createFromAsset(getActivity().getAssets(), "KOMIKAX_.ttf"); // create a typeface from the raw ttf
         Typeface hebrew = Typeface.createFromAsset(getActivity().getAssets(), "OpenSansHebrew-Bold.ttf"); // create a typeface from the raw ttf
-        if(Locale.getDefault().getDisplayLanguage().equals("עברית"))
-        {
+        if (Locale.getDefault().getDisplayLanguage().equals("עברית")) {
             settingsPasswordButton.setTypeface(hebrew);
             settings.setTypeface(hebrew);
-        }
-        else
-        {
+        } else {
             settingsPasswordButton.setTypeface(english);
             settings.setTypeface(english);
         }
-
 
         settingsPasswordInput = (EditText) view.findViewById(R.id.settingsPasswordInput);
         settingsPasswordButton.setOnClickListener(new View.OnClickListener() {
@@ -66,11 +62,10 @@ public class SettingsScreenFragment extends Fragment {
                         InputMethodManager.HIDE_NOT_ALWAYS);
 
 
-                if(settingsPasswordInput.getText().toString().matches("")){
+                if (settingsPasswordInput.getText().toString().matches("")) {
                     Toast.makeText(MyApplication.getAppActivity(), "You must enter the new password",
                             Toast.LENGTH_SHORT).show();
-                }
-                else {
+                } else {
                     Model.getInstance().updatePassword(settingsPasswordInput.getText().toString(), new Model.SyncListener() {
                         @Override
                         public void isSuccessful(boolean success) {
@@ -94,11 +89,6 @@ public class SettingsScreenFragment extends Fragment {
                 }
             }
         });
-
-
-
-
-
         return view;
     }
 

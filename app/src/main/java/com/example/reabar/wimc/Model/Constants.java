@@ -31,7 +31,6 @@ public class Constants {
     final static String PARKING_IS_ACTIVE = "parkingIsActive";
     final static String PARKING_IMAGE_NAME = "imageName";
 
-
     final static String USER_TABLE = "sharedUsersList";
     final static String USER_ID = "user_id";
     final static String USER_EMAIL = "email";

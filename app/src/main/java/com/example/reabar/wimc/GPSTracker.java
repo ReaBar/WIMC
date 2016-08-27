@@ -18,37 +18,37 @@ import android.support.annotation.Nullable;
  */
 public class GPSTracker extends Service implements LocationListener {
 
-    private final  Context context;
+    private final Context context;
 
     Location location;
     protected LocationManager locationManager;
-    boolean enabled  = false;
+    boolean enabled = false;
     boolean getLocation = false;
     boolean network = false;
     double latitude, longitude;
 
-    public GPSTracker(Context context){
+    public GPSTracker(Context context) {
         this.context = context;
         getLocation();
     }
 
-    public Location getLocation(){
+    public Location getLocation() {
         try {
             locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
             enabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
             network = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-            if(!enabled && !network){
+            if (!enabled && !network) {
 
-            }
-            else {
+            } else {
                 getLocation = true;
-                if(network){
-                    try{
-                        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10, 1000*60*1, this);
-                    }catch (SecurityException e){ }
+                if (network) {
+                    try {
+                        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10, 1000 * 60 * 1, this);
+                    } catch (SecurityException e) {
+                    }
 
                 }
-                if(locationManager != null) {
+                if (locationManager != null) {
                     try {
 
                         location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
@@ -56,59 +56,59 @@ public class GPSTracker extends Service implements LocationListener {
                             latitude = location.getLatitude();
                             longitude = location.getLongitude();
                         }
-                    }catch (SecurityException e){ }
+                    } catch (SecurityException e) {
+                    }
                 }
             }
 
-            if(enabled){
-                if(location == null)
-                {
+            if (enabled) {
+                if (location == null) {
                     try {
-                        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10, 1000*60*1, this);
-                        if(locationManager != null){
+                        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10, 1000 * 60 * 1, this);
+                        if (locationManager != null) {
                             location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
-                            if(location != null){
+                            if (location != null) {
                                 latitude = location.getLatitude();
                                 longitude = location.getLongitude();
                             }
                         }
+                    } catch (SecurityException e) {
                     }
-                    catch (SecurityException e){ }
                 }
             }
+        } catch (Exception e) {
         }
-        catch (Exception e){ }
 
         return location;
     }
 
-    public void stopGPS(){
-        if(locationManager != null){
+    public void stopGPS() {
+        if (locationManager != null) {
             try {
                 locationManager.removeUpdates(GPSTracker.this);
+            } catch (SecurityException e) {
             }
-            catch (SecurityException e){ }
         }
     }
 
-    public double getLatitude(){
-        if(location != null)
+    public double getLatitude() {
+        if (location != null)
             latitude = location.getLatitude();
-        return  latitude;
+        return latitude;
     }
 
-    public double getLongitude(){
-        if(location != null)
+    public double getLongitude() {
+        if (location != null)
             longitude = location.getLongitude();
         return longitude;
     }
 
-    public boolean canGetLocation(){
+    public boolean canGetLocation() {
         return this.getLocation;
     }
 
-    public void showSettingsAlert(){
+    public void showSettingsAlert() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
         alertDialog.setTitle("GPS Settings");
         alertDialog.setMessage("Please Enabled GPS To Save Your Location");
@@ -129,6 +129,7 @@ public class GPSTracker extends Service implements LocationListener {
 
         alertDialog.show();
     }
+
     @Override
     public void onLocationChanged(Location location) {
 

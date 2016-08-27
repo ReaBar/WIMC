@@ -198,6 +198,5 @@ public class MyCarsNowScreenFragment extends Fragment {
 
             return convertView;
         }
-
     }
 }

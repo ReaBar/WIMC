@@ -30,7 +30,6 @@ public class FilesManagerHelper {
 
 
     public Bitmap loadImageFromFile(String imageFileName){
-        String str = null;
         Bitmap bitmap = null;
         try {
 
@@ -55,7 +54,6 @@ public class FilesManagerHelper {
     }
 
     public void saveImageToFile(Bitmap imageBitmap, String imageFileName){
-        FileOutputStream fos;
         OutputStream out = null;
         try {
             File dir = Environment.getExternalStoragePublicDirectory(

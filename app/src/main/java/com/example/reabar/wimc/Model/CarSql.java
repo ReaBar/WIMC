@@ -59,9 +59,9 @@ public class CarSql {
 
                 List<String> usersList = convertStringToList(cursor.getString(userListIndex));
                 Car car = new Car(id, color, model, company, userOwnerId);
-                if(usersList != null){
+                if (usersList != null) {
                     for (String user : usersList) {
-                        car.setNewCarUser(user,false);
+                        car.setNewCarUser(user, false);
                     }
                 }
                 car.setParkingIsActive(isParkingActive);
@@ -162,9 +162,9 @@ public class CarSql {
 
                 Car car = new Car(id, color, model, company, userOwner);
                 List<String> carUsers = convertStringToList(usersList);
-                if(carUsers != null){
+                if (carUsers != null) {
                     for (String user : carUsers) {
-                        car.setNewCarUser(user,false);
+                        car.setNewCarUser(user, false);
                     }
                 }
                 car.setParkingIsActive(isParkingActive);
@@ -204,9 +204,9 @@ public class CarSql {
 
                 Car car = new Car(id, color, model, company, userOwner);
                 List<String> carUsers = convertStringToList(usersList);
-                if(carUsers != null){
+                if (carUsers != null) {
                     for (String user : carUsers) {
-                        car.setNewCarUser(user,false);
+                        car.setNewCarUser(user, false);
                     }
                 }
                 car.setParkingIsActive(isParkingActive);
@@ -242,7 +242,7 @@ public class CarSql {
     }
 
     public static List<String> convertStringToList(String str) {
-        if(str == null){
+        if (str == null) {
             return null;
         }
         return Arrays.asList(str.split(Constants.LIST_SEPARATOR));

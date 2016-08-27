@@ -19,7 +19,6 @@ import java.util.ArrayList;
 public class CarFirebase {
 
     private String TAG = "CarsFirebase";
-    //private String CARS_DB = "cars";
 
     public void addCarToDB(FirebaseDatabase db, Car car, final Model.SyncListener listener) {
         DatabaseReference dbRef = db.getReference(Constants.CAR_TABLE);

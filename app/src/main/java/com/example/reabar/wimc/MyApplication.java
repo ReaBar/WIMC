@@ -25,18 +25,7 @@ public class MyApplication extends Application {
 
         //initialize model
         Model.getInstance();
-
-
-        //check for default image
-      /*  Bitmap defaultImage = BitmapFactory.decodeResource(getResources(), R.drawable.image);
-        if(defaultImage == null)
-            Log.d("TAG", "null default image");
-        //Model.getInstance().SetLocalBitmap(defaultImage);
-        */
     }
-
-
-
 
     public static Context getAppContext() {
         return MyApplication.context;

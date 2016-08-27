@@ -42,9 +42,9 @@ public class ParkingFirebase {
 
                         @Override
                         public void passData(Object data) {
-                            if(data instanceof ArrayList){
-                                for (Car car: (ArrayList<Car>)data) {
-                                    if(car.getCarId().equals(parkingLocation.getCarId())){
+                            if (data instanceof ArrayList) {
+                                for (Car car : (ArrayList<Car>) data) {
+                                    if (car.getCarId().equals(parkingLocation.getCarId())) {
                                         car.setParkingIsActive(true);
                                         car.updateThisCar();
                                         Model.getInstance().updateParkingDbTime();
@@ -137,9 +137,9 @@ public class ParkingFirebase {
 
             @Override
             public void passData(Object data) {
-                if(data instanceof ArrayList){
-                    for (Car car: (ArrayList<Car>)data) {
-                        if((car.getUserOwnerId().equals(Model.getInstance().getCurrentUser().getEmail()) || car.getUsersList().contains(Model.getInstance().getCurrentUser().getEmail())) && car.getParkingIsActive()){
+                if (data instanceof ArrayList) {
+                    for (Car car : (ArrayList<Car>) data) {
+                        if ((car.getUserOwnerId().equals(Model.getInstance().getCurrentUser().getEmail()) || car.getUsersList().contains(Model.getInstance().getCurrentUser().getEmail())) && car.getParkingIsActive()) {
                             carsList.add(car);
                         }
                     }
@@ -150,7 +150,7 @@ public class ParkingFirebase {
         });
     }
 
-    public void getAllMyParkingSpots(final FirebaseDatabase db,final Model.SyncListener listener) {
+    public void getAllMyParkingSpots(final FirebaseDatabase db, final Model.SyncListener listener) {
         final ArrayList<Parking> parkingSpots = new ArrayList<>();
         final ArrayList<Parking> finalParkingList = new ArrayList<>();
         DatabaseReference dbRef = db.getReference(Constants.PARKING_TABLE);
@@ -161,7 +161,7 @@ public class ParkingFirebase {
                 while (children.iterator().hasNext()) {
                     parkingSpots.add(children.iterator().next().getValue(Parking.class));
                 }
-                getMyParkedCars(db,new Model.SyncListener() {
+                getMyParkedCars(db, new Model.SyncListener() {
                     @Override
                     public void isSuccessful(boolean success) {
 
@@ -174,9 +174,9 @@ public class ParkingFirebase {
 
                     @Override
                     public void passData(Object data) {
-                        for (Car car: (List<Car>)data) {
-                            for (Parking parking: parkingSpots) {
-                                if(car.getCarId().equals(parking.getCarId())){
+                        for (Car car : (List<Car>) data) {
+                            for (Parking parking : parkingSpots) {
+                                if (car.getCarId().equals(parking.getCarId())) {
                                     finalParkingList.add(parking);
                                 }
                             }
@@ -209,9 +209,9 @@ public class ParkingFirebase {
 
             @Override
             public void passData(Object data) {
-                if(data instanceof ArrayList){
-                    for (Car car: (ArrayList<Car>)data) {
-                        if(car.getCarId().equals(parking.getCarId())){
+                if (data instanceof ArrayList) {
+                    for (Car car : (ArrayList<Car>) data) {
+                        if (car.getCarId().equals(parking.getCarId())) {
                             car.setParkingIsActive(false);
                             car.updateThisCar();
                             return;
@@ -238,9 +238,9 @@ public class ParkingFirebase {
 
             @Override
             public void passData(Object data) {
-                if(data instanceof ArrayList){
-                    for (Car car: (ArrayList<Car>)data) {
-                        if(car.getCarId().equals(car.getCarId())){
+                if (data instanceof ArrayList) {
+                    for (Car car : (ArrayList<Car>) data) {
+                        if (car.getCarId().equals(car.getCarId())) {
                             car.setParkingIsActive(false);
                             car.updateThisCar();
                             return;

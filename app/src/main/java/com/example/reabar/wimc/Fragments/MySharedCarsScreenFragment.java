@@ -48,26 +48,23 @@ public class MySharedCarsScreenFragment extends Fragment {
         Typeface english = Typeface.createFromAsset(getActivity().getAssets(), "KOMIKAX_.ttf"); // create a typeface from the raw ttf
         Typeface hebrew = Typeface.createFromAsset(getActivity().getAssets(), "OpenSansHebrew-Bold.ttf"); // create a typeface from the raw ttf
 
-        if(Locale.getDefault().getDisplayLanguage().equals("עברית"))
-        {
+        if (Locale.getDefault().getDisplayLanguage().equals("עברית")) {
             title.setTypeface(hebrew);
             text.setTypeface(hebrew);
-        }
-        else
-        {
+        } else {
             title.setTypeface(english);
             text.setTypeface(english);
         }
 
 
-        if(cars == null) {
+        if (cars == null) {
             cars = new ArrayList<>();
         }
 
         progressBar = (ProgressBar) view.findViewById(R.id.mySharedCars_ProgressBar);
         progressBar.setVisibility(View.VISIBLE);
 
-        carsList= (ListView) view.findViewById(R.id.listShredCars);
+        carsList = (ListView) view.findViewById(R.id.listShredCars);
         Model.getInstance().getListOfSharedCars(Model.getInstance().getCurrentUser().getEmail(), new Model.SyncListener() {
             @Override
             public void passData(Object allCars) {
@@ -96,8 +93,6 @@ public class MySharedCarsScreenFragment extends Fragment {
             }
         });
 
-
-
         return view;
     }
 
@@ -110,8 +105,6 @@ public class MySharedCarsScreenFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
     }
-
-
 
     public class MySharedCarsAdapter extends BaseAdapter {
 
@@ -133,12 +126,11 @@ public class MySharedCarsScreenFragment extends Fragment {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
 
-            if(convertView == null){
+            if (convertView == null) {
                 LayoutInflater layoutInflater = getActivity().getLayoutInflater();
-                convertView= layoutInflater.inflate(R.layout.fragment_my_shared_cars_screen_row,null);
+                convertView = layoutInflater.inflate(R.layout.fragment_my_shared_cars_screen_row, null);
 
-            }
-            else{
+            } else {
                 Log.d("TAG", "use convert view:" + position);
             }
 
@@ -150,5 +142,4 @@ public class MySharedCarsScreenFragment extends Fragment {
             return convertView;
         }
     }
-
 }

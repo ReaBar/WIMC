@@ -28,7 +28,6 @@ public class HomeScreenFragment extends Fragment {
 
     ProgressBar progressBar;
     FragmentCommunicator fragmentCommunicator;
-    FragmentTransaction fragmentTransaction;
     CarsNotParkingAdapter adapter;
     ListView carsList;
     List<Car> cars = new ArrayList<>();
@@ -53,12 +52,9 @@ public class HomeScreenFragment extends Fragment {
         TextView hello = (TextView) view.findViewById(R.id.helloTextView);
         Typeface english = Typeface.createFromAsset(getActivity().getAssets(), "KOMIKAX_.ttf"); // create a typeface from the raw ttf
         Typeface hebrew = Typeface.createFromAsset(getActivity().getAssets(), "OpenSansHebrew-Bold.ttf"); // create a typeface from the raw ttf
-        if(Locale.getDefault().getDisplayLanguage().equals("עברית"))
-        {
+        if (Locale.getDefault().getDisplayLanguage().equals("עברית")) {
             hello.setTypeface(hebrew);
-        }
-        else
-        {
+        } else {
             hello.setTypeface(english);
             hello.setTextSize(26);
         }
@@ -66,7 +62,7 @@ public class HomeScreenFragment extends Fragment {
         progressBar = (ProgressBar) view.findViewById(R.id.homepageProgressBar);
         progressBar.setVisibility(View.VISIBLE);
 
-        if(Model.getInstance().getCurrentUser() != null) {
+        if (Model.getInstance().getCurrentUser() != null) {
             Model.getInstance().getMyUnparkedCars(Model.getInstance().getCurrentUser().getEmail(), new Model.SyncListener() {
                 @Override
                 public void passData(Object allCars) {
@@ -94,7 +90,7 @@ public class HomeScreenFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Object[] data = new Object[1];
                 data[0] = cars.get(position).getCarId();
-                fragmentCommunicator.passData(data,"ParkingScreenFragment");
+                fragmentCommunicator.passData(data, "ParkingScreenFragment");
             }
         });
 
@@ -112,10 +108,6 @@ public class HomeScreenFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
     }
-
-
-
-
 
     public class CarsNotParkingAdapter extends BaseAdapter {
 
@@ -137,11 +129,10 @@ public class HomeScreenFragment extends Fragment {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
 
-            if(convertView == null){
+            if (convertView == null) {
                 LayoutInflater layoutInflater = getActivity().getLayoutInflater();
-                convertView= layoutInflater.inflate(R.layout.fragment_home_screen_row,null);
-            }
-            else{
+                convertView = layoutInflater.inflate(R.layout.fragment_home_screen_row, null);
+            } else {
                 Log.d("TAG", "use convert view:" + position);
             }
 
@@ -155,5 +146,4 @@ public class HomeScreenFragment extends Fragment {
             return convertView;
         }
     }
-
 }

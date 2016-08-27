@@ -15,7 +15,6 @@ import java.util.List;
 public class ParkingSql {
 
     static public void create(SQLiteDatabase db) {
-        //TODO startParking is not saved we need to solve this because there is no such field as Date
         db.execSQL("CREATE TABLE IF NOT EXISTS " +
                 Constants.PARKING_TABLE + " (" +
                 Constants.PARKING_CAR_ID + " TEXT PRIMARY KEY," +
@@ -47,10 +46,10 @@ public class ParkingSql {
         db.insertWithOnConflict(Constants.PARKING_TABLE, Constants.PARKING_CAR_ID, values, SQLiteDatabase.CONFLICT_REPLACE);
     }
 
-    public static void getMyUnparkedCars(SQLiteDatabase db,Model.SyncListener listener) {
+    public static void getMyUnparkedCars(SQLiteDatabase db, Model.SyncListener listener) {
         String currentUser = "%" + Model.getInstance().getCurrentUser().getEmail() + "%";
         String userEmail = Model.getInstance().getCurrentUser().getEmail();
-        Cursor cursor = db.rawQuery("SELECT * FROM " + Constants.CAR_TABLE + " WHERE " + Constants.CAR_ID + " NOT IN (SELECT " + Constants.PARKING_CAR_ID + " FROM " + Constants.PARKING_TABLE + ") AND (" + Constants.CAR_USER_OWNER_ID + " = ? OR " + Constants.CAR_USERS_LIST + " LIKE ?)" , new String[]{userEmail,currentUser});
+        Cursor cursor = db.rawQuery("SELECT * FROM " + Constants.CAR_TABLE + " WHERE " + Constants.CAR_ID + " NOT IN (SELECT " + Constants.PARKING_CAR_ID + " FROM " + Constants.PARKING_TABLE + ") AND (" + Constants.CAR_USER_OWNER_ID + " = ? OR " + Constants.CAR_USERS_LIST + " LIKE ?)", new String[]{userEmail, currentUser});
         List<Car> cars = new ArrayList<>();
 
         if (cursor.moveToFirst()) {
@@ -70,9 +69,9 @@ public class ParkingSql {
                 List<String> usersList = CarSql.convertStringToList(cursor.getString(userListIndex));
 
                 Car car = new Car(id, color, model, company, userOwnerId);
-                if(usersList != null){
+                if (usersList != null) {
                     for (String user : usersList) {
-                        car.setNewCarUser(user,false);
+                        car.setNewCarUser(user, false);
                     }
                 }
                 cars.add(car);
@@ -81,10 +80,10 @@ public class ParkingSql {
         listener.passData(cars);
     }
 
-    public static void getMyParkedCars(SQLiteDatabase db,Model.SyncListener listener) {
+    public static void getMyParkedCars(SQLiteDatabase db, Model.SyncListener listener) {
         String currentUser = "%" + Model.getInstance().getCurrentUser().getEmail() + "%";
         String userEmail = Model.getInstance().getCurrentUser().getEmail();
-        Cursor cursor = db.rawQuery("SELECT * FROM " + Constants.CAR_TABLE + " WHERE " + Constants.CAR_ID + " IN (SELECT " + Constants.PARKING_CAR_ID + " FROM " + Constants.PARKING_TABLE + ") AND (" + Constants.CAR_USER_OWNER_ID + " = ? OR " + Constants.CAR_USERS_LIST + " LIKE ?)" , new String[]{userEmail,currentUser});
+        Cursor cursor = db.rawQuery("SELECT * FROM " + Constants.CAR_TABLE + " WHERE " + Constants.CAR_ID + " IN (SELECT " + Constants.PARKING_CAR_ID + " FROM " + Constants.PARKING_TABLE + ") AND (" + Constants.CAR_USER_OWNER_ID + " = ? OR " + Constants.CAR_USERS_LIST + " LIKE ?)", new String[]{userEmail, currentUser});
         List<Car> cars = new ArrayList<>();
 
         if (cursor.moveToFirst()) {
@@ -104,9 +103,9 @@ public class ParkingSql {
                 List<String> usersList = CarSql.convertStringToList(cursor.getString(userListIndex));
 
                 Car car = new Car(id, color, model, company, userOwnerId);
-                if(usersList != null){
+                if (usersList != null) {
                     for (String user : usersList) {
-                        car.setNewCarUser(user,false);
+                        car.setNewCarUser(user, false);
                     }
                 }
                 cars.add(car);
@@ -115,10 +114,10 @@ public class ParkingSql {
         listener.passData(cars);
     }
 
-    public static void getMyParkingSpots(SQLiteDatabase db,Model.SyncListener listener) {
+    public static void getMyParkingSpots(SQLiteDatabase db, Model.SyncListener listener) {
         String currentUser = "%" + Model.getInstance().getCurrentUser().getEmail() + "%";
         String userEmail = Model.getInstance().getCurrentUser().getEmail();
-        Cursor cursor = db.rawQuery("SELECT * FROM " + Constants.PARKING_TABLE + " WHERE " + Constants.PARKING_CAR_ID + " IN (SELECT " + Constants.CAR_ID + " FROM " + Constants.CAR_TABLE + " WHERE " + Constants.CAR_USER_OWNER_ID + " = ? OR " + Constants.CAR_USERS_LIST + " LIKE ?)" , new String[]{userEmail,currentUser});
+        Cursor cursor = db.rawQuery("SELECT * FROM " + Constants.PARKING_TABLE + " WHERE " + Constants.PARKING_CAR_ID + " IN (SELECT " + Constants.CAR_ID + " FROM " + Constants.CAR_TABLE + " WHERE " + Constants.CAR_USER_OWNER_ID + " = ? OR " + Constants.CAR_USERS_LIST + " LIKE ?)", new String[]{userEmail, currentUser});
         List<Parking> parkingSpots = new ArrayList<>();
 
         if (cursor.moveToFirst()) {
@@ -155,7 +154,7 @@ public class ParkingSql {
         listener.passData(parkingSpots);
     }
 
-    public static void stopParking(SQLiteDatabase db,final Parking parking){
+    public static void stopParking(SQLiteDatabase db, final Parking parking) {
         CarSql.getAllCars(db, new Model.SyncListener() {
             @Override
             public void isSuccessful(boolean success) {
@@ -169,9 +168,9 @@ public class ParkingSql {
 
             @Override
             public void passData(Object data) {
-                List<Car> cars = (List<Car>)data;
-                for (Car car: cars) {
-                    if(car.getCarId().equals(parking.getCarId())){
+                List<Car> cars = (List<Car>) data;
+                for (Car car : cars) {
+                    if (car.getCarId().equals(parking.getCarId())) {
                         car.setParkingIsActive(false);
                         car.updateThisCar();
                     }
@@ -179,13 +178,13 @@ public class ParkingSql {
             }
         });
 
-        db.delete(Constants.PARKING_TABLE, Constants.PARKING_CAR_ID + " = " + parking.getCarId(),null);
+        db.delete(Constants.PARKING_TABLE, Constants.PARKING_CAR_ID + " = " + parking.getCarId(), null);
     }
 
-    public static void stopParking(SQLiteDatabase db, Car car){
+    public static void stopParking(SQLiteDatabase db, Car car) {
         car.setParkingIsActive(false);
         car.updateThisCar();
-        db.delete(Constants.PARKING_TABLE, Constants.PARKING_CAR_ID + " = " + car.getCarId(),null);
+        db.delete(Constants.PARKING_TABLE, Constants.PARKING_CAR_ID + " = " + car.getCarId(), null);
     }
 
     public static void drop(SQLiteDatabase db) {

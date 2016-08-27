@@ -204,7 +204,6 @@ public class Parking {
             this.imageName = imageName;
             return this;
         }
-
         public Parking build() {
             return new Parking(this);
         }

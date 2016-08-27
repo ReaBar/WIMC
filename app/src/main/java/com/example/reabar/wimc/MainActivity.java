@@ -39,7 +39,6 @@ public class MainActivity extends AppCompatActivity
     MyApplication myApplication;
 
     //Fragments
-    FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
     LoginScreenFragment loginFragment;
     SignupScreenFragment signUpFragment;
@@ -50,7 +49,6 @@ public class MainActivity extends AppCompatActivity
     ParkingScreenFragment parkingFragment;
     MyCarsNowScreenFragment MyCarNowFragment;
     CarScreenFragment carScreenFragment;
-    MapScreenFragment mapFragment;
     ParkingPhotoFragment parkingPhotoFragment;
 
     @Override
@@ -152,10 +150,10 @@ public class MainActivity extends AppCompatActivity
             NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
             navigationView.setNavigationItemSelectedListener(this);
 
-            if(Model.getInstance().getCurrentUser() != null){
+            if (Model.getInstance().getCurrentUser() != null) {
                 String userName = Model.getInstance().getCurrentUser().getEmail();
-                View header=navigationView.getHeaderView(0);
-                TextView userNameHeader = (TextView)header.findViewById(R.id.nav_drawer_header_user_name);
+                View header = navigationView.getHeaderView(0);
+                TextView userNameHeader = (TextView) header.findViewById(R.id.nav_drawer_header_user_name);
                 userNameHeader.setText(userName);
             }
             drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
@@ -173,7 +171,6 @@ public class MainActivity extends AppCompatActivity
             toggle.syncState();
         }
     }
-
 
     @Override
     public void passString(String text) {
@@ -241,14 +238,6 @@ public class MainActivity extends AppCompatActivity
                 fragmentTransaction.addToBackStack(null).commit();
                 break;
             case "MapScreenFragment":
-/*                mapFragment = new MapScreenFragment();
-//                parkingFragment.carID = (String) data[0];
-                mapFragment.latitude = (double) data[0];
-                mapFragment.longitude = (double) data[1];
-                fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.main_frag_container, mapFragment, "MapScreenFragment");
-                fragmentTransaction.addToBackStack(null).commit();
-                break;*/
                 Uri gmmIntentUri = Uri.parse("google.navigation:q=" + data[0] + "," + data[1] + "&mode=w");
                 Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
                 mapIntent.setPackage("com.google.android.apps.maps");
@@ -256,14 +245,14 @@ public class MainActivity extends AppCompatActivity
                 break;
             case "CarScreenFragment":
                 carScreenFragment = new CarScreenFragment();
-                carScreenFragment.car = (Car)data[0];
+                carScreenFragment.car = (Car) data[0];
                 fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.main_frag_container, carScreenFragment, "CarScreenFragment");
                 fragmentTransaction.addToBackStack(null).commit();
                 break;
             case "ParkingPhotoScreenFragment":
                 parkingPhotoFragment = new ParkingPhotoFragment();
-                parkingPhotoFragment.photoName = (String)data[0];
+                parkingPhotoFragment.photoName = (String) data[0];
                 fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.main_frag_container, parkingPhotoFragment, "ParkingPhotoScreenFragment");
                 fragmentTransaction.addToBackStack(null).commit();

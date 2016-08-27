@@ -3,7 +3,6 @@ package com.example.reabar.wimc.Model;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.example.reabar.wimc.FilesHandler;
 import com.example.reabar.wimc.MyApplication;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -125,7 +124,7 @@ public class UserFirebase {
 
     public void getCurrentUser() {
         if (mAuth.getCurrentUser() != null) {
-            Model.getInstance().setCurrentUser(new User(mAuth.getCurrentUser().getUid(),mAuth.getCurrentUser().getEmail()));
+            Model.getInstance().setCurrentUser(new User(mAuth.getCurrentUser().getUid(), mAuth.getCurrentUser().getEmail()));
         }
     }
 
@@ -148,6 +147,4 @@ public class UserFirebase {
             }
         });
     }
-
-
 }

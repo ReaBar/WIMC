@@ -57,7 +57,7 @@ public class Model {
 
             @Override
             public void passData(Object data) {
-                for (Car car:(List<Car>)data) {
+                for (Car car : (List<Car>) data) {
                     modelSql.addCar(car);
                 }
                 modelSql.updateCarsDbTime(System.currentTimeMillis());
@@ -77,7 +77,7 @@ public class Model {
 
             @Override
             public void passData(Object data) {
-                for (Parking parking:(List<Parking>)data) {
+                for (Parking parking : (List<Parking>) data) {
                     modelSql.parkCar(parking);
                 }
                 modelSql.updateParkingDbTime(System.currentTimeMillis());
@@ -97,7 +97,7 @@ public class Model {
 
             @Override
             public void passData(Object data) {
-                for (User user:(List<User>)data) {
+                for (User user : (List<User>) data) {
                     modelSql.addUser(user);
                 }
                 modelSql.updateUsersDbTime(System.currentTimeMillis());
@@ -109,40 +109,40 @@ public class Model {
         this.currentUser = currentUser;
     }
 
-    public void signupUser(final User user, final String password, final SyncListener listener){
+    public void signupUser(final User user, final String password, final SyncListener listener) {
         modelFirebase.signupUser(user, password, listener);
         modelSql.addUser(user);
         updateUsersDbTime();
     }
 
-    public void signInUser(User user, String password, final SyncListener listener){
+    public void signInUser(User user, String password, final SyncListener listener) {
         modelFirebase.signInUser(user, password, listener);
         currentUser = user;
     }
 
-    public void logoutUser(){
+    public void logoutUser() {
         modelFirebase.logoutUser();
         currentUser = null;
     }
 
-    public User getCurrentUser(){
-       modelFirebase.getCurrentUser();
+    public User getCurrentUser() {
+        modelFirebase.getCurrentUser();
         return currentUser;
     }
 
-    public String getCurrentUserID(){
+    public String getCurrentUserID() {
         return FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
 
-    public void resetPassword(String email, final SyncListener listener){
+    public void resetPassword(String email, final SyncListener listener) {
         modelFirebase.resetPassword(email, listener);
     }
 
-    public void updatePassword(String newPassword, final SyncListener listener){
+    public void updatePassword(String newPassword, final SyncListener listener) {
         modelFirebase.updatePassword(newPassword, listener);
     }
 
-    public void getUsersList(final Model.SyncListener listener){
+    public void getUsersList(final Model.SyncListener listener) {
         final String lastUpdateDate = modelSql.getUsersLastUpdateTime();
         final List<User> usersList = new ArrayList<>();
         modelFirebase.getUsersDbTime(new SyncListener() {
@@ -158,7 +158,7 @@ public class Model {
 
             @Override
             public void passData(Object data) {
-                if(data == null ||lastUpdateDate == null || data.toString().compareTo(lastUpdateDate) > 0){
+                if (data == null || lastUpdateDate == null || data.toString().compareTo(lastUpdateDate) > 0) {
                     modelFirebase.getUsersList(new SyncListener() {
                         @Override
                         public void isSuccessful(boolean success) {
@@ -172,8 +172,8 @@ public class Model {
 
                         @Override
                         public void passData(Object data) {
-                            if(data != null){
-                                for (User user: (List<User>)data) {
+                            if (data != null) {
+                                for (User user : (List<User>) data) {
                                     modelSql.addUser(user);
                                 }
                                 modelSql.updateUsersDbTime(System.currentTimeMillis());
@@ -182,18 +182,17 @@ public class Model {
                             }
                         }
                     });
-                    if(data == null){
+                    if (data == null) {
                         modelFirebase.updateUsersDbTime(System.currentTimeMillis());
                     }
-                }
-                else{
+                } else {
                     modelSql.getUsersList(listener);
                 }
             }
         });
     }
 
-    public void getOwnedCars(final String uId, final SyncListener listener){
+    public void getOwnedCars(final String uId, final SyncListener listener) {
         final String lastUpdateDate = modelSql.getCarLastUpdate();
         final List<Car> carsList = new ArrayList<>();
         modelFirebase.getCarDbTime(new SyncListener() {
@@ -209,11 +208,9 @@ public class Model {
 
             @Override
             public void passData(Object data) {
-                if(data == null){
+                if (data == null) {
                     listener.passData(carsList);
-                }
-
-                else if (lastUpdateDate == null || data.toString().compareTo(lastUpdateDate) > 0) {
+                } else if (lastUpdateDate == null || data.toString().compareTo(lastUpdateDate) > 0) {
                     modelFirebase.getOwnedCars(uId, new SyncListener() {
                         @Override
                         public void isSuccessful(boolean success) {
@@ -227,8 +224,8 @@ public class Model {
 
                         @Override
                         public void passData(Object data) {
-                            if(data != null){
-                                for (Car car:(List<Car>)data) {
+                            if (data != null) {
+                                for (Car car : (List<Car>) data) {
                                     if (modelSql.getCarById(car.getCarId()) == null) {
                                         modelSql.addCar(car);
                                     }
@@ -238,16 +235,14 @@ public class Model {
                             }
                         }
                     });
-                }
-
-                else{
-                    modelSql.getOwnedCars(uId,listener);
+                } else {
+                    modelSql.getOwnedCars(uId, listener);
                 }
             }
         });
     }
 
-    public void getListOfSharedCars(final String uId,final SyncListener listener){
+    public void getListOfSharedCars(final String uId, final SyncListener listener) {
         final String lastUpdateDate = modelSql.getCarLastUpdate();
         final List<Car> carsList = new ArrayList<>();
         modelFirebase.getCarDbTime(new SyncListener() {
@@ -263,11 +258,9 @@ public class Model {
 
             @Override
             public void passData(Object data) {
-                if(data == null){
+                if (data == null) {
                     listener.passData(carsList);
-                }
-
-                else if (lastUpdateDate == null || data.toString().compareTo(lastUpdateDate) > 0) {
+                } else if (lastUpdateDate == null || data.toString().compareTo(lastUpdateDate) > 0) {
                     modelFirebase.getListOfSharedCars(uId, new SyncListener() {
                         @Override
                         public void isSuccessful(boolean success) {
@@ -281,8 +274,8 @@ public class Model {
 
                         @Override
                         public void passData(Object data) {
-                            if(data != null){
-                                for (Car car:(List<Car>)data) {
+                            if (data != null) {
+                                for (Car car : (List<Car>) data) {
                                     if (modelSql.getCarById(car.getCarId()) == null) {
                                         modelSql.addCar(car);
                                     }
@@ -292,30 +285,28 @@ public class Model {
                             }
                         }
                     });
-                }
-
-                else{
-                    modelSql.getListOfSharedCars(uId,listener);
+                } else {
+                    modelSql.getListOfSharedCars(uId, listener);
                 }
             }
         });
     }
 
-    public void addCarToDB(final Car car, final SyncListener listener){
+    public void addCarToDB(final Car car, final SyncListener listener) {
         modelFirebase.addCarToDB(car, listener);
         modelSql.addCar(car);
         updateCarDbTime();
     }
 
-    public void updateCar(Car car,Model.SyncListener listener){
+    public void updateCar(Car car, Model.SyncListener listener) {
         modelSql.updateCar(car);
         modelFirebase.updateCar(car, listener);
         updateCarDbTime();
     }
 
-    public void getAllCars(final SyncListener listener){
+    public void getAllCars(final SyncListener listener) {
         final String lastUpdateDate = modelSql.getCarLastUpdate();
-        final ArrayList<Car> carList= new ArrayList<>();
+        final ArrayList<Car> carList = new ArrayList<>();
         modelFirebase.getCarDbTime(new SyncListener() {
             @Override
             public void isSuccessful(boolean success) {
@@ -329,11 +320,9 @@ public class Model {
 
             @Override
             public void passData(Object data) {
-                if(data == null){
+                if (data == null) {
                     listener.passData(carList);
-                }
-
-                else if (lastUpdateDate == null || data.toString().compareTo(lastUpdateDate) > 0) {
+                } else if (lastUpdateDate == null || data.toString().compareTo(lastUpdateDate) > 0) {
                     modelFirebase.getListOfAllCarsInDB(new SyncListener() {
                         @Override
                         public void isSuccessful(boolean success) {
@@ -363,19 +352,19 @@ public class Model {
         });
     }
 
-    public Car getCarById(String carId){
+    public Car getCarById(String carId) {
         return modelSql.getCarById(carId);
     }
 
-    public void parkCar(Parking parking, SyncListener listener){
+    public void parkCar(Parking parking, SyncListener listener) {
         modelFirebase.parkCar(parking, listener);
         modelSql.parkCar(parking);
         updateParkingDbTime();
     }
 
-    public void getMyUnparkedCars(final String uId,final SyncListener listener){
+    public void getMyUnparkedCars(final String uId, final SyncListener listener) {
         final String lastUpdateDate = modelSql.getParkingLastUpdate();
-        final ArrayList<Car> unparkedCars= new ArrayList<>();
+        final ArrayList<Car> unparkedCars = new ArrayList<>();
         modelFirebase.getParkingDbTime(new SyncListener() {
             @Override
             public void isSuccessful(boolean success) {
@@ -389,8 +378,8 @@ public class Model {
 
             @Override
             public void passData(Object data) {
-                 if (data == null || lastUpdateDate == null || data.toString().compareTo(lastUpdateDate) > 0) {
-                    modelFirebase.getMyUnparkedCars(uId,new SyncListener() {
+                if (data == null || lastUpdateDate == null || data.toString().compareTo(lastUpdateDate) > 0) {
+                    modelFirebase.getMyUnparkedCars(uId, new SyncListener() {
                         @Override
                         public void isSuccessful(boolean success) {
 
@@ -416,9 +405,9 @@ public class Model {
 
                                 @Override
                                 public void passData(Object data) {
-                                    if(data != null){
-                                        for (Car car:(List<Car>)data) {
-                                            if(modelSql.getCarById(car.getCarId()) == null){
+                                    if (data != null) {
+                                        for (Car car : (List<Car>) data) {
+                                            if (modelSql.getCarById(car.getCarId()) == null) {
                                                 modelSql.addCar(car);
                                             }
                                         }
@@ -440,15 +429,15 @@ public class Model {
 
                                 @Override
                                 public void passData(Object data) {
-                                    if(data != null){
-                                        for (Parking parking: (List<Parking>)data) {
+                                    if (data != null) {
+                                        for (Parking parking : (List<Parking>) data) {
                                             modelSql.parkCar(parking);
                                         }
                                         modelSql.updateParkingDbTime(System.currentTimeMillis());
                                     }
                                 }
                             });
-                            if(data == null){
+                            if (data == null) {
                                 modelFirebase.updateParkingDbTime(System.currentTimeMillis());
                             }
                             listener.passData(data);
@@ -461,9 +450,9 @@ public class Model {
         });
     }
 
-    public void getMyParkedCars(final SyncListener listener){
+    public void getMyParkedCars(final SyncListener listener) {
         final String lastUpdateDate = modelSql.getParkingLastUpdate();
-        final ArrayList<Car> parkedCars= new ArrayList<>();
+        final ArrayList<Car> parkedCars = new ArrayList<>();
         modelFirebase.getParkingDbTime(new SyncListener() {
             @Override
             public void isSuccessful(boolean success) {
@@ -477,11 +466,9 @@ public class Model {
 
             @Override
             public void passData(Object data) {
-                if(data == null){
+                if (data == null) {
                     listener.passData(parkedCars);
-                }
-
-                else if (lastUpdateDate == null || data.toString().compareTo(lastUpdateDate) > 0) {
+                } else if (lastUpdateDate == null || data.toString().compareTo(lastUpdateDate) > 0) {
                     modelFirebase.getMyParkedCars(new SyncListener() {
                         @Override
                         public void isSuccessful(boolean success) {
@@ -508,9 +495,9 @@ public class Model {
 
                                 @Override
                                 public void passData(Object data) {
-                                    if(data != null){
-                                        for (Car car:(List<Car>)data) {
-                                            if(modelSql.getCarById(car.getCarId()) == null){
+                                    if (data != null) {
+                                        for (Car car : (List<Car>) data) {
+                                            if (modelSql.getCarById(car.getCarId()) == null) {
                                                 modelSql.addCar(car);
                                             }
                                         }
@@ -532,8 +519,8 @@ public class Model {
 
                                 @Override
                                 public void passData(Object data) {
-                                    if(data != null){
-                                        for (Parking parking: (List<Parking>)data) {
+                                    if (data != null) {
+                                        for (Parking parking : (List<Parking>) data) {
                                             modelSql.parkCar(parking);
                                         }
                                         modelSql.updateParkingDbTime(System.currentTimeMillis());
@@ -550,9 +537,9 @@ public class Model {
         });
     }
 
-    public void getMyParkingSpots(final SyncListener listener){
+    public void getMyParkingSpots(final SyncListener listener) {
         final String lastUpdateDate = modelSql.getParkingLastUpdate();
-        final ArrayList<Parking> parkingSpots= new ArrayList<>();
+        final ArrayList<Parking> parkingSpots = new ArrayList<>();
         modelFirebase.getParkingDbTime(new SyncListener() {
             @Override
             public void isSuccessful(boolean success) {
@@ -566,11 +553,9 @@ public class Model {
 
             @Override
             public void passData(Object data) {
-                if(data == null){
+                if (data == null) {
                     listener.passData(parkingSpots);
-                }
-
-                else if (lastUpdateDate == null || data.toString().compareTo(lastUpdateDate) > 0) {
+                } else if (lastUpdateDate == null || data.toString().compareTo(lastUpdateDate) > 0) {
                     modelFirebase.getMyParkingSpots(new SyncListener() {
                         @Override
                         public void isSuccessful(boolean success) {
@@ -597,9 +582,9 @@ public class Model {
 
                                 @Override
                                 public void passData(Object data) {
-                                    if(data != null){
-                                        for (Car car:(List<Car>)data) {
-                                            if(modelSql.getCarById(car.getCarId()) == null){
+                                    if (data != null) {
+                                        for (Car car : (List<Car>) data) {
+                                            if (modelSql.getCarById(car.getCarId()) == null) {
                                                 modelSql.addCar(car);
                                             }
                                         }
@@ -621,8 +606,8 @@ public class Model {
 
                                 @Override
                                 public void passData(Object data) {
-                                    if(data != null){
-                                        for (Parking parking: (List<Parking>)data) {
+                                    if (data != null) {
+                                        for (Parking parking : (List<Parking>) data) {
                                             modelSql.parkCar(parking);
                                         }
                                         modelSql.updateParkingDbTime(System.currentTimeMillis());
@@ -639,31 +624,31 @@ public class Model {
         });
     }
 
-    public void stopParking(Parking parking){
+    public void stopParking(Parking parking) {
         modelFirebase.stopParking(parking);
         modelSql.stopParking(parking);
         updateParkingDbTime();
     }
 
-    public void stopParking(Car car){
+    public void stopParking(Car car) {
         modelFirebase.stopParking(car);
         modelSql.stopParking(car);
         updateParkingDbTime();
     }
 
-    public void updateCarDbTime(){
+    public void updateCarDbTime() {
         long currentTime = System.currentTimeMillis();
         modelFirebase.updateCarDbTime(currentTime);
         modelSql.updateCarsDbTime(currentTime);
     }
 
-    public void updateParkingDbTime(){
+    public void updateParkingDbTime() {
         long currentTime = System.currentTimeMillis();
         modelFirebase.updateParkingDbTime(currentTime);
         modelSql.updateParkingDbTime(currentTime);
     }
 
-    public void updateUsersDbTime(){
+    public void updateUsersDbTime() {
         long currentTime = System.currentTimeMillis();
         modelFirebase.updateUsersDbTime(currentTime);
         modelSql.updateUsersDbTime(currentTime);
@@ -671,12 +656,12 @@ public class Model {
 
     public float getAPIVersion() {
 
-        float f=1f;
+        float f = 1f;
         try {
             StringBuilder strBuild = new StringBuilder();
             strBuild.append(android.os.Build.VERSION.RELEASE.substring(0, 2));
-            f= Float.valueOf(strBuild.toString());
-            Log.d("deviceVersion","device OS version is: " + f);
+            f = Float.valueOf(strBuild.toString());
+            Log.d("deviceVersion", "device OS version is: " + f);
         } catch (NumberFormatException e) {
             Log.e("deviceVersion", "error retrieving api version" + e.getMessage());
         }
@@ -684,31 +669,30 @@ public class Model {
         return f;
     }
 
-    public List<Address> getLatandLong(String locationName){
+    public List<Address> getLatandLong(String locationName) {
         List<Address> result = new ArrayList<>();
         try {
             result = new Geocoder(MyApplication.getAppContext()).getFromLocationName(locationName, 1);
             return result;
         } catch (IOException e) {
-            Log.e("location",e.getMessage());
+            Log.e("location", e.getMessage());
         }
         return null;
 
     }
 
     //--- Listeners ---- //
-    public interface SyncListener{
+    public interface SyncListener {
         void isSuccessful(boolean success);
+
         void failed(String message);
+
         void passData(Object data);
     }
 
 
-
-
-
     public void loadImage(final String imageName, final LoadImageListener listener) {
-        AsyncTask<String,String,Bitmap> task = new AsyncTask<String, String, Bitmap >() {
+        AsyncTask<String, String, Bitmap> task = new AsyncTask<String, String, Bitmap>() {
             @Override
             protected Bitmap doInBackground(String... params) {
                 //Bitmap bmp = modelCloudinary.loadImage(imageName);
@@ -719,10 +703,11 @@ public class Model {
                     bmp = modelCloudinary.loadImage(imageName);
                     //save the image locally for next time
                     if (bmp != null)
-                        fileManager.saveImageToFile(bmp,imageName);
+                        fileManager.saveImageToFile(bmp, imageName);
                 }
                 return bmp;
             }
+
             @Override
             protected void onPostExecute(Bitmap result) {
                 listener.onResult(result);
@@ -732,18 +717,13 @@ public class Model {
     }
 
 
-    public interface LoadImageListener{
+    public interface LoadImageListener {
         public void onResult(Bitmap imageBmp);
     }
 
 
-
-
-
-
-
     public void saveImage(final Bitmap imageBitmap, final String imageName) {
-        saveImageToFile(imageBitmap,imageName); // synchronously save image locally
+        saveImageToFile(imageBitmap, imageName); // synchronously save image locally
         Thread d = new Thread(new Runnable() {  // asynchronously save image to parse
             @Override
             public void run() {
@@ -753,8 +733,7 @@ public class Model {
         d.start();
     }
 
-
-    private void saveImageToFile(Bitmap imageBitmap, String imageFileName){
+    private void saveImageToFile(Bitmap imageBitmap, String imageFileName) {
         FileOutputStream fos;
         OutputStream out = null;
         try {
@@ -763,7 +742,7 @@ public class Model {
             if (!dir.exists()) {
                 dir.mkdir();
             }
-            File imageFile = new File(dir,imageFileName);
+            File imageFile = new File(dir, imageFileName);
             imageFile.createNewFile();
 
             out = new FileOutputStream(imageFile);
@@ -783,68 +762,4 @@ public class Model {
             e.printStackTrace();
         }
     }
-
-
-
-  /*  public void SetLocalBitmap(Bitmap image)
-    {
-        this.image = image;
-        for(int i=0; i<data.size(); i++)
-            data.get(i).setImageProduct(image);
-
-        modelCloudinary.uploadImage(data.get(0).getImageProductLink(), data.get(0).getImageProduct());
-    }
-*/
-
-/*
-
-
-    public interface LoadImageListener{
-        public void onResult(Bitmap imageBmp);
-    }
-
-    public void loadImage(final String imageName, final LoadImageListener listener) {
-        AsyncTask<String,String,Bitmap> task = new AsyncTask<String, String, Bitmap >() {
-            @Override
-            protected Bitmap doInBackground(String... params) {
-                Bitmap bmp = loadImageFromFile(imageName);              //first try to fin the image on the device
-                if (bmp == null) {                                      //if image not found - try downloading it from parse
-                    bmp = modelCloudinary.loadImage(imageName);
-                    if (bmp != null) saveImageToFile(bmp,imageName);    //save the image locally for next time
-                }
-                return bmp;
-            }
-
-            @Override
-            protected void onPostExecute(Bitmap result) {
-                listener.onResult(result);
-            }
-        };
-        task.execute();
-    }
-
-
-    private Bitmap loadImageFromFile(String imageFileName){
-        String str = null;
-        Bitmap bitmap = null;
-        try {
-            File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-            File imageFile = new File(dir,imageFileName);
-
-            //File dir = context.getExternalFilesDir(null);
-            InputStream inputStream = new FileInputStream(imageFile);
-            bitmap = BitmapFactory.decodeStream(inputStream);
-            Log.d("tag","got image from cache: " + imageFileName);
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return bitmap;
-    }
-
-*/
-
-
 }

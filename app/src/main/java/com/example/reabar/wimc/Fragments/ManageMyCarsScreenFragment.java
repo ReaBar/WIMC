@@ -32,9 +32,7 @@ import java.util.Locale;
 
 public class ManageMyCarsScreenFragment extends Fragment {
 
-    FragmentTransaction fragmentTransaction;
     FragmentCommunicator fragmentCommunicator;
-    CarScreenFragment carFragment;
     EditText carLicenseInput;
     EditText carColorInput;
     EditText carModelInput;
@@ -56,7 +54,7 @@ public class ManageMyCarsScreenFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_manage_my_cars_screen, container, false);
         fragmentCommunicator = (FragmentCommunicator) getActivity();
 
-        if(cars == null) {
+        if (cars == null) {
             cars = new ArrayList<>();
         }
 
@@ -64,17 +62,13 @@ public class ManageMyCarsScreenFragment extends Fragment {
         TextView title = (TextView) view.findViewById(R.id.logoTextManageMyCars);
         Typeface english = Typeface.createFromAsset(getActivity().getAssets(), "KOMIKAX_.ttf"); // create a typeface from the raw ttf
         Typeface hebrew = Typeface.createFromAsset(getActivity().getAssets(), "OpenSansHebrew-Bold.ttf"); // create a typeface from the raw ttf
-        if(Locale.getDefault().getDisplayLanguage().equals("עברית"))
-        {
+        if (Locale.getDefault().getDisplayLanguage().equals("עברית")) {
             addNewCarButton.setTypeface(hebrew);
             title.setTypeface(hebrew);
-        }
-        else
-        {
+        } else {
             addNewCarButton.setTypeface(english);
             title.setTypeface(english);
         }
-
 
         progressBar = (ProgressBar) view.findViewById(R.id.mainProgressBar);
         progressBar.setVisibility(View.VISIBLE);
@@ -93,11 +87,10 @@ public class ManageMyCarsScreenFragment extends Fragment {
                 inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(),
                         InputMethodManager.HIDE_NOT_ALWAYS);
 
-                if(carCompanyInput.getText().toString().matches("") || carColorInput.getText().toString().matches("") || carLicenseInput.getText().toString().matches("") || carModelInput.getText().toString().matches("")){
+                if (carCompanyInput.getText().toString().matches("") || carColorInput.getText().toString().matches("") || carLicenseInput.getText().toString().matches("") || carModelInput.getText().toString().matches("")) {
                     Toast.makeText(MyApplication.getAppActivity(), "You must fill all the information about the new car",
                             Toast.LENGTH_SHORT).show();
-                }
-                else {
+                } else {
                     Car newCar = new Car(carLicenseInput.getText().toString(), carColorInput.getText().toString(), carModelInput.getText().toString(), carCompanyInput.getText().toString(), Model.getInstance().getCurrentUser().getEmail());
                     Model.getInstance().addCarToDB(newCar, new Model.SyncListener() {
                         @Override
@@ -124,9 +117,7 @@ public class ManageMyCarsScreenFragment extends Fragment {
             }
         });
 
-
-
-        carsList= (ListView) view.findViewById(R.id.carsListView);
+        carsList = (ListView) view.findViewById(R.id.carsListView);
         Model.getInstance().getOwnedCars(Model.getInstance().getCurrentUser().getEmail(), new Model.SyncListener() {
             @Override
             public void passData(Object allCars) {
@@ -153,15 +144,7 @@ public class ManageMyCarsScreenFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 Object[] data = new Object[]{cars.get(position)};
-                fragmentCommunicator.passData(data,"CarScreenFragment");
-/*                carFragment = new CarScreenFragment();
-                carFragment.sharedUsersList = cars.get(position).getUsersList();
-                carFragment.carLicense = cars.get(position).getCarId();
-                carFragment.car = cars.get(position);
-                carFragment.modelCompany = cars.get(position).getCompany() + " " + cars.get(position).getModel();
-                fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.main_frag_container, carFragment, "CarScreenFragment");
-                fragmentTransaction.addToBackStack(null).commit();*/
+                fragmentCommunicator.passData(data, "CarScreenFragment");
             }
         });
 
@@ -202,14 +185,13 @@ public class ManageMyCarsScreenFragment extends Fragment {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
 
-            if(convertView == null){
-                    LayoutInflater layoutInflater = getActivity().getLayoutInflater();
-                    convertView= layoutInflater.inflate(R.layout.fragment_manage_my_cars_screen_row,null);
+            if (convertView == null) {
+                LayoutInflater layoutInflater = getActivity().getLayoutInflater();
+                convertView = layoutInflater.inflate(R.layout.fragment_manage_my_cars_screen_row, null);
 
-                }
-                else{
-                    Log.d("TAG", "use convert view:" + position);
-                }
+            } else {
+                Log.d("TAG", "use convert view:" + position);
+            }
 
             TextView carLicense = (TextView) convertView.findViewById(R.id.cars_list_row_car_license);
             TextView carModelCompany = (TextView) convertView.findViewById(R.id.cars_list_row_car_model_company);

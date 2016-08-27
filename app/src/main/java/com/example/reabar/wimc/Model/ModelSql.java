@@ -139,7 +139,6 @@ public class ModelSql {
         LastUpdateSql.setLastUpdate(db,Constants.CAR_TABLE,currentTime);
     }
 
-
     class MyDBHelper extends SQLiteOpenHelper {
         public MyDBHelper(Context context) {
             super(context,"database.db", null, VERSION);

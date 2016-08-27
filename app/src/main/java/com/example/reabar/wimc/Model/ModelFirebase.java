@@ -12,7 +12,7 @@ public class ModelFirebase {
     private ParkingFirebase parkingFirebase;
     private LastUpdateFirebase lastUpdateFirebase;
 
-    public ModelFirebase(){
+    public ModelFirebase() {
         firebaseDatabase = FirebaseDatabase.getInstance();
         carFirebase = new CarFirebase();
         userFirebase = new UserFirebase();
@@ -21,109 +21,108 @@ public class ModelFirebase {
     }
 
     // ---- User Functions ---- //
-    public void signupUser(User user, String password, final Model.SyncListener listener){
-        userFirebase.signupUser(firebaseDatabase,user,password,listener);
+    public void signupUser(User user, String password, final Model.SyncListener listener) {
+        userFirebase.signupUser(firebaseDatabase, user, password, listener);
     }
 
-    public void signInUser(User user,String password, final Model.SyncListener listener){
+    public void signInUser(User user, String password, final Model.SyncListener listener) {
         userFirebase.signInUser(user, password, listener);
     }
 
-    public void logoutUser(){
+    public void logoutUser() {
         userFirebase.logoutUser();
     }
 
-    public void getCurrentUser(){
-       userFirebase.getCurrentUser();
+    public void getCurrentUser() {
+        userFirebase.getCurrentUser();
     }
 
-    public void resetPassword(String email, final Model.SyncListener listener){
+    public void resetPassword(String email, final Model.SyncListener listener) {
         userFirebase.resetPassword(email, listener);
     }
 
-    public void updatePassword(String newPassword, final Model.SyncListener listener){
+    public void updatePassword(String newPassword, final Model.SyncListener listener) {
         userFirebase.updatePassword(newPassword, listener);
     }
 
 
     // ---- Car Functions ---- //
-    public void addCarToDB(Car car, final Model.SyncListener listener){
+    public void addCarToDB(Car car, final Model.SyncListener listener) {
         carFirebase.addCarToDB(firebaseDatabase, car, listener);
     }
 
-    public void removeCarFromDB(Car car){
-        carFirebase.removeCarFromDB(firebaseDatabase,car);
+    public void removeCarFromDB(Car car) {
+        carFirebase.removeCarFromDB(firebaseDatabase, car);
     }
 
-    public void updateCar(Car car,Model.SyncListener listener){
-        carFirebase.updateCar(firebaseDatabase, car,listener);
+    public void updateCar(Car car, Model.SyncListener listener) {
+        carFirebase.updateCar(firebaseDatabase, car, listener);
     }
 
-    public void getUsersList(Model.SyncListener listener){
-       userFirebase.getUsersList(firebaseDatabase, listener);
+    public void getUsersList(Model.SyncListener listener) {
+        userFirebase.getUsersList(firebaseDatabase, listener);
     }
 
-    public void getOwnedCars(String uId,Model.SyncListener listener){
-        carFirebase.getOwnedCars(firebaseDatabase,uId,listener);
+    public void getOwnedCars(String uId, Model.SyncListener listener) {
+        carFirebase.getOwnedCars(firebaseDatabase, uId, listener);
     }
 
-    public void getListOfSharedCars(String uId, Model.SyncListener listener){
-        carFirebase.getListOfSharedCars(firebaseDatabase,uId,listener);
+    public void getListOfSharedCars(String uId, Model.SyncListener listener) {
+        carFirebase.getListOfSharedCars(firebaseDatabase, uId, listener);
     }
 
-    public void getListOfAllCarsInDB(Model.SyncListener listener){
-        carFirebase.getListOfAllCarsInDB(firebaseDatabase,listener);
+    public void getListOfAllCarsInDB(Model.SyncListener listener) {
+        carFirebase.getListOfAllCarsInDB(firebaseDatabase, listener);
     }
 
     // ---- Parking Functions ---- //
-    public void parkCar(Parking parking, Model.SyncListener listener){
-        parkingFirebase.parkCar(firebaseDatabase,parking,listener);
+    public void parkCar(Parking parking, Model.SyncListener listener) {
+        parkingFirebase.parkCar(firebaseDatabase, parking, listener);
     }
 
-    public void getMyUnparkedCars(String uid, Model.SyncListener listener){
-        parkingFirebase.getMyUnparkedCars(firebaseDatabase,uid,listener);
+    public void getMyUnparkedCars(String uid, Model.SyncListener listener) {
+        parkingFirebase.getMyUnparkedCars(firebaseDatabase, uid, listener);
     }
 
-    public void getMyParkedCars(Model.SyncListener listener){
-        parkingFirebase.getMyParkedCars(firebaseDatabase,listener);
+    public void getMyParkedCars(Model.SyncListener listener) {
+        parkingFirebase.getMyParkedCars(firebaseDatabase, listener);
     }
 
-    public void getMyParkingSpots(Model.SyncListener listener){
-        parkingFirebase.getAllMyParkingSpots(firebaseDatabase,listener);
+    public void getMyParkingSpots(Model.SyncListener listener) {
+        parkingFirebase.getAllMyParkingSpots(firebaseDatabase, listener);
     }
 
-    public void stopParking(Parking parking){
-        parkingFirebase.stopParking(firebaseDatabase,parking);
+    public void stopParking(Parking parking) {
+        parkingFirebase.stopParking(firebaseDatabase, parking);
     }
 
-    public void stopParking(Car car){
-        parkingFirebase.stopParking(firebaseDatabase,car);
+    public void stopParking(Car car) {
+        parkingFirebase.stopParking(firebaseDatabase, car);
     }
 
     // ---- Last Update Functions --- //
 
-    public void updateParkingDbTime(long currentTime){
-        lastUpdateFirebase.updateParkingDbTime(firebaseDatabase,currentTime);
+    public void updateParkingDbTime(long currentTime) {
+        lastUpdateFirebase.updateParkingDbTime(firebaseDatabase, currentTime);
     }
 
-    public void getParkingDbTime(Model.SyncListener listener){
-        lastUpdateFirebase.getParkingDbTime(firebaseDatabase,listener);
+    public void getParkingDbTime(Model.SyncListener listener) {
+        lastUpdateFirebase.getParkingDbTime(firebaseDatabase, listener);
     }
 
-    public void updateCarDbTime(long currentTime){
-        lastUpdateFirebase.updateCarDbTime(firebaseDatabase,currentTime);
+    public void updateCarDbTime(long currentTime) {
+        lastUpdateFirebase.updateCarDbTime(firebaseDatabase, currentTime);
     }
 
-    public void getCarDbTime(Model.SyncListener listener){
-        lastUpdateFirebase.getCarDbTime(firebaseDatabase,listener);
+    public void getCarDbTime(Model.SyncListener listener) {
+        lastUpdateFirebase.getCarDbTime(firebaseDatabase, listener);
     }
 
-    public void updateUsersDbTime(long currentTime){
-        lastUpdateFirebase.updateUsersDbTime(firebaseDatabase,currentTime);
+    public void updateUsersDbTime(long currentTime) {
+        lastUpdateFirebase.updateUsersDbTime(firebaseDatabase, currentTime);
     }
 
-    public void getUsersDbTime(Model.SyncListener listener){
-        lastUpdateFirebase.getUsersDbTime(firebaseDatabase,listener);
+    public void getUsersDbTime(Model.SyncListener listener) {
+        lastUpdateFirebase.getUsersDbTime(firebaseDatabase, listener);
     }
-
 }

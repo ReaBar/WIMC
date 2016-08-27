@@ -18,6 +18,7 @@ import com.example.reabar.wimc.R;
 public class ParkingPhotoFragment extends Fragment {
 
     public String photoName;
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }

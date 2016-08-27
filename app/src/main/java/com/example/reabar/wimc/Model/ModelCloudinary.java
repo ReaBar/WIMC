@@ -22,14 +22,12 @@ import java.util.Map;
 public class ModelCloudinary {
     Cloudinary cloudinary;
 
-    public ModelCloudinary(Context context){
+    public ModelCloudinary(Context context) {
         cloudinary = new Cloudinary("cloudinary://994665469628467:GR0yXpujp0T4I4Ll83QL05Zy6R4@wimc");
     }
 
-
-    public void uploadImage(final String imageName,final Bitmap image)
-    {
-        if(image == null)
+    public void uploadImage(final String imageName, final Bitmap image) {
+        if (image == null)
             return;
 
         Thread t = new Thread(new Runnable() {
@@ -49,9 +47,7 @@ public class ModelCloudinary {
                         Log.d("TAG", e.getMessage());
                         e.printStackTrace();
                     }
-                }
-                catch (Exception ex)
-                {
+                } catch (Exception ex) {
                     Log.d("TAG", ex.getMessage());
                 }
             }
@@ -75,8 +71,6 @@ public class ModelCloudinary {
 
         return null;
     }
-
-
 }
 
 

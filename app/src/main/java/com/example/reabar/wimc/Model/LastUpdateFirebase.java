@@ -16,7 +16,6 @@ import com.google.firebase.database.ValueEventListener;
  */
 public class LastUpdateFirebase {
     private String TAG = "LastUpdateFirebase";
-    //private String LAST_UPDATE_DB = "lastUpdate";
 
     public void updateParkingDbTime(FirebaseDatabase db,final long currentTime) {
         DatabaseReference dbRef = db.getReference(Constants.LAST_UPDATE_TABLE);
