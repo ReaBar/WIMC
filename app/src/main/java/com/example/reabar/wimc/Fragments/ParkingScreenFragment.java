@@ -96,21 +96,24 @@ public class ParkingScreenFragment extends Fragment implements LocationListener 
             public void onClick(View view) {
 
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
 
-//                int permissionCheck = ContextCompat.checkSelfPermission(MyApplication.getAppActivity(),
-//                        Manifest.permission.CAMERA);
-//                if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
-//                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                    startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
-//                } else {
-//                    ActivityCompat.requestPermissions(MyApplication.getAppActivity(),
-//                            new String[]{Manifest.permission.CAMERA},
-//                            REQUEST_IMAGE_CAPTURE);
-//                }
+                if(Model.getInstance().getAPIVersion() < 6.0){
+                    startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+                }
+
+                else if(Model.getInstance().getAPIVersion() >= 6){
+                    int permissionCheck = ContextCompat.checkSelfPermission(MyApplication.getAppActivity(),
+                            Manifest.permission.CAMERA);
+                    if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
+                        startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
+                    } else {
+                        ActivityCompat.requestPermissions(MyApplication.getAppActivity(),
+                                new String[]{Manifest.permission.CAMERA},
+                                REQUEST_IMAGE_CAPTURE);
+                    }
+                }
             }
         });
-
 
         //GPS Button flow..
         gpsLocation = (Button) view.findViewById(R.id.locationButton);
