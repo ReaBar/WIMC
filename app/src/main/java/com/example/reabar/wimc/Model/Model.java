@@ -43,7 +43,7 @@ public class Model {
         modelFirebase = new ModelFirebase();
         modelSql = new ModelSql();
         modelCloudinary = new ModelCloudinary(MyApplication.getAppContext());
-        getAPIVerison();
+        getAPIVersion();
         modelFirebase.getListOfAllCarsInDB(new SyncListener() {
             @Override
             public void isSuccessful(boolean success) {
@@ -663,7 +663,7 @@ public class Model {
         modelSql.updateUsersDbTime(currentTime);
     }
 
-    public float getAPIVerison() {
+    public float getAPIVersion() {
 
         float f=1f;
         try {
@@ -672,7 +672,7 @@ public class Model {
             f= Float.valueOf(strBuild.toString());
             Log.d("deviceVersion","device OS version is: " + f);
         } catch (NumberFormatException e) {
-            Log.e("deviceVersion", "error retriving api version" + e.getMessage());
+            Log.e("deviceVersion", "error retrieving api version" + e.getMessage());
         }
 
         return f;
