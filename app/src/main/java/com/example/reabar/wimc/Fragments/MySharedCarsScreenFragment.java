@@ -142,8 +142,8 @@ public class MySharedCarsScreenFragment extends Fragment {
                 Log.d("TAG", "use convert view:" + position);
             }
 
-            TextView carLicense = (TextView) convertView.findViewById(R.id.mySharedCars_car_license);
-            TextView carModelCompany = (TextView) convertView.findViewById(R.id.mySharedCars_model_company);
+            TextView carLicense = (TextView) convertView.findViewById(R.id.mySharedCars_model_company);
+            TextView carModelCompany = (TextView) convertView.findViewById(R.id.mySharedCars_car_license);
             Car car = cars.get(position);
             carLicense.setText(car.getCarId());
             carModelCompany.setText(car.getCompany() + " " + car.getModel());
