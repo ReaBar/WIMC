@@ -22,6 +22,7 @@ import com.example.reabar.wimc.Fragments.ManageMyCarsScreenFragment;
 import com.example.reabar.wimc.Fragments.MapScreenFragment;
 import com.example.reabar.wimc.Fragments.MyCarsNowScreenFragment;
 import com.example.reabar.wimc.Fragments.MySharedCarsScreenFragment;
+import com.example.reabar.wimc.Fragments.ParkingPhotoFragment;
 import com.example.reabar.wimc.Fragments.ParkingScreenFragment;
 import com.example.reabar.wimc.Fragments.SettingsScreenFragment;
 import com.example.reabar.wimc.Fragments.SignupScreenFragment;
@@ -47,6 +48,7 @@ public class MainActivity extends AppCompatActivity
     ParkingScreenFragment parkingFragment;
     MyCarsNowScreenFragment MyCarNowFragment;
     MapScreenFragment mapFragment;
+    ParkingPhotoFragment parkingPhotoFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
