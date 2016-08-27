@@ -56,7 +56,7 @@ public class MyCarsNowScreenFragment extends Fragment {
 
         cloudinary = new ModelCloudinary(getActivity());
 
-        if(parkings == null) {
+        if (parkings == null) {
             parkings = new ArrayList<>();
         }
 
@@ -120,12 +120,14 @@ public class MyCarsNowScreenFragment extends Fragment {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
 
-            if(convertView == null){
+            if (convertView == null) {
                 LayoutInflater layoutInflater = getActivity().getLayoutInflater();
-                convertView= layoutInflater.inflate(R.layout.fragment_my_cars_now_row,null);
+                convertView = layoutInflater.inflate(R.layout.fragment_my_cars_now_row, null);
+            } else {
+                Log.d("TAG", "use convert view:" + position);
             }
 
-            Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(),"Alyssa_Kayla.ttf"); // create a typeface from the raw ttf
+            Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(), "Alyssa_Kayla.ttf"); // create a typeface from the raw ttf
             TextView yourCarParkingHere = (TextView) convertView.findViewById(R.id.parkingText1);
             yourCarParkingHere.setTypeface(typeface);
             TextView parkingLotDetails = (TextView) convertView.findViewById(R.id.parkingLotText);
@@ -141,14 +143,13 @@ public class MyCarsNowScreenFragment extends Fragment {
 
             final Parking parking = parkings.get(position);
 
-            if(Locale.getDefault().getDisplayLanguage().equals("עברית")) {
+            if (Locale.getDefault().getDisplayLanguage().equals("עברית")) {
                 myParkingCarDetails.setText("רכב מספר " + parking.getCarId());
-            }
-            else {
+            } else {
                 myParkingCarDetails.setText(myParkingCarDetails.getText().toString() + parking.getCarId());
             }
             myParkingCarCityStreetNumber.setText(parking.getStreet() + " " + parking.getStreetNumber() + "  " + parking.getCity());
-            if(parking.getParkingLotName() != null || parking.getParkingLotName() != ""){
+            if (parking.getParkingLotName() != null || parking.getParkingLotName() != "") {
                 parkingLotDetails.setText("");
                 myParkingLotName.setText(parking.getParkingLotName());
                 myParkingLotFloor.setText(parking.getParkingLotFloor());
@@ -158,7 +159,7 @@ public class MyCarsNowScreenFragment extends Fragment {
             Model.getInstance().loadImage(parking.getImageName(), new Model.LoadImageListener() {
                 @Override
                 public void onResult(Bitmap imageBmp) {
-                    if(imageBmp != null){
+                    if (imageBmp != null) {
                         parkingPhoto.setImageBitmap(imageBmp);
                     }
                 }
@@ -185,9 +186,18 @@ public class MyCarsNowScreenFragment extends Fragment {
                 }
             });
 
+            parkingPhoto.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v) {
+                    Object[] data=new Object[1];
+                    data[0]=parking.getImageName();
+                    fragmentCommunicator.passData(data,"ParkingPhotoScreenFragment");
+                }
+            });
+
             return convertView;
         }
+
     }
-
-
 }
