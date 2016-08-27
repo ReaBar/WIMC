@@ -44,25 +44,50 @@ public class Model {
         modelSql = new ModelSql();
         modelCloudinary = new ModelCloudinary(MyApplication.getAppContext());
         getAPIVersion();
-        modelFirebase.getListOfAllCarsInDB(new SyncListener() {
-            @Override
-            public void isSuccessful(boolean success) {
+        User tempUser = currentUser;
+        if(tempUser != null){
+            modelFirebase.getOwnedCars(currentUser.getEmail(),new SyncListener() {
+                @Override
+                public void isSuccessful(boolean success) {
 
-            }
-
-            @Override
-            public void failed(String message) {
-
-            }
-
-            @Override
-            public void passData(Object data) {
-                for (Car car : (List<Car>) data) {
-                    modelSql.addCar(car);
                 }
-                modelSql.updateCarsDbTime(System.currentTimeMillis());
-            }
-        });
+
+                @Override
+                public void failed(String message) {
+
+                }
+
+                @Override
+                public void passData(Object data) {
+                    for (Car car : (List<Car>) data) {
+                        modelSql.addCar(car);
+                    }
+                    modelSql.updateCarsDbTime(System.currentTimeMillis());
+                }
+            });
+        }
+        else{
+            modelFirebase.getListOfAllCarsInDB(new SyncListener() {
+                @Override
+                public void isSuccessful(boolean success) {
+
+                }
+
+                @Override
+                public void failed(String message) {
+
+                }
+
+                @Override
+                public void passData(Object data) {
+                    for (Car car : (List<Car>) data) {
+                        modelSql.addCar(car);
+                    }
+                    modelSql.updateCarsDbTime(System.currentTimeMillis());
+                }
+            });
+        }
+
 
         modelFirebase.getMyParkingSpots(new SyncListener() {
             @Override
@@ -116,13 +141,13 @@ public class Model {
     }
 
     public void signInUser(User user, String password, final SyncListener listener) {
-        modelFirebase.signInUser(user, password, listener);
         currentUser = user;
+        modelFirebase.signInUser(user, password, listener);
     }
 
     public void logoutUser() {
         modelFirebase.logoutUser();
-        currentUser = null;
+        //currentUser = null;
     }
 
     public User getCurrentUser() {

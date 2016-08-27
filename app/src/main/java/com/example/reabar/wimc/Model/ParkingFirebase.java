@@ -86,7 +86,7 @@ public class ParkingFirebase {
                         }
                         DatabaseReference parkingDbRef = db.getReference(Constants.PARKING_TABLE);
 
-                        parkingDbRef.orderByChild("carId").addListenerForSingleValueEvent(new ValueEventListener() {
+                        parkingDbRef.orderByChild(Constants.CAR_ID).addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();

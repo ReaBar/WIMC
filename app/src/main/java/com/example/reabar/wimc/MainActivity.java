@@ -20,7 +20,6 @@ import com.example.reabar.wimc.Fragments.CarScreenFragment;
 import com.example.reabar.wimc.Fragments.HomeScreenFragment;
 import com.example.reabar.wimc.Fragments.LoginScreenFragment;
 import com.example.reabar.wimc.Fragments.ManageMyCarsScreenFragment;
-import com.example.reabar.wimc.Fragments.MapScreenFragment;
 import com.example.reabar.wimc.Fragments.MyCarsNowScreenFragment;
 import com.example.reabar.wimc.Fragments.MySharedCarsScreenFragment;
 import com.example.reabar.wimc.Fragments.ParkingPhotoFragment;
@@ -65,7 +64,7 @@ public class MainActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        Model.getInstance().getAllCars(new Model.SyncListener() {
+/*        Model.getInstance().getAllCars(new Model.SyncListener() {
             @Override
             public void isSuccessful(boolean success) {
 
@@ -79,7 +78,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void passData(Object data) {
             }
-        });
+        });*/
         passString("HomeScreenFragment");
     }
 
