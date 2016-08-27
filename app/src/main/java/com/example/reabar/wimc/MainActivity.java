@@ -243,6 +243,9 @@ public class MainActivity extends AppCompatActivity
                 startActivity(mapIntent);
                 break;
             case "CarScreenFragment":
+                if(carScreenFragment != null && carScreenFragment.isVisible()){
+                    getSupportFragmentManager().popBackStack();
+                }
                 carScreenFragment = new CarScreenFragment();
                 carScreenFragment.car = (Car) data[0];
                 fragmentTransaction = getSupportFragmentManager().beginTransaction();
