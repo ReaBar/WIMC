@@ -681,7 +681,7 @@ public class Model {
     public List<Address> getLatandLong(String locationName){
         List<Address> result = new ArrayList<>();
         try {
-            result = new Geocoder(MyApplication.getAppContext()).getFromLocationName(locationName, 5);
+            result = new Geocoder(MyApplication.getAppContext()).getFromLocationName(locationName, 1);
             return result;
         } catch (IOException e) {
             Log.e("location",e.getMessage());
