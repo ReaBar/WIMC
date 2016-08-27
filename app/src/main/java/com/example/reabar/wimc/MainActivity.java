@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.example.reabar.wimc.Fragments.HomeScreenFragment;
 import com.example.reabar.wimc.Fragments.LoginScreenFragment;
@@ -26,6 +27,8 @@ import com.example.reabar.wimc.Fragments.ParkingScreenFragment;
 import com.example.reabar.wimc.Fragments.SettingsScreenFragment;
 import com.example.reabar.wimc.Fragments.SignupScreenFragment;
 import com.example.reabar.wimc.Model.Model;
+
+import java.util.Locale;
 
 
 public class MainActivity extends AppCompatActivity
@@ -65,30 +68,13 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-//        View headerView = navigationView.getHeaderView(0);
-//        TextView navUsername = (TextView) headerView.findViewById(R.id.loggedinUser);
-//        navUsername.setText("Hello " + Model.getInstance().getCurrentUser().getEmail());
+        if(Model.getInstance().getCurrentUser() != null){
+            String userName = Model.getInstance().getCurrentUser().getEmail();
+            View header=navigationView.getHeaderView(0);
+            TextView userNameHeader = (TextView)header.findViewById(R.id.nav_drawer_header_user_name);
+            userNameHeader.setText(userName);
+        }
 
-
-        //Parking parking = new Parking.ParkingBuilder("12345555556").city("Tel Aviv").street("dalia").build();
-
-//        Car car = new Car("112233", "Blue", "2015", "Honda", "rea.bar@gmail.com");
-//        String share1 = "tomer_aronovsky@hotmail.com";
-//        String share2 = "tasolutions2012@gmail.com";
-//        ArrayList<String> s = new ArrayList<String>();
-//        s.addUser(share1);
-//        s.addUser(share2);
-//        car.setUsersList(s);
-//        Model.getInstance().addCarToDB(car, new Model.AddNewCarListener() {
-//            @Override
-//            public void success(boolean success) {
-//                if (success) {
-//                }
-//            }
-//            @Override
-//            public void failed(String message) {
-//            }
-//        });
         Model.getInstance().getAllCars(new Model.SyncListener() {
             @Override
             public void isSuccessful(boolean success) {
@@ -102,7 +88,6 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public void passData(Object data) {
-                Log.d("TESTTEST","test");
             }
         });
         passString("HomeScreenFragment");
@@ -263,7 +248,7 @@ public class MainActivity extends AppCompatActivity
                 fragmentTransaction.replace(R.id.main_frag_container, mapFragment, "MapScreenFragment");
                 fragmentTransaction.addToBackStack(null).commit();
                 break;*/
-                Uri gmmIntentUri = Uri.parse("google.navigation:q=" + data[0] + "," + data[1] +"&mode=w");
+                Uri gmmIntentUri = Uri.parse("google.navigation:q=" + data[0] + "," + data[1] + "&mode=w");
                 Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
                 mapIntent.setPackage("com.google.android.apps.maps");
                 startActivity(mapIntent);
@@ -276,9 +261,6 @@ public class MainActivity extends AppCompatActivity
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
     }
-
-
-
 
 
 }
