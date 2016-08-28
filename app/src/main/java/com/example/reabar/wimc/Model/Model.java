@@ -506,7 +506,8 @@ public class Model {
     }
 
     public void getMyUnparkedCars(final String uId, final SyncListener listener) {
-        final String lastUpdateDate = modelSql.getParkingLastUpdate();
+        final String parkingLastUpdateDate = modelSql.getParkingLastUpdate();
+        final String carLastUpdateDate = modelSql.getCarLastUpdate();
         final ArrayList<Car> unparkedCars = new ArrayList<>();
         modelFirebase.getParkingDbTime(new SyncListener() {
             @Override
@@ -521,7 +522,7 @@ public class Model {
 
             @Override
             public void passData(Object data) {
-                if (data == null || lastUpdateDate == null || data.toString().compareTo(lastUpdateDate) > 0) {
+                if (data == null || parkingLastUpdateDate == null || carLastUpdateDate == null ||data.toString().compareTo(parkingLastUpdateDate) > 0 || data.toString().compareTo(carLastUpdateDate) > 0) {
                     modelSql.dropCarDb();
                     modelSql.dropParkingDb();
                     modelFirebase.getMyUnparkedCars(uId, new SyncListener() {
