@@ -3,6 +3,7 @@ package com.example.reabar.wimc.Fragments;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -167,6 +168,10 @@ public class MyCarsNowScreenFragment extends Fragment {
                 public void onResult(Bitmap imageBmp) {
                     if (imageBmp != null) {
                         parkingPhoto.setImageBitmap(imageBmp);
+                    }
+                    else {
+                        Bitmap image = ((BitmapDrawable) getResources().getDrawable(R.drawable.image_not_available)).getBitmap();
+                        parkingPhoto.setImageBitmap(image);
                     }
                 }
             });
