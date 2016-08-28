@@ -36,6 +36,10 @@ public class Model {
     private FilesManagerHelper fileManager;
 
     public static Model getInstance() {
+        if(ourInstance == null)
+        {
+            ourInstance = new Model();
+        }
         return ourInstance;
     }
 
@@ -146,7 +150,8 @@ public class Model {
 
     public void logoutUser() {
         modelFirebase.logoutUser();
-        //currentUser = null;
+        currentUser = null;
+        ourInstance = null;
     }
 
     public User getCurrentUser() {
@@ -345,11 +350,16 @@ public class Model {
             userEmails.add(user.getEmail());
         }
 
-        for (String carUser:usersList) {
-            if(!userEmails.contains(carUser)){
-                usersList.remove(carUser);
+        for(int i=0; i<usersList.size(); i++){
+            if(!userEmails.contains(usersList.get(i))){
+                usersList.remove(usersList.get(i));
             }
         }
+//        for (String carUser:usersList) {
+//            if(!userEmails.contains(carUser)){
+//                usersList.remove(carUser);
+//            }
+//        }
         car.setUsersList(usersList);
         updateCar(car);
     }

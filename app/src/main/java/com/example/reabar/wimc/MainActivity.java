@@ -64,7 +64,8 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
 
 
-        passString("HomeScreenFragment");
+        //passString("HomeScreenFragment");
+        passString("LoginScreenFragment");
     }
 
     @Override
@@ -166,11 +167,20 @@ public class MainActivity extends AppCompatActivity
                 setDrawerState(true);
                 break;
             case "LoginScreenFragment":
-                loginFragment = new LoginScreenFragment();
-                fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.main_frag_container, loginFragment, "LoginFragment");
-                fragmentTransaction.addToBackStack(null).commit();
-                break;
+//                if(homeFragment != null && !homeFragment.isVisible()){
+//                    getSupportFragmentManager().popBackStack();
+//                }
+                if(Model.getInstance().getCurrentUser() != null){
+                    passString("HomeScreenFragment");
+                    break;
+                }
+                else {
+                    loginFragment = new LoginScreenFragment();
+                    fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.main_frag_container, loginFragment, "LoginFragment");
+                    fragmentTransaction.addToBackStack(null).commit();
+                    break;
+                }
             case "SignUpScreenFragment":
                 signUpFragment = new SignupScreenFragment();
                 fragmentTransaction = getSupportFragmentManager().beginTransaction();

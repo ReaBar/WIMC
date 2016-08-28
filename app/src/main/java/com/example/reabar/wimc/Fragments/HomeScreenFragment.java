@@ -37,7 +37,7 @@ public class HomeScreenFragment extends Fragment {
         fragmentCommunicator = (FragmentCommunicator) getActivity();
         if (Model.getInstance().getCurrentUser() == null) {
             fragmentCommunicator.passString("cancelDrawer");
-            fragmentCommunicator.passString("LoginScreenFragment");
+//            fragmentCommunicator.passString("LoginScreenFragment");
         }
         fragmentCommunicator.passString("enableDrawer");
     }
