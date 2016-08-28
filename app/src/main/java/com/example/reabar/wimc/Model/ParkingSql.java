@@ -119,6 +119,8 @@ public class ParkingSql {
 /*                    for (String user : usersList) {
                         car.setCarUser(user, false);
                     }*/
+                }else {
+                    Model.getInstance().updateCar(car);
                 }
                 cars.add(car);
             } while (cursor.moveToNext());

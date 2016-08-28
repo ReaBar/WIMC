@@ -139,7 +139,7 @@ public class ParkingFirebase {
             public void passData(Object data) {
                 if (data instanceof ArrayList) {
                     for (Car car : (ArrayList<Car>) data) {
-                        if ((car.getUserOwnerId().equals(Model.getInstance().getCurrentUser().getEmail()) || car.getUsersList().contains(Model.getInstance().getCurrentUser().getEmail())) && car.getParkingIsActive()) {
+                        if ((car.getUserOwnerId().equals(Model.getInstance().getCurrentUser().getEmail()) || car.getUsersList().contains(Model.getInstance().getCurrentUser().getEmail()))) {
                             carsList.add(car);
                         }
                     }

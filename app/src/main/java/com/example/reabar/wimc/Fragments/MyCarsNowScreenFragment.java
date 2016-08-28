@@ -131,12 +131,12 @@ public class MyCarsNowScreenFragment extends Fragment {
                 Log.d("TAG", "use convert view:" + position);
             }
 
-            Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(), "Alyssa_Kayla.ttf"); // create a typeface from the raw ttf
+            Typeface hebrew = Typeface.createFromAsset(getActivity().getAssets(), "OpenSansHebrew-Bold.ttf"); // create a typeface from the raw ttf
+            Typeface english = Typeface.createFromAsset(getActivity().getAssets(), "KOMIKAX_.ttf"); // create a typeface from the raw ttf
             TextView yourCarParkingHere = (TextView) convertView.findViewById(R.id.parkingText1);
-            yourCarParkingHere.setTypeface(typeface);
+            yourCarParkingHere.setTypeface(english);
             TextView parkingLotDetails = (TextView) convertView.findViewById(R.id.parkingLotText);
-            TextView myParkingCarDetails = (TextView) convertView.findViewById(R.id.myParkingCarModelYear);
-            myParkingCarDetails.setTypeface(typeface);
+            TextView myParkingCarDetails = (TextView) convertView.findViewById(R.id.myParkingCarNumber);
 
             TextView myParkingCarCityStreetNumber = (TextView) convertView.findViewById(R.id.parkingCityStreetInput1);
             TextView myParkingLotName = (TextView) convertView.findViewById(R.id.parkingLotNameInput);
@@ -149,8 +149,10 @@ public class MyCarsNowScreenFragment extends Fragment {
 
             if (Locale.getDefault().getDisplayLanguage().equals("עברית")) {
                 myParkingCarDetails.setText("רכב מספר " + parking.getCarId());
+                myParkingCarDetails.setTypeface(hebrew);
             } else {
-                myParkingCarDetails.setText(myParkingCarDetails.getText().toString() + parking.getCarId());
+                myParkingCarDetails.setText("Car Number " + parking.getCarId());
+                myParkingCarDetails.setTypeface(english);
             }
             myParkingCarCityStreetNumber.setText(parking.getStreet() + " " + parking.getStreetNumber() + "  " + parking.getCity());
             if (parking.getParkingLotName() != null || parking.getParkingLotName() != "") {

@@ -344,6 +344,7 @@ public class Model {
         for (User user : allUsers) {
             userEmails.add(user.getEmail());
         }
+
         for (String carUser:usersList) {
             if(!userEmails.contains(carUser)){
                 usersList.remove(carUser);

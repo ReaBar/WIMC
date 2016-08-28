@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -22,7 +22,7 @@
         style="@android:style/Widget.Holo.ProgressBar.Large"
         android:indeterminate="true"
         android:background="#00fafafa"
-        android:layout_marginTop="75dp"
+        android:layout_marginTop="55dp"
         android:indeterminateBehavior="cycle" />
 
         <TextView
@@ -47,8 +47,7 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:id="@+id/myCarsNowList"
-        android:layout_gravity="center_horizontal|top"
-        android:layout_marginTop="@dimen/design_fab_size_normal"  />
+        android:layout_gravity="center_horizontal|top"  />
 
         </LinearLayout>
-</LinearLayout>
+</FrameLayout>
