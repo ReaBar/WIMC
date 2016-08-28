@@ -43,6 +43,13 @@ public class ModelSql {
         ParkingSql.create(db);
     }
 
+    public void dropSharedUserDb(){
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        UserSql.drop(db);
+        LastUpdateSql.setLastUpdate(db,Constants.USER_TABLE,0);
+        UserSql.create(db);
+    }
+
     public void addUser(User user) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         UserSql.addUser(db, user);

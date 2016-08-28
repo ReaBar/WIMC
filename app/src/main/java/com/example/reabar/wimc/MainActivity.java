@@ -188,6 +188,7 @@ public class MainActivity extends AppCompatActivity
                 fragmentTransaction.addToBackStack(null).commit();
                 break;
             case "HomeScreenFragment":
+                Model.getInstance().syncUserCount();
                 homeFragment = new HomeScreenFragment();
                 fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.main_frag_container, homeFragment, "HomeScreenFragment");
@@ -200,6 +201,7 @@ public class MainActivity extends AppCompatActivity
                 fragmentTransaction.addToBackStack(null).commit();
                 break;
             case "ManageMyCarsScreenFragment":
+                Model.getInstance().syncUserCount();
                 manageMyCarsFragment = new ManageMyCarsScreenFragment();
                 fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.main_frag_container, manageMyCarsFragment, "ManageMyCarsScreenFragment");
@@ -212,6 +214,7 @@ public class MainActivity extends AppCompatActivity
                 fragmentTransaction.addToBackStack(null).commit();
                 break;
             case "MyCarsNowScreenFragment":
+                Model.getInstance().syncUserCount();
                 MyCarNowFragment = new MyCarsNowScreenFragment();
                 fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.main_frag_container, MyCarNowFragment, "MyCarsNowScreenFragment");
@@ -238,6 +241,7 @@ public class MainActivity extends AppCompatActivity
                 startActivity(mapIntent);
                 break;
             case "CarScreenFragment":
+                Model.getInstance().syncUserCount();
                 if(carScreenFragment != null && carScreenFragment.isVisible()){
                     getSupportFragmentManager().popBackStack();
                 }
@@ -248,6 +252,7 @@ public class MainActivity extends AppCompatActivity
                 fragmentTransaction.addToBackStack(null).commit();
                 break;
             case "ParkingPhotoScreenFragment":
+                Model.getInstance().syncUserCount();
                 parkingPhotoFragment = new ParkingPhotoFragment();
                 parkingPhotoFragment.photoName = (String) data[0];
                 fragmentTransaction = getSupportFragmentManager().beginTransaction();

@@ -21,6 +21,10 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 /**
  * Created by reabar on 28/06/2016.
@@ -34,6 +38,7 @@ public class Model {
     private User currentUser;
     private static boolean imageBool;
     private FilesManagerHelper fileManager;
+    private final List<User> usersCount;
 
     public static Model getInstance() {
         if (ourInstance == null) {
@@ -48,6 +53,7 @@ public class Model {
         modelSql = new ModelSql();
         modelCloudinary = new ModelCloudinary(MyApplication.getAppContext());
         getAPIVersion();
+        usersCount = new ArrayList<>();
         User tempUser = currentUser;
         if (tempUser != null) {
             modelFirebase.getOwnedCars(currentUser.getEmail(), new SyncListener() {
@@ -327,12 +333,27 @@ public class Model {
     }
 
     public void setCarUser(final Car car, final String userEmail) {
-        //new
-        List<User> allUsers = modelSql.getUsersList();
+        final List<User> allUsers = modelSql.getUsersList();
+        final String sqlUserLastUpdate = modelSql.getUsersLastUpdateTime();
         final List<String> userEmails = new ArrayList<>();
 
-        if (allUsers.size() == 0) {
-            modelFirebase.getUsersList(new SyncListener() {
+        for (User user : usersCount) {
+            userEmails.add(user.getEmail());
+        }
+        if(userEmails.contains(userEmail)){
+            for (User user : usersCount) {
+                if (user.getEmail().equals(userEmail) && !car.getUsersList().contains(userEmail) && !userEmail.equals(Model.getInstance().getCurrentUser().getEmail())) {
+                    car.setNewCarUser(userEmail);
+                    Toast.makeText(MyApplication.getAppActivity(), "User added To Car!",
+                            Toast.LENGTH_SHORT).show();
+                    updateCar(car);
+                    return;
+                }
+            }
+            Toast.makeText(MyApplication.getAppContext(), "User not found or already shared with", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            modelFirebase.getUsersDbTime(new SyncListener() {
                 @Override
                 public void isSuccessful(boolean success) {
 
@@ -345,32 +366,52 @@ public class Model {
 
                 @Override
                 public void passData(Object data) {
-                    if (data != null) {
-                        for (User user : (List<User>) data) {
-                            userEmails.add(user.getEmail());
+                    if (allUsers.size() == 0 || sqlUserLastUpdate == null || data.toString().compareTo(sqlUserLastUpdate) > 0 || allUsers.size() < usersCount.size()) {
+                        modelSql.dropSharedUserDb();
+                        modelFirebase.getUsersList(new SyncListener() {
+                            @Override
+                            public void isSuccessful(boolean success) {
+
+                            }
+
+                            @Override
+                            public void failed(String message) {
+
+                            }
+
+                            @Override
+                            public void passData(Object data) {
+                                if (data != null) {
+                                    for (User user : (List<User>) data) {
+                                        userEmails.add(user.getEmail());
+                                        modelSql.addUser(user);
+                                    }
+                                    modelSql.updateUsersDbTime(System.currentTimeMillis());
+                                    if (userEmails.contains(userEmail) && !car.getUsersList().contains(userEmail) && !userEmail.equals(Model.getInstance().getCurrentUser().getEmail())) {
+                                        car.setNewCarUser(userEmail);
+                                        Toast.makeText(MyApplication.getAppActivity(), "User added To Car!",
+                                                Toast.LENGTH_SHORT).show();
+                                        updateCar(car);
+                                    } else {
+                                        Toast.makeText(MyApplication.getAppContext(), "User not found or already shared with", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            }
+                        });
+                    } else {
+                        for (User user : allUsers) {
+                            if (user.getEmail().equals(userEmail) && !car.getUsersList().contains(userEmail) && !userEmail.equals(Model.getInstance().getCurrentUser().getEmail())) {
+                                car.setNewCarUser(userEmail);
+                                Toast.makeText(MyApplication.getAppActivity(), "User added To Car!",
+                                        Toast.LENGTH_SHORT).show();
+                                updateCar(car);
+                                return;
+                            }
                         }
-                        if (userEmails.contains(userEmail) && !car.getUsersList().contains(userEmail) && !userEmail.equals(Model.getInstance().getCurrentUser().getEmail())) {
-                            car.setNewCarUser(userEmail);
-                            Toast.makeText(MyApplication.getAppActivity(), "User added To Car!",
-                                    Toast.LENGTH_SHORT).show();
-                            updateCar(car);
-                        } else {
-                            Toast.makeText(MyApplication.getAppContext(), "User not found or already shared with", Toast.LENGTH_SHORT).show();
-                        }
+                        Toast.makeText(MyApplication.getAppContext(), "User not found or already shared with", Toast.LENGTH_SHORT).show();
                     }
                 }
             });
-        } else {
-            for (User user : allUsers) {
-                if (user.getEmail().equals(userEmail) && !car.getUsersList().contains(userEmail) && !userEmail.equals(Model.getInstance().getCurrentUser().getEmail())) {
-                    car.setNewCarUser(userEmail);
-                    Toast.makeText(MyApplication.getAppActivity(), "User added To Car!",
-                            Toast.LENGTH_SHORT).show();
-                    updateCar(car);
-                    return;
-                }
-            }
-            Toast.makeText(MyApplication.getAppContext(), "User not found or already shared with", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -1092,5 +1133,29 @@ public class Model {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void syncUserCount(){
+        new Thread()
+        {
+            public void run() {
+                modelFirebase.getUsersList(new SyncListener() {
+                    @Override
+                    public void isSuccessful(boolean success) {
+
+                    }
+
+                    @Override
+                    public void failed(String message) {
+
+                    }
+
+                    @Override
+                    public void passData(Object data) {
+                        usersCount.addAll((List<User>)data);
+                    }
+                });
+            }
+        }.start();
     }
 }
