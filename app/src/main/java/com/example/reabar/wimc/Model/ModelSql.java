@@ -29,6 +29,20 @@ public class ModelSql {
         LastUpdateSql.create(db);
     }
 
+    public void dropCarDb(){
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        CarSql.drop(db);
+        LastUpdateSql.setLastUpdate(db,Constants.CAR_TABLE,0);
+        CarSql.create(db);
+    }
+
+    public void dropParkingDb(){
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ParkingSql.drop(db);
+        LastUpdateSql.setLastUpdate(db,Constants.PARKING_TABLE,0);
+        ParkingSql.create(db);
+    }
+
     public void addUser(User user) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         UserSql.addUser(db, user);

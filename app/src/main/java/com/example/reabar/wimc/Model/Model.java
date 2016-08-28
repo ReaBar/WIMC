@@ -522,6 +522,8 @@ public class Model {
             @Override
             public void passData(Object data) {
                 if (data == null || lastUpdateDate == null || data.toString().compareTo(lastUpdateDate) > 0) {
+                    modelSql.dropCarDb();
+                    modelSql.dropParkingDb();
                     modelFirebase.getMyUnparkedCars(uId, new SyncListener() {
                         @Override
                         public void isSuccessful(boolean success) {
@@ -612,6 +614,8 @@ public class Model {
                 if (data == null) {
                     listener.passData(parkedCars);
                 } else if (lastUpdateDate == null || data.toString().compareTo(lastUpdateDate) > 0) {
+                    modelSql.dropCarDb();
+                    modelSql.dropParkingDb();
                     modelFirebase.getMyParkedCars(new SyncListener() {
                         @Override
                         public void isSuccessful(boolean success) {
@@ -699,6 +703,8 @@ public class Model {
                 if (data == null) {
                     listener.passData(parkingSpots);
                 } else if (lastUpdateDate == null || data.toString().compareTo(lastUpdateDate) > 0) {
+                    modelSql.dropCarDb();
+                    modelSql.dropParkingDb();
                     modelFirebase.getMyParkingSpots(new SyncListener() {
                         @Override
                         public void isSuccessful(boolean success) {
