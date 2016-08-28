@@ -101,10 +101,8 @@ public class Car {
         });
     }*/
 
-    public void setNewCarUser(String email){
-        if(!usersList.contains(email)){
-            usersList.add(email);
-        }
+    public void setNewCarUser(String email) {
+        usersList.add(email);
     }
 
 /*    public void setCarUser(final String email, final boolean newUserOrJustSQL) {

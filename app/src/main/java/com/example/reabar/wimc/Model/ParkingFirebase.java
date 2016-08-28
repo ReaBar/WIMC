@@ -223,7 +223,7 @@ public class ParkingFirebase {
         dbRef.child(parking.getCarId()).removeValue();
     }
 
-    public void stopParking(FirebaseDatabase db, final Car car) {
+/*    public void stopParking(FirebaseDatabase db, final Car car) {
         DatabaseReference dbRef = db.getReference(Constants.PARKING_TABLE);
         Model.getInstance().getMyParkedCars(new Model.SyncListener() {
             @Override
@@ -250,5 +250,5 @@ public class ParkingFirebase {
             }
         });
         dbRef.child(car.getCarId()).removeValue();
-    }
+    }*/
 }

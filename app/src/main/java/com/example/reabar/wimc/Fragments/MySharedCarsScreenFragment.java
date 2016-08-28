@@ -84,14 +84,14 @@ public class MySharedCarsScreenFragment extends Fragment {
 
         adapter = new MySharedCarsAdapter();
         carsList.setAdapter(adapter);
-        carsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+/*        carsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(MyApplication.getAppActivity(), "Row Clicked!",
                         Toast.LENGTH_SHORT).show();
 
             }
-        });
+        });*/
 
         return view;
     }

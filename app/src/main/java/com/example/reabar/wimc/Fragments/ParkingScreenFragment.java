@@ -239,9 +239,11 @@ public class ParkingScreenFragment extends Fragment implements LocationListener 
                             String country = "Israel";
                             List<Address> latAndLong = Model.getInstance().getLatandLong(streetNumber + " " + streetName + ", " + cityName + ", " + country);
                             if (latAndLong != null) {
-                                Address address = latAndLong.get(0);
-                                latitude = address.getLatitude();
-                                longitude = address.getLongitude();
+                                if(latAndLong.size() > 0){
+                                    Address address = latAndLong.get(0);
+                                    latitude = address.getLatitude();
+                                    longitude = address.getLongitude();
+                                }
                             }
                         }
                         parking = new Parking.ParkingBuilder(carID).street(street.getText().toString()).streetNumber(number.getText().toString()).city(city.getText().toString()).parkingLotName(parkingLotName.getText().toString()).parkingLotFloor(FloorNumber.getText().toString()).parkingLotRowColor(RowColor.getText().toString()).parkingLatitude(latitude).parkingLonitude(longitude).startParking(nowDate).build();

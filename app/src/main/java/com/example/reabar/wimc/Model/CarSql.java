@@ -243,11 +243,11 @@ public class CarSql {
         if(stringList.size() == 0){
             return null;
         }
-        List<String> al = stringList;
+/*        List<String> al = stringList;
         Set<String> hs = new HashSet<>();
         hs.addAll(al);
         al.clear();
-        al.addAll(hs);
+        al.addAll(hs);*/
         StringBuffer stringBuffer = new StringBuffer();
         for (String str : stringList) {
             stringBuffer.append(str).append(Constants.LIST_SEPARATOR);

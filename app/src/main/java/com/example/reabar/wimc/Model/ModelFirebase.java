@@ -100,9 +100,9 @@ public class ModelFirebase {
         parkingFirebase.stopParking(firebaseDatabase, parking);
     }
 
-    public void stopParking(Car car) {
+/*    public void stopParking(Car car) {
         parkingFirebase.stopParking(firebaseDatabase, car);
-    }
+    }*/
 
     // ---- Last Update Functions --- //
 

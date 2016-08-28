@@ -119,8 +119,6 @@ public class ParkingSql {
 /*                    for (String user : usersList) {
                         car.setCarUser(user, false);
                     }*/
-                }else {
-                    Model.getInstance().updateCar(car);
                 }
                 cars.add(car);
             } while (cursor.moveToNext());
@@ -187,7 +185,7 @@ public class ParkingSql {
                     if (car.getCarId().equals(parking.getCarId())) {
                         car.setParkingIsActive(false);
                         //car.updateThisCar();
-                        Model.getInstance().updateCar(car);
+                        //Model.getInstance().updateCar(car);
                     }
                 }
             }

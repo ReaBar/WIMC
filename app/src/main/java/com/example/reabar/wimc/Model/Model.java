@@ -327,41 +327,110 @@ public class Model {
         updateCarDbTime();
     }
 
-    public void setCarUser(Car car, String userEmail) {
+    public void setCarUser(final Car car,final String userEmail) {
         //new
         List<User> allUsers = modelSql.getUsersList();
-        for (User user : allUsers) {
-            if (user.getEmail().equals(userEmail) && !car.getUsersList().contains(userEmail)) {
-                car.setNewCarUser(userEmail);
-                Toast.makeText(MyApplication.getAppActivity(), "User added To Car!",
-                        Toast.LENGTH_SHORT).show();
-                updateCar(car);
-                return;
-            }
+        final List<String> userEmails = new ArrayList<>();
+
+        if(allUsers.size() == 0){
+            modelFirebase.getUsersList(new SyncListener() {
+                @Override
+                public void isSuccessful(boolean success) {
+
+                }
+
+                @Override
+                public void failed(String message) {
+
+                }
+
+                @Override
+                public void passData(Object data) {
+                    if(data != null){
+                        for (User user: (List<User>)data) {
+                            userEmails.add(user.getEmail());
+                        }
+                            if(userEmails.contains(userEmail) && !car.getUsersList().contains(userEmail) && !userEmail.equals(Model.getInstance().getCurrentUser().getEmail())){
+                                car.setNewCarUser(userEmail);
+                                Toast.makeText(MyApplication.getAppActivity(), "User added To Car!",
+                                        Toast.LENGTH_SHORT).show();
+                                updateCar(car);
+                            }
+                        else{
+                                Toast.makeText(MyApplication.getAppContext(), "User not found or already shared with", Toast.LENGTH_SHORT).show();
+                            }
+                    }
+                }
+            });
         }
-        Toast.makeText(MyApplication.getAppContext(), "User not found or already shared with", Toast.LENGTH_SHORT).show();
+        else{
+            for (User user : allUsers) {
+                if (user.getEmail().equals(userEmail) && !car.getUsersList().contains(userEmail) && !userEmail.equals(Model.getInstance().getCurrentUser().getEmail())) {
+                    car.setNewCarUser(userEmail);
+                    Toast.makeText(MyApplication.getAppActivity(), "User added To Car!",
+                            Toast.LENGTH_SHORT).show();
+                    updateCar(car);
+                    return;
+                }
+            }
+            Toast.makeText(MyApplication.getAppContext(), "User not found or already shared with", Toast.LENGTH_SHORT).show();
+        }
     }
 
-    public void setCarUsersList(Car car,List<String> usersList) {
+    public void setCarUsersList(final Car car,final List<String> usersList) {
         //new
+
         List<User> allUsers = modelSql.getUsersList();
-        List<String> userEmails = new ArrayList<>();
-        for (User user : allUsers) {
-            userEmails.add(user.getEmail());
+        final List<String> userEmails = new ArrayList<>();
+
+        if(allUsers.size() == 0){
+            modelFirebase.getUsersList(new SyncListener() {
+                @Override
+                public void isSuccessful(boolean success) {
+
+                }
+
+                @Override
+                public void failed(String message) {
+
+                }
+
+                @Override
+                public void passData(Object data) {
+                    if(data != null){
+                        for (User user: (List<User>)data) {
+                            userEmails.add(user.getEmail());
+                        }
+                        for(int i = 0 ; i < usersList.size(); i++){
+                            if(!userEmails.contains(usersList.get(i))){
+                                usersList.remove(usersList.get(i));
+                            }
+                        }
+                        car.setUsersList(usersList);
+                        //updateCar(car);
+                    }
+                }
+            });
+        }
+        else{
+            for (User user : allUsers) {
+                userEmails.add(user.getEmail());
+            }
+
+            for(int i=0; i<usersList.size(); i++){
+                if(!userEmails.contains(usersList.get(i))){
+                    usersList.remove(usersList.get(i));
+                }
+            }
+            car.setUsersList(usersList);
+            //updateCar(car);
         }
 
-        for(int i=0; i<usersList.size(); i++){
-            if(!userEmails.contains(usersList.get(i))){
-                usersList.remove(usersList.get(i));
-            }
-        }
 //        for (String carUser:usersList) {
 //            if(!userEmails.contains(carUser)){
 //                usersList.remove(carUser);
 //            }
 //        }
-        car.setUsersList(usersList);
-        updateCar(car);
     }
 
 
@@ -372,11 +441,11 @@ public class Model {
         updateCarDbTime();
     }
 
-    public void updateCar(final Car car, Model.SyncListener listener) {
-        modelSql.updateCar(car);
-        modelFirebase.updateCar(car, listener);
-        updateCarDbTime();
-    }
+//    public void updateCar(final Car car, Model.SyncListener listener) {
+//        modelSql.updateCar(car);
+//        modelFirebase.updateCar(car, listener);
+//        updateCarDbTime();
+//    }
 
     public void getAllCars(final SyncListener listener) {
         final String lastUpdateDate = modelSql.getCarLastUpdate();
@@ -426,9 +495,9 @@ public class Model {
         });
     }
 
-    public Car getCarById(String carId) {
-        return modelSql.getCarById(carId);
-    }
+//    public Car getCarById(String carId) {
+//        return modelSql.getCarById(carId);
+//    }
 
     public void parkCar(Parking parking, SyncListener listener) {
         modelFirebase.parkCar(parking, listener);
@@ -704,11 +773,11 @@ public class Model {
         updateParkingDbTime();
     }
 
-    public void stopParking(Car car) {
+/*    public void stopParking(Car car) {
         modelFirebase.stopParking(car);
         modelSql.stopParking(car);
         updateParkingDbTime();
-    }
+    }*/
 
     public void updateCarDbTime() {
         long currentTime = System.currentTimeMillis();

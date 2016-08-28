@@ -58,6 +58,8 @@ public class CarFirebase {
 
     public void updateCar(FirebaseDatabase db, Car car){
         DatabaseReference dbRef = db.getReference(Constants.CAR_TABLE);
+
+
         dbRef.child(car.getCarId()).setValue(car).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
