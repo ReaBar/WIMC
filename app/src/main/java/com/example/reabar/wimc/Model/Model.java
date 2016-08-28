@@ -36,8 +36,7 @@ public class Model {
     private FilesManagerHelper fileManager;
 
     public static Model getInstance() {
-        if(ourInstance == null)
-        {
+        if (ourInstance == null) {
             ourInstance = new Model();
         }
         return ourInstance;
@@ -327,12 +326,12 @@ public class Model {
         updateCarDbTime();
     }
 
-    public void setCarUser(final Car car,final String userEmail) {
+    public void setCarUser(final Car car, final String userEmail) {
         //new
         List<User> allUsers = modelSql.getUsersList();
         final List<String> userEmails = new ArrayList<>();
 
-        if(allUsers.size() == 0){
+        if (allUsers.size() == 0) {
             modelFirebase.getUsersList(new SyncListener() {
                 @Override
                 public void isSuccessful(boolean success) {
@@ -346,24 +345,22 @@ public class Model {
 
                 @Override
                 public void passData(Object data) {
-                    if(data != null){
-                        for (User user: (List<User>)data) {
+                    if (data != null) {
+                        for (User user : (List<User>) data) {
                             userEmails.add(user.getEmail());
                         }
-                            if(userEmails.contains(userEmail) && !car.getUsersList().contains(userEmail) && !userEmail.equals(Model.getInstance().getCurrentUser().getEmail())){
-                                car.setNewCarUser(userEmail);
-                                Toast.makeText(MyApplication.getAppActivity(), "User added To Car!",
-                                        Toast.LENGTH_SHORT).show();
-                                updateCar(car);
-                            }
-                        else{
-                                Toast.makeText(MyApplication.getAppContext(), "User not found or already shared with", Toast.LENGTH_SHORT).show();
-                            }
+                        if (userEmails.contains(userEmail) && !car.getUsersList().contains(userEmail) && !userEmail.equals(Model.getInstance().getCurrentUser().getEmail())) {
+                            car.setNewCarUser(userEmail);
+                            Toast.makeText(MyApplication.getAppActivity(), "User added To Car!",
+                                    Toast.LENGTH_SHORT).show();
+                            updateCar(car);
+                        } else {
+                            Toast.makeText(MyApplication.getAppContext(), "User not found or already shared with", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
             });
-        }
-        else{
+        } else {
             for (User user : allUsers) {
                 if (user.getEmail().equals(userEmail) && !car.getUsersList().contains(userEmail) && !userEmail.equals(Model.getInstance().getCurrentUser().getEmail())) {
                     car.setNewCarUser(userEmail);
@@ -377,13 +374,13 @@ public class Model {
         }
     }
 
-    public void setCarUsersList(final Car car,final List<String> usersList) {
+    public void setCarUsersList(final Car car, final List<String> usersList) {
         //new
 
         List<User> allUsers = modelSql.getUsersList();
         final List<String> userEmails = new ArrayList<>();
 
-        if(allUsers.size() == 0){
+        if (allUsers.size() == 0) {
             modelFirebase.getUsersList(new SyncListener() {
                 @Override
                 public void isSuccessful(boolean success) {
@@ -397,12 +394,12 @@ public class Model {
 
                 @Override
                 public void passData(Object data) {
-                    if(data != null){
-                        for (User user: (List<User>)data) {
+                    if (data != null) {
+                        for (User user : (List<User>) data) {
                             userEmails.add(user.getEmail());
                         }
-                        for(int i = 0 ; i < usersList.size(); i++){
-                            if(!userEmails.contains(usersList.get(i))){
+                        for (int i = 0; i < usersList.size(); i++) {
+                            if (!userEmails.contains(usersList.get(i))) {
                                 usersList.remove(usersList.get(i));
                             }
                         }
@@ -411,14 +408,13 @@ public class Model {
                     }
                 }
             });
-        }
-        else{
+        } else {
             for (User user : allUsers) {
                 userEmails.add(user.getEmail());
             }
 
-            for(int i=0; i<usersList.size(); i++){
-                if(!userEmails.contains(usersList.get(i))){
+            for (int i = 0; i < usersList.size(); i++) {
+                if (!userEmails.contains(usersList.get(i))) {
                     usersList.remove(usersList.get(i));
                 }
             }
@@ -508,7 +504,6 @@ public class Model {
     public void getMyUnparkedCars(final String uId, final SyncListener listener) {
         final String parkingLastUpdateDate = modelSql.getParkingLastUpdate();
         final String carLastUpdateDate = modelSql.getCarLastUpdate();
-        final ArrayList<Car> unparkedCars = new ArrayList<>();
         modelFirebase.getParkingDbTime(new SyncListener() {
             @Override
             public void isSuccessful(boolean success) {
@@ -522,7 +517,7 @@ public class Model {
 
             @Override
             public void passData(Object data) {
-                if (data == null || parkingLastUpdateDate == null || carLastUpdateDate == null ||data.toString().compareTo(parkingLastUpdateDate) > 0 || data.toString().compareTo(carLastUpdateDate) > 0) {
+                if (data == null || parkingLastUpdateDate == null || data.toString().compareTo(parkingLastUpdateDate) > 0) {
                     modelSql.dropCarDb();
                     modelSql.dropParkingDb();
                     modelFirebase.getMyUnparkedCars(uId, new SyncListener() {
@@ -583,10 +578,97 @@ public class Model {
                                     }
                                 }
                             });
-                            if (data == null) {
+/*                            if (data == null) {
                                 modelFirebase.updateParkingDbTime(System.currentTimeMillis());
-                            }
+                            }*/
                             listener.passData(data);
+                        }
+                    });
+                } else if (data.toString().compareTo(parkingLastUpdateDate) <= 0) {
+                    modelFirebase.getCarDbTime(new SyncListener() {
+                        @Override
+                        public void isSuccessful(boolean success) {
+
+                        }
+
+                        @Override
+                        public void failed(String message) {
+
+                        }
+
+                        @Override
+                        public void passData(Object data) {
+                            if(carLastUpdateDate == null || data.toString().compareTo(carLastUpdateDate) > 0){
+                                modelSql.dropCarDb();
+                                modelSql.dropParkingDb();
+                                modelFirebase.getMyUnparkedCars(uId, new SyncListener() {
+                                    @Override
+                                    public void isSuccessful(boolean success) {
+
+                                    }
+
+                                    @Override
+                                    public void failed(String message) {
+
+                                    }
+
+                                    @Override
+                                    public void passData(Object data) {
+                                        modelFirebase.getListOfAllCarsInDB(new SyncListener() {
+                                            @Override
+                                            public void isSuccessful(boolean success) {
+
+                                            }
+
+                                            @Override
+                                            public void failed(String message) {
+
+                                            }
+
+                                            @Override
+                                            public void passData(Object data) {
+                                                if (data != null) {
+                                                    for (Car car : (List<Car>) data) {
+                                                        if (modelSql.getCarById(car.getCarId()) == null) {
+                                                            modelSql.addCar(car);
+                                                        }
+                                                    }
+                                                    modelSql.updateCarsDbTime(System.currentTimeMillis());
+                                                }
+                                            }
+                                        });
+
+                                        modelFirebase.getMyParkingSpots(new SyncListener() {
+                                            @Override
+                                            public void isSuccessful(boolean success) {
+
+                                            }
+
+                                            @Override
+                                            public void failed(String message) {
+
+                                            }
+
+                                            @Override
+                                            public void passData(Object data) {
+                                                if (data != null) {
+                                                    for (Parking parking : (List<Parking>) data) {
+                                                        modelSql.parkCar(parking);
+                                                    }
+                                                    modelSql.updateParkingDbTime(System.currentTimeMillis());
+                                                }
+                                            }
+                                        });
+/*                                        if (data == null) {
+                                            modelFirebase.updateCarDbTime(System.currentTimeMillis());
+                                        }*/
+                                        listener.passData(data);
+                                    }
+                                });
+                            }
+                            else{
+                                modelSql.getMyUnparkedCars(listener);
+                            }
                         }
                     });
                 } else {
@@ -686,7 +768,8 @@ public class Model {
     }
 
     public void getMyParkingSpots(final SyncListener listener) {
-        final String lastUpdateDate = modelSql.getParkingLastUpdate();
+        final String parkingLastUpdateDate = modelSql.getParkingLastUpdate();
+        final String carLastUpdateDate = modelSql.getCarLastUpdate();
         final ArrayList<Parking> parkingSpots = new ArrayList<>();
         modelFirebase.getParkingDbTime(new SyncListener() {
             @Override
@@ -701,9 +784,7 @@ public class Model {
 
             @Override
             public void passData(Object data) {
-                if (data == null) {
-                    listener.passData(parkingSpots);
-                } else if (lastUpdateDate == null || data.toString().compareTo(lastUpdateDate) > 0) {
+                if (data == null || parkingLastUpdateDate == null || data.toString().compareTo(parkingLastUpdateDate) > 0) {
                     modelSql.dropCarDb();
                     modelSql.dropParkingDb();
                     modelFirebase.getMyParkingSpots(new SyncListener() {
@@ -743,7 +824,7 @@ public class Model {
                                 }
                             });
 
-                            modelFirebase.getMyParkingSpots(new SyncListener() {
+/*                            modelFirebase.getMyParkingSpots(new SyncListener() {
                                 @Override
                                 public void isSuccessful(boolean success) {
 
@@ -763,8 +844,108 @@ public class Model {
                                         modelSql.updateParkingDbTime(System.currentTimeMillis());
                                     }
                                 }
-                            });
+                            });*/
+                            if (data != null) {
+                                for (Parking parking : (List<Parking>) data) {
+                                    modelSql.parkCar(parking);
+                                }
+                                modelSql.updateParkingDbTime(System.currentTimeMillis());
+                            }
                             listener.passData(data);
+                        }
+                    });
+                } else if (data.toString().compareTo(parkingLastUpdateDate) <= 0) {
+                    modelFirebase.getCarDbTime(new SyncListener() {
+                        @Override
+                        public void isSuccessful(boolean success) {
+
+                        }
+
+                        @Override
+                        public void failed(String message) {
+
+                        }
+
+                        @Override
+                        public void passData(Object data) {
+                            if(carLastUpdateDate == null || data.toString().compareTo(carLastUpdateDate) > 0){
+                                modelSql.dropCarDb();
+                                modelSql.dropParkingDb();
+                                modelFirebase.getMyParkingSpots(new SyncListener() {
+                                    @Override
+                                    public void isSuccessful(boolean success) {
+
+                                    }
+
+                                    @Override
+                                    public void failed(String message) {
+
+                                    }
+
+                                    @Override
+                                    public void passData(Object data) {
+                                        modelFirebase.getListOfAllCarsInDB(new SyncListener() {
+                                            @Override
+                                            public void isSuccessful(boolean success) {
+
+                                            }
+
+                                            @Override
+                                            public void failed(String message) {
+
+                                            }
+
+                                            @Override
+                                            public void passData(Object data) {
+                                                if (data != null) {
+                                                    for (Car car : (List<Car>) data) {
+                                                        if (modelSql.getCarById(car.getCarId()) == null) {
+                                                            modelSql.addCar(car);
+                                                        }
+                                                    }
+                                                    modelSql.updateCarsDbTime(System.currentTimeMillis());
+                                                }
+                                            }
+                                        });
+
+/*                                        modelFirebase.getMyParkingSpots(new SyncListener() {
+                                            @Override
+                                            public void isSuccessful(boolean success) {
+
+                                            }
+
+                                            @Override
+                                            public void failed(String message) {
+
+                                            }
+
+                                            @Override
+                                            public void passData(Object data) {
+                                                if (data != null) {
+                                                    for (Parking parking : (List<Parking>) data) {
+                                                        modelSql.parkCar(parking);
+                                                    }
+                                                    modelSql.updateParkingDbTime(System.currentTimeMillis());
+                                                }
+                                            }
+                                        });*/
+
+                                        if (data != null) {
+                                            for (Parking parking : (List<Parking>) data) {
+                                                modelSql.parkCar(parking);
+                                            }
+                                            modelSql.updateParkingDbTime(System.currentTimeMillis());
+                                        }
+/*                                        if (data == null) {
+                                            modelFirebase.updateCarDbTime(System.currentTimeMillis());
+                                        }*/
+                                        listener.passData(data);
+                                    }
+                                });
+                            }
+                            else{
+                                modelSql.getMyParkingSpots(listener);
+                            }
                         }
                     });
                 } else {

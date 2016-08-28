@@ -83,7 +83,7 @@ public class MyCarsNowScreenFragment extends Fragment {
                 parkings = (ArrayList) data;
                 progressBar.setVisibility(View.GONE);
                 adapter.notifyDataSetChanged();
-                if(parkings.size() == 0){
+                if (parkings.size() == 0) {
                     carListEmpty.setVisibility(View.VISIBLE);
                 }
             }
@@ -168,10 +168,11 @@ public class MyCarsNowScreenFragment extends Fragment {
                 public void onResult(Bitmap imageBmp) {
                     if (imageBmp != null) {
                         parkingPhoto.setImageBitmap(imageBmp);
-                    }
-                    else {
+                        parkingPhoto.setClickable(true);
+                    } else {
                         Bitmap image = ((BitmapDrawable) getResources().getDrawable(R.drawable.image_not_available)).getBitmap();
                         parkingPhoto.setImageBitmap(image);
+                        parkingPhoto.setClickable(false);
                     }
                 }
             });
@@ -197,13 +198,12 @@ public class MyCarsNowScreenFragment extends Fragment {
                 }
             });
 
-            parkingPhoto.setOnClickListener(new View.OnClickListener()
-            {
+            parkingPhoto.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Object[] data=new Object[1];
-                    data[0]=parking.getImageName();
-                    fragmentCommunicator.passData(data,"ParkingPhotoScreenFragment");
+                    Object[] data = new Object[1];
+                    data[0] = parking.getImageName();
+                    fragmentCommunicator.passData(data, "ParkingPhotoScreenFragment");
                 }
             });
 
